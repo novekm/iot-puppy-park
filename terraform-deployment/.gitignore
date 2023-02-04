@@ -1,4 +1,6 @@
 ../.DS_Store
+.vscode/
+.vscode/*
 
 ESP8266_AWS_IOT/
 ESP8266_AWS_IOT/*
