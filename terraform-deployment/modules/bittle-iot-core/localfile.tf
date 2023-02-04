@@ -24,8 +24,8 @@ resource "local_file" "dynamic_secrets_h" {
 
   #define SECRET
 
-  const char WIFI_SSID[] = "AzulNuevo";               //TAMIM2.4G
-  const char WIFI_PASSWORD[] = "Barbados727xS1176*!";           //0544287380
+  const char WIFI_SSID[] = "${var.local_ssid}";    // Your Local SSID/Network Name
+  const char WIFI_PASSWORD[] = "${var.bc_local_network_password}";   //Your Local Network Password
 
   #define THINGNAME "${each.value.name}"
   // const char THINGNAME[] = "MyTestBittle1";

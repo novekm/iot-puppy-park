@@ -433,11 +433,7 @@
 
 
 
-# IoT Things
-variable "all_bittles" {
-  type    = map(any)
-  default = {}
-}
+
 
 # # Admin Users
 # variable "sample_admin_cognito_users" {
@@ -547,6 +543,30 @@ variable "all_bittles" {
 
 # }
 
+
+# IoT Things
+variable "all_bittles" {
+  type    = map(any)
+  default = {}
+}
+
+# WiFi Information
+variable "bc_local_ssid" {
+  type = string
+  default = null
+  description = "The SSID for the local network you want Bittle to connect to."
+  sensitive = true
+
+}
+variable "bc_local_network_password" {
+  type = string
+  default = null
+  description = "The password for the local network you want Bittle to connect to."
+  sensitive = true
+
+}
+
+# Tagging
 variable "tags" {
   type        = map(any)
   description = "Tags to apply to resources"

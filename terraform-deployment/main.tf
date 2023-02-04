@@ -53,9 +53,18 @@ module "bittle-iot-core" {
   // location of the module - can be local or git repo
   source = "./modules/bittle-iot-core"
 
+  # - Network information -
+  // note - for added security, eventually these could be values stored in parameter store
+  // however that would require users to manually enter them before deploying the terraform code.
+
+  bc_local_ssid             = "" // enter SSID for the local network you want bittle to connect to
+  bc_local_network_password = "" // enter password for the local network you want bittle to connect to
+
 
   # - IoT -
   # Dynamic Creation of IoT Things for Bittles
+
+  // Enter an object for each Bittle you would like to connect
   all_bittles = {
     Bittle1 : {
       name            = "Bittle1"
