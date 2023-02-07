@@ -34,4 +34,43 @@ module "bittle-iot-core" {
     },
   }
 
+  # - Amplify App -
+  create_amplify_app = true
+  bc_create_codecommit_repo = false
+  bc_enable_gitlab_mirroring = false
+  bc_existing_repo_url = "https://github.com/novekm/aws-amplify-cloudscape"
+
+  # # - SSM -
+  # lookup_ssm_github_access_token = true // find the github access token in ssm
+  # ssm_github_access_token_name = "github-access-token" // name of your ssm parameter
+
+  # - Cognito -
+  # Admin Users to create
+  bc_admin_cognito_users = {
+    DefaultAdmin : {
+      username       = "admin"
+      given_name     = "Default"
+      family_name    = "Admin"
+      email          = "novekm@amazon.com"
+      email_verified = true // no touchy
+    },
+    KevonMayers : {
+      username       = "kmayers"
+      given_name     = "Kevon"
+      family_name    = "Mayers"
+      email          = "kevonmayers31@gmail.com"
+      email_verified = true // no touchy
+    }
+  }
+  # Standard Users to create
+  bc_standard_cognito_users = {
+    DefaultStandardUser : {
+      username       = "default"
+      given_name     = "Default"
+      family_name    = "User"
+      email          = "kevon_mayers@yahoo.com"
+      email_verified = true // no touchy
+    }
+  }
+
 }

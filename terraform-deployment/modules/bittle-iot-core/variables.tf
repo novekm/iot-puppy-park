@@ -133,76 +133,76 @@
 #   description = "The number of days until objects in the bucket are deleted"
 # }
 
-# # - Amplify -
-# variable "create_amplify_app" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional creation of AWS Amplify Web Application"
-# }
-# variable "bc_app_name" {
-#   type        = string
-#   default     = "bc-App"
-#   description = "The name of the Amplify Application"
-# }
-# variable "bc_existing_repo_url" {
-#   type        = string
-#   default     = null
-#   description = "URL for the existing repo"
+# - Amplify -
+variable "create_amplify_app" {
+  type        = bool
+  default     = false
+  description = "Conditional creation of AWS Amplify Web Application"
+}
+variable "bc_app_name" {
+  type        = string
+  default     = "bc-App"
+  description = "The name of the Amplify Application"
+}
+variable "bc_existing_repo_url" {
+  type        = string
+  default     = null
+  description = "URL for the existing repo"
 
-# }
-# variable "github_access_token" {
-#   type        = string
-#   default     = null
-#   description = "Optional GitHub access token. Only required if using GitHub repo."
+}
+variable "github_access_token" {
+  type        = string
+  default     = null
+  description = "Optional GitHub access token. Only required if using GitHub repo."
 
-# }
-# variable "bc_amplify_app_framework" {
-#   type    = string
-#   default = "React"
+}
+variable "bc_amplify_app_framework" {
+  type    = string
+  default = "React"
 
-# }
-# variable "create_bc_amplify_branch_main" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional creation of main branch for amplify app"
+}
+variable "create_bc_amplify_branch_main" {
+  type        = bool
+  default     = true
+  description = "Conditional creation of main branch for amplify app"
 
-# }
-# variable "bc_amplify_branch_main_name" {
-#   type    = string
-#   default = "main"
-# }
-# variable "bc_amplify_branch_main_stage" {
-#   type    = string
-#   default = "PRODUCTION"
+}
+variable "bc_amplify_branch_main_name" {
+  type    = string
+  default = "main"
+}
+variable "bc_amplify_branch_main_stage" {
+  type    = string
+  default = "PRODUCTION"
 
-# }
-# variable "create_bc_amplify_branch_dev" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional creation of dev branch for amplify app"
+}
+variable "create_bc_amplify_branch_dev" {
+  type        = bool
+  default     = true
+  description = "Conditional creation of dev branch for amplify app"
 
-# }
-# variable "bc_amplify_branch_dev_name" {
-#   type    = string
-#   default = "dev"
-# }
-# variable "bc_amplify_branch_dev_stage" {
-#   type    = string
-#   default = "DEVELOPMENT"
+}
+variable "bc_amplify_branch_dev_name" {
+  type    = string
+  default = "dev"
+}
+variable "bc_amplify_branch_dev_stage" {
+  type    = string
+  default = "DEVELOPMENT"
 
-# }
+}
 
-# variable "create_bc_amplify_domain_association" {
-#   type    = bool
-#   default = false
+variable "create_bc_amplify_domain_association" {
+  type    = bool
+  default = false
 
-# }
-# variable "bc_amplify_app_domain_name" {
-#   type        = string
-#   default     = "example.com"
-#   description = "The name of your domain. Ex. naruto.ninja"
+}
+variable "bc_amplify_app_domain_name" {
+  type        = string
+  default     = "example.com"
+  description = "The name of your domain. Ex. naruto.ninja"
 
-# }
+}
 
 
 # # AppSync - GraphQL
@@ -221,14 +221,14 @@
 
 # }
 
-# # - IAM -
+# - IAM -
 
-# variable "create_restricted_access_roles" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional creation of restricted access roles"
+variable "create_restricted_access_roles" {
+  type        = bool
+  default     = true
+  description = "Conditional creation of restricted access roles"
 
-# }
+}
 
 
 # # - DynamoDB -
@@ -256,178 +256,176 @@
 # }
 
 
-# # - Cognito -
-# # User Pool
-# variable "bc_user_pool_name" {
-#   type        = string
-#   default     = "bc_user_pool"
-#   description = "The name of the Cognito User Pool created"
-# }
-# variable "bc_user_pool_client_name" {
-#   type        = string
-#   default     = "bc_user_pool_client"
-#   description = "The name of the Cognito User Pool Client created"
-# }
-# variable "bc_identity_pool_name" {
-#   type        = string
-#   default     = "bc_identity_pool"
-#   description = "The name of the Cognito Identity Pool created"
+# - Cognito -
+# User Pool
+variable "bc_user_pool_name" {
+  type        = string
+  default     = "bc_user_pool"
+  description = "The name of the Cognito User Pool created"
+}
+variable "bc_user_pool_client_name" {
+  type        = string
+  default     = "bc_user_pool_client"
+  description = "The name of the Cognito User Pool Client created"
+}
+variable "bc_identity_pool_name" {
+  type        = string
+  default     = "bc_identity_pool"
+  description = "The name of the Cognito Identity Pool created"
 
-# }
-# variable "bc_identity_pool_allow_unauthenticated_identites" {
-#   type    = bool
-#   default = false
-# }
-# variable "bc_identity_pool_allow_classic_flow" {
-#   type    = bool
-#   default = false
+}
+variable "bc_identity_pool_allow_unauthenticated_identites" {
+  type    = bool
+  default = false
+}
+variable "bc_identity_pool_allow_classic_flow" {
+  type    = bool
+  default = false
 
-# }
-# variable "bc_email_verification_message" {
-#   type        = string
-#   default     = <<-EOF
+}
+variable "bc_email_verification_message" {
+  type        = string
+  default     = <<-EOF
 
-#   Thank you for registering with the bc App. This is your email confirmation.
-#   Verification Code: {####}
+  Thank you for registering with the Bittle Control App. This is your email confirmation.
+  Verification Code: {####}
 
-#   EOF
-#   description = "The Cognito email verification message"
-# }
-# variable "bc_email_verification_subject" {
-#   type        = string
-#   default     = "bc App Verification"
-#   description = "The Cognito email verification subject"
-# }
-# variable "bc_invite_email_message" {
-#   type    = string
-#   default = <<-EOF
-#     You have been invited to the bc App App! Your username is "{username}" and
-#     temporary password is "{####}". Please reach out to an admin if you have issues signing in.
+  EOF
+  description = "The Cognito email verification message"
+}
+variable "bc_email_verification_subject" {
+  type        = string
+  default     = "bc App Verification"
+  description = "The Cognito email verification subject"
+}
+variable "bc_invite_email_message" {
+  type    = string
+  default = <<-EOF
+    You have been invited to the Bittle Control App! Your username is "{username}" and
+    temporary password is "{####}". Please reach out to an admin if you have issues signing in.
 
-#   EOF
+  EOF
 
-# }
-# variable "bc_invite_email_subject" {
-#   type    = string
-#   default = <<-EOF
-#   You've been CHOSEN.
-#   EOF
+}
+variable "bc_invite_email_subject" {
+  type    = string
+  default = <<-EOF
+  Welcome to Bittle Control!
+  EOF
 
-# }
-# variable "bc_invite_sms_message" {
-#   type    = string
-#   default = <<-EOF
-#     You have been invited to the bc App! Your username is "{username}" and
-#     temporary password is "{####}".
+}
+variable "bc_invite_sms_message" {
+  type    = string
+  default = <<-EOF
+    You have been invited to the Bittle Control App! Your username is "{username}" and
+    temporary password is "{####}".
 
-#   EOF
+  EOF
 
-# }
-# variable "bc_password_policy_min_length" {
-#   type        = number
-#   default     = 8
-#   description = "The minimum nmber of characters for Cognito user passwords"
-# }
-# variable "bc_password_policy_require_lowercase" {
-#   type        = bool
-#   default     = true
-#   description = "Whether or not the Cognito user password must have at least 1 lowercase character"
+}
+variable "bc_password_policy_min_length" {
+  type        = number
+  default     = 8
+  description = "The minimum nmber of characters for Cognito user passwords"
+}
+variable "bc_password_policy_require_lowercase" {
+  type        = bool
+  default     = true
+  description = "Whether or not the Cognito user password must have at least 1 lowercase character"
 
-# }
-# variable "bc_password_policy_require_uppercase" {
-#   type        = bool
-#   default     = true
-#   description = "Whether or not the Cognito user password must have at least 1 uppercase character"
+}
+variable "bc_password_policy_require_uppercase" {
+  type        = bool
+  default     = true
+  description = "Whether or not the Cognito user password must have at least 1 uppercase character"
 
-# }
-# variable "bc_password_policy_require_numbers" {
-#   type        = bool
-#   default     = true
-#   description = "Whether or not the Cognito user password must have at least 1 number"
+}
+variable "bc_password_policy_require_numbers" {
+  type        = bool
+  default     = true
+  description = "Whether or not the Cognito user password must have at least 1 number"
 
-# }
+}
 
-# variable "bc_password_policy_require_symbols" {
-#   type        = bool
-#   default     = true
-#   description = "Whether or not the Cognito user password must have at least 1 special character"
+variable "bc_password_policy_require_symbols" {
+  type        = bool
+  default     = true
+  description = "Whether or not the Cognito user password must have at least 1 special character"
 
-# }
+}
 
-# variable "bc_password_policy_temp_password_validity_days" {
-#   type        = number
-#   default     = 7
-#   description = "The number of days a temp password is valid. If user does not sign-in during this time, will need to be reset by an admin"
+variable "bc_password_policy_temp_password_validity_days" {
+  type        = number
+  default     = 7
+  description = "The number of days a temp password is valid. If user does not sign-in during this time, will need to be reset by an admin"
 
-# }
-# # General Schema
-# variable "bc_schemas" {
-#   description = "A container with the schema attributes of a user pool. Maximum of 50 attributes"
-#   type        = list(any)
-#   default     = []
-# }
-# # Schema (String)
-# variable "bc_string_schemas" {
-#   description = "A container with the string schema attributes of a user pool. Maximum of 50 attributes"
-#   type        = list(any)
-#   default = [{
-#     name                     = "email"
-#     attribute_data_type      = "String"
-#     required                 = true
-#     mutable                  = false
-#     developer_only_attribute = false
+}
+# General Schema
+variable "bc_schemas" {
+  description = "A container with the schema attributes of a user pool. Maximum of 50 attributes"
+  type        = list(any)
+  default     = []
+}
+# Schema (String)
+variable "bc_string_schemas" {
+  description = "A container with the string schema attributes of a user pool. Maximum of 50 attributes"
+  type        = list(any)
+  default = [{
+    name                     = "email"
+    attribute_data_type      = "String"
+    required                 = true
+    mutable                  = false
+    developer_only_attribute = false
 
-#     string_attribute_constraints = {
-#       min_length = 7
-#       max_length = 25
-#     }
-#     },
-#     {
-#       name                     = "given_name"
-#       attribute_data_type      = "String"
-#       required                 = true
-#       mutable                  = true
-#       developer_only_attribute = false
+    string_attribute_constraints = {
+      min_length = 7
+      max_length = 25
+    }
+    },
+    {
+      name                     = "given_name"
+      attribute_data_type      = "String"
+      required                 = true
+      mutable                  = true
+      developer_only_attribute = false
 
-#       string_attribute_constraints = {
-#         min_length = 1
-#         max_length = 25
-#       }
-#     },
-#     {
-#       name                     = "family_name"
-#       attribute_data_type      = "String"
-#       required                 = true
-#       mutable                  = true
-#       developer_only_attribute = false
+      string_attribute_constraints = {
+        min_length = 1
+        max_length = 25
+      }
+    },
+    {
+      name                     = "family_name"
+      attribute_data_type      = "String"
+      required                 = true
+      mutable                  = true
+      developer_only_attribute = false
 
-#       string_attribute_constraints = {
-#         min_length = 1
-#         max_length = 25
-#       }
-#     },
-#     {
-#       name                     = "IAC_PROVIDER"
-#       attribute_data_type      = "String"
-#       required                 = false
-#       mutable                  = true
-#       developer_only_attribute = false
+      string_attribute_constraints = {
+        min_length = 1
+        max_length = 25
+      }
+    },
+    {
+      name                     = "IAC_PROVIDER"
+      attribute_data_type      = "String"
+      required                 = false
+      mutable                  = true
+      developer_only_attribute = false
 
-#       string_attribute_constraints = {
-#         min_length = 1
-#         max_length = 10
-#       }
-#     },
-#   ]
-# }
-# # Schema (number)
-# variable "bc_number_schemas" {
-#   description = "A container with the number schema attributes of a user pool. Maximum of 50 attributes"
-#   type        = list(any)
-#   default     = []
-# }
-
-
+      string_attribute_constraints = {
+        min_length = 1
+        max_length = 10
+      }
+    },
+  ]
+}
+# Schema (number)
+variable "bc_number_schemas" {
+  description = "A container with the number schema attributes of a user pool. Maximum of 50 attributes"
+  type        = list(any)
+  default     = []
+}
 
 
 
@@ -435,77 +433,79 @@
 
 
 
-# # Admin Users
-# variable "bc_admin_cognito_users" {
-#   type    = map(any)
-#   default = {}
-# }
-
-# variable "bc_admin_cognito_user_group_name" {
-#   type    = string
-#   default = "Admin"
-
-# }
-# variable "bc_admin_cognito_user_group_description" {
-#   type    = string
-#   default = "Admin Group"
-
-# }
-# # Standard Users
-# variable "bc_standard_cognito_users" {
-#   type    = map(any)
-#   default = {}
-
-# }
-# variable "bc_standard_cognito_user_group_name" {
-#   type    = string
-#   default = "Standard"
-
-# }
-# variable "bc_standard_cognito_user_group_description" {
-#   type    = string
-#   default = "Standard Group"
-
-# }
-
-# # GitLab Mirroring
-
-# variable "bc_enable_gitlab_mirroring" {
-#   type        = bool
-#   default     = false
-#   description = "Enables GitLab mirroring to the option AWS CodeCommit repo."
-# }
-# variable "bc_gitlab_mirroring_iam_user_name" {
-#   type        = string
-#   default     = "bc_gitlab_mirroring"
-#   description = "The IAM Username for the GitLab Mirroring IAM User."
-# }
-# variable "bc_gitlab_mirroring_policy_name" {
-#   type        = string
-#   default     = "bc_gitlab_mirroring_policy"
-#   description = "The name of the IAM policy attached to the GitLab Mirroring IAM User"
-# }
 
 
+# Admin Users
+variable "bc_admin_cognito_users" {
+  type    = map(any)
+  default = {}
+}
 
-# # CodeCommit
-# variable "bc_create_codecommit_repo" {
-#   type    = bool
-#   default = true
-# }
-# variable "bc_codecommit_repo_name" {
-#   type    = string
-#   default = "bc_codecommit_repo"
-# }
-# variable "bc_codecommit_repo_description" {
-#   type    = string
-#   default = "The CodeCommit repo created in the bc deployment"
-# }
-# variable "bc_codecommit_repo_default_branch" {
-#   type    = string
-#   default = "main"
+variable "bc_admin_cognito_user_group_name" {
+  type    = string
+  default = "Admin"
 
-# }
+}
+variable "bc_admin_cognito_user_group_description" {
+  type    = string
+  default = "Admin Group"
+
+}
+# Standard Users
+variable "bc_standard_cognito_users" {
+  type    = map(any)
+  default = {}
+
+}
+variable "bc_standard_cognito_user_group_name" {
+  type    = string
+  default = "Standard"
+
+}
+variable "bc_standard_cognito_user_group_description" {
+  type    = string
+  default = "Standard Group"
+
+}
+
+# GitLab Mirroring
+
+variable "bc_enable_gitlab_mirroring" {
+  type        = bool
+  default     = false
+  description = "Enables GitLab mirroring to the option AWS CodeCommit repo."
+}
+variable "bc_gitlab_mirroring_iam_user_name" {
+  type        = string
+  default     = "bc_gitlab_mirroring"
+  description = "The IAM Username for the GitLab Mirroring IAM User."
+}
+variable "bc_gitlab_mirroring_policy_name" {
+  type        = string
+  default     = "bc_gitlab_mirroring_policy"
+  description = "The name of the IAM policy attached to the GitLab Mirroring IAM User"
+}
+
+
+
+# CodeCommit
+variable "bc_create_codecommit_repo" {
+  type    = bool
+  default = false
+}
+variable "bc_codecommit_repo_name" {
+  type    = string
+  default = "bc_codecommit_repo"
+}
+variable "bc_codecommit_repo_description" {
+  type    = string
+  default = "The CodeCommit repo created in the bc deployment"
+}
+variable "bc_codecommit_repo_default_branch" {
+  type    = string
+  default = "main"
+
+}
 
 
 # #  - Step Function -
