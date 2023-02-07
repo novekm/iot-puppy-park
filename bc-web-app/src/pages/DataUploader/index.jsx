@@ -256,7 +256,7 @@ const Content = () => {
               </Box>
               <div className="custom-home__header-title">
                 <Box fontSize="display-l" fontWeight="bold" color="inherit">
-                  Sample Amplify App
+                  bc Amplify App
                 </Box>
                 <Box
                   fontSize="display-l"
@@ -402,7 +402,7 @@ const Content = () => {
                             <input
                               type="file"
                               accept=".amr,.flac,.mp3,.ogg, .webm,.wav"
-                              id="sample-file"
+                              id="bc-file"
                               hidden="hidden"
                               style={{ display: 'none' }}
                               ref={fileInput}
@@ -411,7 +411,7 @@ const Content = () => {
                             <Button
                               disabled={disableAddFileButton}
                               iconName="file"
-                              id="sample-button"
+                              id="bc-button"
                               onClick={selectFile}
                             >
                               {' '}

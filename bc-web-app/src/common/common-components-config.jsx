@@ -28,7 +28,7 @@ export const navItems = [
   //   type: 'section',
   //   text: 'Getting Started',
   //   items: [
-  //     { type: 'link', text: 'TCA 101', href: '/sample-101' },
+  //     { type: 'link', text: 'TCA 101', href: '/bc-101' },
   //     { type: 'link', text: 'Setup Guide', href: '/setup-guide' },
   //     { type: 'link', text: 'Case Studies', href: '/case-studies' },
   //   ],
@@ -51,7 +51,7 @@ export const navItems = [
   //     { type: 'link', text: 'Data Uploader', href: '/data-uploader' },
   //     { type: 'link', text: 'CLM Uploader', href: '/custom-language-model-uploader' },
   //     { type: 'link', text: 'CV Uploader', href: '/custom-vocabulary-uploader' },
-  //     { type: 'link', text: 'TCA Jobs', href: '/sample-jobs' },
+  //     { type: 'link', text: 'TCA Jobs', href: '/bc-jobs' },
   //     // { type: 'link', text: 'Decarb Intelligence', href: '/decarb-intelligence' },
   //     // { type: 'link', text: 'Visualizations', href: '/visualizations' },
   //   ]

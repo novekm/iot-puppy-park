@@ -99,11 +99,11 @@ export const COLUMN_DEFINITIONS = addColumnSortLabels([
     sortingField: 'FilePath',
   },
   // {
-  //   id: 'SampleRate',
-  //   header: 'Sample Rate',
-  //   cell: (item) => item.SampleRate,
+  //   id: 'bcRate',
+  //   header: 'bc Rate',
+  //   cell: (item) => item.bcRate,
   //   minWidth: 100,
-  //   sortingField: 'SampleRate',
+  //   sortingField: 'bcRate',
   // },
   // {
   //   id: 'MediaFormat',
@@ -177,9 +177,9 @@ export const FILTERING_PROPERTIES = [
   //   operators: [':', '!:', '=', '!='],
   // },
   // {
-  //   propertyLabel: 'Sample Rate',
-  //   key: 'SampleRate',
-  //   groupValuesLabel: 'Sample Rate values',
+  //   propertyLabel: 'bc Rate',
+  //   key: 'bcRate',
+  //   groupValuesLabel: 'bc Rate values',
   //   operators: [':', '!:', '=', '!='],
   // },
 ];
@@ -239,7 +239,7 @@ export const DEFAULT_PREFERENCES = {
     'OriginalBucket',
     'Region',
     'SourceIPAddress',
-    'SampleRate',
+    'bcRate',
     'MediaFormat',
   ],
   wraplines: false,
@@ -268,7 +268,7 @@ export const VISIBLE_CONTENT_OPTIONS = [
       { id: 'Region', label: 'Region', editable: true },
       { id: 'SourceIPAddress', label: 'SourceIPAddress', editable: true },
       // { id: 'MediaFormat', label: 'Media Format', editable: true },
-      // { id: 'SampleRate', label: 'Sample Rate', editable: true },
+      // { id: 'bcRate', label: 'bc Rate', editable: true },
     ],
   },
 ];

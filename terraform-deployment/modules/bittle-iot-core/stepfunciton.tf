@@ -3,31 +3,31 @@
 # // - Copy file from input bucket to output bucket
 # // - Write the S3 file metadata to DynamoDB
 
-# resource "random_uuid" "sample_file_uuid" {
+# resource "random_uuid" "bc_file_uuid" {
 # }
 
-# resource "aws_sfn_state_machine" "sample_sfn_state_machine" {
+# resource "aws_sfn_state_machine" "bc_sfn_state_machine" {
 #   # // prevents timeout error for deletion of sfn state machine
 #   # // this operation can take a while to complete
 #   # timeouts {
 #   #   delete = "20m"
 #   # }
-#   name     = var.sample_sfn_state_machine_name
-#   role_arn = aws_iam_role.sample_step_functions_master_restricted_access[0].arn
+#   name     = var.bc_sfn_state_machine_name
+#   role_arn = aws_iam_role.bc_step_functions_master_restricted_access[0].arn
 #   definition = jsonencode({
 #     Comment = "A State Machine that processes files with and writes metadata to DynamoDB"
-#     StartAt = var.sample_sfn_state_generate_uuid_name
+#     StartAt = var.bc_sfn_state_generate_uuid_name
 #     States = merge(
 #       # - Generate UUID -
 #       # Generates a UUID from S3 PutObject id
 #       {
-#         "${var.sample_sfn_state_generate_uuid_name}" = {
+#         "${var.bc_sfn_state_generate_uuid_name}" = {
 #           Type = "Pass",
 #           Result = {
 #             "uuid.$" = "$.id"
 #           }
 #           ResultPath = "$.taskresult"
-#           Next       = "${var.sample_sfn_state_get_sample_input_file_name}"
+#           Next       = "${var.bc_sfn_state_get_bc_input_file_name}"
 #         }
 #       },
 
@@ -38,9 +38,9 @@
 #           Resource   = "arn:aws:states:::aws-sdk:s3:copyObject",
 #           ResultPath = "$.getS3Output"
 #           Parameters = {
-#             Bucket         = "${aws_s3_bucket.sample_app_storage_bucket.id}",
+#             Bucket         = "${aws_s3_bucket.bc_app_storage_bucket.id}",
 #             "Key.$"        = "States.Format('{}-{}',$.detail.object.key, $.id)",                                        // reference object key from InputPath and add uuid
-#             "CopySource.$" = "States.Format('${aws_s3_bucket.sample_input_bucket.id}/{}-{}',$.detail.object.key, $.id)" // reference bucket name and object path from InputPath
+#             "CopySource.$" = "States.Format('${aws_s3_bucket.bc_input_bucket.id}/{}-{}',$.detail.object.key, $.id)" // reference bucket name and object path from InputPath
 #           },
 #           Next = "WriteToDynamoDB"
 #         }
@@ -68,7 +68,7 @@
 #           Comment    = "Write the S3 Object metadata to DynamoDB"
 #           ResultPath = "$.DynamoDB"
 #           Parameters = {
-#             TableName = "${aws_dynamodb_table.sample_output.id}"
+#             TableName = "${aws_dynamodb_table.bc_output.id}"
 #             # IMPORTANT - Even if your value is not a string, you need to put a string value.
 #             # The data type ("N","S", etc.) will identify it as the type you describe
 #             # Note - the data type "SS" as of October 2022 is not supported by Step Functions
@@ -98,10 +98,10 @@
 #                 "S.$" = "$.region"
 #               },
 #               CurrentBucket = {
-#                 "S.$" = "States.Format('${aws_s3_bucket.sample_app_storage_bucket.id}')"
+#                 "S.$" = "States.Format('${aws_s3_bucket.bc_app_storage_bucket.id}')"
 #               },
 #               FilePath = {
-#                 "S.$" = "States.Format('s3://${aws_s3_bucket.sample_app_storage_bucket.id}/{}-{}', $.detail.object.key, $.id)"
+#                 "S.$" = "States.Format('s3://${aws_s3_bucket.bc_app_storage_bucket.id}/{}-{}', $.detail.object.key, $.id)"
 #               },
 #               // SS - String Set (i.e. an array of strings)
 #               // NS - Number Set (i.e. an array of numbers)
@@ -115,7 +115,7 @@
 #                 "S.$" = "$.detail.source-ip-address"
 #               },
 #               LifecycleConfig = {
-#                 "S.$" = "$.getSampleInputStateOutput.Expiration"
+#                 "S.$" = "$.getbcInputStateOutput.Expiration"
 #               },
 #             }
 #           }
@@ -134,7 +134,7 @@
 #       #     Parameters = {
 #       #       # "Message.$" = "$"
 #       #       Message  = "The TCA Step Function has failed. Please check the logs and try to re-upload your media."
-#       #       TopicArn = "${aws_sns_topic.sample_sfn_status.arn}"
+#       #       TopicArn = "${aws_sns_topic.bc_sfn_status.arn}"
 #       #     }
 #       #     Next = "Fail"
 #       #   }
@@ -157,15 +157,15 @@
 
 #       # },
 
-#       // GetSampleInputFile
-#       coalesce((var.create_sample_sfn_state_get_sample_input_file) ? {
-#         # (var.sample_sfn_state_get_sample_input_file_name) = {
-#         "${var.sample_sfn_state_get_sample_input_file_name}" = {
+#       // GetbcInputFile
+#       coalesce((var.create_bc_sfn_state_get_bc_input_file) ? {
+#         # (var.bc_sfn_state_get_bc_input_file_name) = {
+#         "${var.bc_sfn_state_get_bc_input_file_name}" = {
 #           Type       = "Task",
 #           Resource   = "arn:aws:states:::aws-sdk:s3:copyObject",
-#           ResultPath = "$.getSampleInputStateOutput"
+#           ResultPath = "$.getbcInputStateOutput"
 #           Parameters = {
-#             Bucket         = "${aws_s3_bucket.sample_input_bucket.id}",
+#             Bucket         = "${aws_s3_bucket.bc_input_bucket.id}",
 #             "Key.$"        = "States.Format('{}-{}',$.detail.object.key, $.id)",               // reference object key from InputPath and add uuid
 #             "CopySource.$" = "States.Format('{}/{}',$.detail.bucket.name,$.detail.object.key)" // reference bucket name and object path from InputPath
 #           },

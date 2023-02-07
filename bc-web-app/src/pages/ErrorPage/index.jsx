@@ -75,7 +75,7 @@ const Content = () => {
                     {/* Click <Link to={{ pathname: "/about-carbonlake"}}  target="_blank">here</Link> to learn more. */}
                     <br />
                     <br />
-                    Click <a href="/sample-101">here</a> to find your way back
+                    Click <a href="/bc-101">here</a> to find your way back
                     home.
                   </span>
                 </Box>
@@ -142,7 +142,7 @@ export const ToolsContent = () => (
   >
     {/* TODO - Change href to /dashboard page once it is created */}
     <p>
-      You've reached this page by mistake. <a href="/sample-101">Click here</a>{' '}
+      You've reached this page by mistake. <a href="/bc-101">Click here</a>{' '}
       to go home.
     </p>
   </HelpPanel>

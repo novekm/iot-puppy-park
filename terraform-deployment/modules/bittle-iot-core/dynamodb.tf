@@ -1,11 +1,11 @@
 # // TODO - Create TF code for DynamoDB
-# resource "random_uuid" "sample_output_uuid" {
+# resource "random_uuid" "bc_output_uuid" {
 # }
-# resource "aws_dynamodb_table" "sample_output" {
-#   name           = "sample_output-${random_uuid.sample_output_uuid.result}" // No touchy
-#   billing_mode   = var.sample_output_billing_mode
-#   read_capacity  = var.sample_output_read_capacity
-#   write_capacity = var.sample_output_write_capacity
+# resource "aws_dynamodb_table" "bc_output" {
+#   name           = "bc_output-${random_uuid.bc_output_uuid.result}" // No touchy
+#   billing_mode   = var.bc_output_billing_mode
+#   read_capacity  = var.bc_output_read_capacity
+#   write_capacity = var.bc_output_write_capacity
 #   hash_key       = "ObjectId" // Partition Key
 #   # range_key      = "-" // Sort Key
 
@@ -42,7 +42,7 @@
 
 #   tags = merge(
 #     {
-#       "AppName" = var.app_name
+#       "AppName" = var.bc_app_name
 #     },
 #     var.tags,
 #   )

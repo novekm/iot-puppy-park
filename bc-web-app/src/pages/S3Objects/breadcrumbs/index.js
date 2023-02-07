@@ -1,6 +1,6 @@
 export const resourcesBreadcrumbs = [
   {
-    text: 'Sample Amplify App',
+    text: 'bc Amplify App',
     href: '/',
   },
   {

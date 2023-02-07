@@ -1,14 +1,14 @@
 # # # SNS
-# # variable "sample_enable_sns" {
+# # variable "bc_enable_sns" {
 # #   type        = bool
 # #   default     = true
 # #   description = "Conditional creation of SNS resources"
 
 # # }
-# # variable "sample_sns_email_endpoint" {
+# # variable "bc_sns_email_endpoint" {
 # #   type        = string
 # #   default     = null
-# #   description = "The Admin email address to be used for SNS subscription. Required if sample_enable_sns is set to 'true'"
+# #   description = "The Admin email address to be used for SNS subscription. Required if bc_enable_sns is set to 'true'"
 
 # # }
 
@@ -32,24 +32,24 @@
 # }
 
 # # - S3 -
-# variable "sample_landing_bucket_name" {
+# variable "bc_landing_bucket_name" {
 #   type        = string
-#   default     = "sample-landing-bucket"
+#   default     = "bc-landing-bucket"
 #   description = "Name of the S3 bucket for audio file upload. Max 27 characters"
 # }
-# variable "sample_input_bucket_name" {
+# variable "bc_input_bucket_name" {
 #   type        = string
-#   default     = "sample-input-bucket"
+#   default     = "bc-input-bucket"
 #   description = "Name of the S3 bucket for transcribe job source. Max 27 characters"
 # }
-# variable "sample_output_bucket_name" {
+# variable "bc_output_bucket_name" {
 #   type        = string
-#   default     = "sample-output-bucket"
+#   default     = "bc-output-bucket"
 #   description = "Output bucket for completed transcriptions. Max 27 characters"
 # }
-# variable "sample_app_storage_bucket_name" {
+# variable "bc_app_storage_bucket_name" {
 #   type        = string
-#   default     = "sample-app-storage-bucket"
+#   default     = "bc-app-storage-bucket"
 #   description = "Bucket used for Amplify app storage. Max 27 characters"
 # }
 
@@ -58,76 +58,76 @@
 #   default = "true"
 
 # }
-# variable "sample_s3_enable_bucket_policy" {
+# variable "bc_s3_enable_bucket_policy" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional creation of S3 bucket policies"
 
 # }
-# variable "sample_s3_block_public_access" {
+# variable "bc_s3_block_public_access" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional enabling of the block public access S3 feature"
 
 # }
-# variable "sample_s3_block_public_acls" {
+# variable "bc_s3_block_public_acls" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional enabling of the block public ACLs S3 feature"
 
 # }
-# variable "sample_s3_block_public_policy" {
+# variable "bc_s3_block_public_policy" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional enabling of the block public policy S3 feature"
 
 # }
-# variable "sample_landing_bucket_enable_cors" {
+# variable "bc_landing_bucket_enable_cors" {
 #   type        = bool
 #   default     = true
 #   description = "Contiditional enabling of CORS"
 
 # }
-# variable "sample_landing_bucket_create_nuke_everything_lifecycle_config" {
+# variable "bc_landing_bucket_create_nuke_everything_lifecycle_config" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
 # }
-# variable "sample_landing_bucket_days_until_objects_expiration" {
+# variable "bc_landing_bucket_days_until_objects_expiration" {
 #   type        = number
 #   default     = 1
 #   description = "The number of days until objects in the bucket are deleted"
 # }
 
-# variable "sample_input_bucket_enable_cors" {
+# variable "bc_input_bucket_enable_cors" {
 #   type        = bool
 #   default     = true
 #   description = "Contiditional enabling of CORS"
 
 # }
-# variable "sample_input_bucket_create_nuke_everything_lifecycle_config" {
+# variable "bc_input_bucket_create_nuke_everything_lifecycle_config" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
 # }
-# variable "sample_input_bucket_days_until_objects_expiration" {
+# variable "bc_input_bucket_days_until_objects_expiration" {
 #   type        = number
 #   default     = 1
 #   description = "The number of days until objects in the bucket are deleted"
 # }
-# variable "sample_output_bucket_enable_cors" {
+# variable "bc_output_bucket_enable_cors" {
 #   type        = bool
 #   default     = true
 #   description = "Contiditional enabling of CORS"
 
 # }
-# variable "sample_output_bucket_create_nuke_everything_lifecycle_config" {
+# variable "bc_output_bucket_create_nuke_everything_lifecycle_config" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
 
 # }
-# variable "sample_output_bucket_days_until_objects_expiration" {
+# variable "bc_output_bucket_days_until_objects_expiration" {
 #   type        = number
 #   default     = 1
 #   description = "The number of days until objects in the bucket are deleted"
@@ -139,12 +139,12 @@
 #   default     = true
 #   description = "Conditional creation of AWS Amplify Web Application"
 # }
-# variable "app_name" {
+# variable "bc_app_name" {
 #   type        = string
-#   default     = "sample-App"
+#   default     = "bc-App"
 #   description = "The name of the Amplify Application"
 # }
-# variable "sample_existing_repo_url" {
+# variable "bc_existing_repo_url" {
 #   type        = string
 #   default     = null
 #   description = "URL for the existing repo"
@@ -156,48 +156,48 @@
 #   description = "Optional GitHub access token. Only required if using GitHub repo."
 
 # }
-# variable "sample_amplify_app_framework" {
+# variable "bc_amplify_app_framework" {
 #   type    = string
 #   default = "React"
 
 # }
-# variable "create_sample_amplify_branch_main" {
+# variable "create_bc_amplify_branch_main" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional creation of main branch for amplify app"
 
 # }
-# variable "sample_amplify_branch_main_name" {
+# variable "bc_amplify_branch_main_name" {
 #   type    = string
 #   default = "main"
 # }
-# variable "sample_amplify_branch_main_stage" {
+# variable "bc_amplify_branch_main_stage" {
 #   type    = string
 #   default = "PRODUCTION"
 
 # }
-# variable "create_sample_amplify_branch_dev" {
+# variable "create_bc_amplify_branch_dev" {
 #   type        = bool
 #   default     = true
 #   description = "Conditional creation of dev branch for amplify app"
 
 # }
-# variable "sample_amplify_branch_dev_name" {
+# variable "bc_amplify_branch_dev_name" {
 #   type    = string
 #   default = "dev"
 # }
-# variable "sample_amplify_branch_dev_stage" {
+# variable "bc_amplify_branch_dev_stage" {
 #   type    = string
 #   default = "DEVELOPMENT"
 
 # }
 
-# variable "create_sample_amplify_domain_association" {
+# variable "create_bc_amplify_domain_association" {
 #   type    = bool
 #   default = false
 
 # }
-# variable "sample_amplify_app_domain_name" {
+# variable "bc_amplify_app_domain_name" {
 #   type        = string
 #   default     = "example.com"
 #   description = "The name of your domain. Ex. naruto.ninja"
@@ -206,17 +206,17 @@
 
 
 # # AppSync - GraphQL
-# variable "sample_appsync_graphql_api_name" {
+# variable "bc_appsync_graphql_api_name" {
 #   type    = string
-#   default = "sample-graphql-api"
+#   default = "bc-graphql-api"
 
 # }
 
 
 # # - Step Function -
-# variable "sample_sfn_state_machine_name" {
+# variable "bc_sfn_state_machine_name" {
 #   type        = string
-#   default     = "sample-state-machine"
+#   default     = "bc-state-machine"
 #   description = "Name of the state machine used to orchestrate pipeline"
 
 # }
@@ -240,16 +240,16 @@
 #   type    = string
 #   default = "TimeToExist"
 # }
-# variable "sample_output_billing_mode" {
+# variable "bc_output_billing_mode" {
 #   type    = string
 #   default = "PROVISIONED"
 # }
-# variable "sample_output_read_capacity" {
+# variable "bc_output_read_capacity" {
 #   type    = number
 #   default = 20
 
 # }
-# variable "sample_output_write_capacity" {
+# variable "bc_output_write_capacity" {
 #   type    = number
 #   default = 20
 
@@ -258,116 +258,116 @@
 
 # # - Cognito -
 # # User Pool
-# variable "sample_user_pool_name" {
+# variable "bc_user_pool_name" {
 #   type        = string
-#   default     = "sample_user_pool"
+#   default     = "bc_user_pool"
 #   description = "The name of the Cognito User Pool created"
 # }
-# variable "sample_user_pool_client_name" {
+# variable "bc_user_pool_client_name" {
 #   type        = string
-#   default     = "sample_user_pool_client"
+#   default     = "bc_user_pool_client"
 #   description = "The name of the Cognito User Pool Client created"
 # }
-# variable "sample_identity_pool_name" {
+# variable "bc_identity_pool_name" {
 #   type        = string
-#   default     = "sample_identity_pool"
+#   default     = "bc_identity_pool"
 #   description = "The name of the Cognito Identity Pool created"
 
 # }
-# variable "sample_identity_pool_allow_unauthenticated_identites" {
+# variable "bc_identity_pool_allow_unauthenticated_identites" {
 #   type    = bool
 #   default = false
 # }
-# variable "sample_identity_pool_allow_classic_flow" {
+# variable "bc_identity_pool_allow_classic_flow" {
 #   type    = bool
 #   default = false
 
 # }
-# variable "sample_email_verification_message" {
+# variable "bc_email_verification_message" {
 #   type        = string
 #   default     = <<-EOF
 
-#   Thank you for registering with the Sample App. This is your email confirmation.
+#   Thank you for registering with the bc App. This is your email confirmation.
 #   Verification Code: {####}
 
 #   EOF
 #   description = "The Cognito email verification message"
 # }
-# variable "sample_email_verification_subject" {
+# variable "bc_email_verification_subject" {
 #   type        = string
-#   default     = "Sample App Verification"
+#   default     = "bc App Verification"
 #   description = "The Cognito email verification subject"
 # }
-# variable "sample_invite_email_message" {
+# variable "bc_invite_email_message" {
 #   type    = string
 #   default = <<-EOF
-#     You have been invited to the Sample App App! Your username is "{username}" and
+#     You have been invited to the bc App App! Your username is "{username}" and
 #     temporary password is "{####}". Please reach out to an admin if you have issues signing in.
 
 #   EOF
 
 # }
-# variable "sample_invite_email_subject" {
+# variable "bc_invite_email_subject" {
 #   type    = string
 #   default = <<-EOF
 #   You've been CHOSEN.
 #   EOF
 
 # }
-# variable "sample_invite_sms_message" {
+# variable "bc_invite_sms_message" {
 #   type    = string
 #   default = <<-EOF
-#     You have been invited to the Sample App! Your username is "{username}" and
+#     You have been invited to the bc App! Your username is "{username}" and
 #     temporary password is "{####}".
 
 #   EOF
 
 # }
-# variable "sample_password_policy_min_length" {
+# variable "bc_password_policy_min_length" {
 #   type        = number
 #   default     = 8
 #   description = "The minimum nmber of characters for Cognito user passwords"
 # }
-# variable "sample_password_policy_require_lowercase" {
+# variable "bc_password_policy_require_lowercase" {
 #   type        = bool
 #   default     = true
 #   description = "Whether or not the Cognito user password must have at least 1 lowercase character"
 
 # }
-# variable "sample_password_policy_require_uppercase" {
+# variable "bc_password_policy_require_uppercase" {
 #   type        = bool
 #   default     = true
 #   description = "Whether or not the Cognito user password must have at least 1 uppercase character"
 
 # }
-# variable "sample_password_policy_require_numbers" {
+# variable "bc_password_policy_require_numbers" {
 #   type        = bool
 #   default     = true
 #   description = "Whether or not the Cognito user password must have at least 1 number"
 
 # }
 
-# variable "sample_password_policy_require_symbols" {
+# variable "bc_password_policy_require_symbols" {
 #   type        = bool
 #   default     = true
 #   description = "Whether or not the Cognito user password must have at least 1 special character"
 
 # }
 
-# variable "sample_password_policy_temp_password_validity_days" {
+# variable "bc_password_policy_temp_password_validity_days" {
 #   type        = number
 #   default     = 7
 #   description = "The number of days a temp password is valid. If user does not sign-in during this time, will need to be reset by an admin"
 
 # }
 # # General Schema
-# variable "sample_schemas" {
+# variable "bc_schemas" {
 #   description = "A container with the schema attributes of a user pool. Maximum of 50 attributes"
 #   type        = list(any)
 #   default     = []
 # }
 # # Schema (String)
-# variable "sample_string_schemas" {
+# variable "bc_string_schemas" {
 #   description = "A container with the string schema attributes of a user pool. Maximum of 50 attributes"
 #   type        = list(any)
 #   default = [{
@@ -421,7 +421,7 @@
 #   ]
 # }
 # # Schema (number)
-# variable "sample_number_schemas" {
+# variable "bc_number_schemas" {
 #   description = "A container with the number schema attributes of a user pool. Maximum of 50 attributes"
 #   type        = list(any)
 #   default     = []
@@ -436,33 +436,33 @@
 
 
 # # Admin Users
-# variable "sample_admin_cognito_users" {
+# variable "bc_admin_cognito_users" {
 #   type    = map(any)
 #   default = {}
 # }
 
-# variable "sample_admin_cognito_user_group_name" {
+# variable "bc_admin_cognito_user_group_name" {
 #   type    = string
 #   default = "Admin"
 
 # }
-# variable "sample_admin_cognito_user_group_description" {
+# variable "bc_admin_cognito_user_group_description" {
 #   type    = string
 #   default = "Admin Group"
 
 # }
 # # Standard Users
-# variable "sample_standard_cognito_users" {
+# variable "bc_standard_cognito_users" {
 #   type    = map(any)
 #   default = {}
 
 # }
-# variable "sample_standard_cognito_user_group_name" {
+# variable "bc_standard_cognito_user_group_name" {
 #   type    = string
 #   default = "Standard"
 
 # }
-# variable "sample_standard_cognito_user_group_description" {
+# variable "bc_standard_cognito_user_group_description" {
 #   type    = string
 #   default = "Standard Group"
 
@@ -470,38 +470,38 @@
 
 # # GitLab Mirroring
 
-# variable "sample_enable_gitlab_mirroring" {
+# variable "bc_enable_gitlab_mirroring" {
 #   type        = bool
 #   default     = false
 #   description = "Enables GitLab mirroring to the option AWS CodeCommit repo."
 # }
-# variable "sample_gitlab_mirroring_iam_user_name" {
+# variable "bc_gitlab_mirroring_iam_user_name" {
 #   type        = string
-#   default     = "sample_gitlab_mirroring"
+#   default     = "bc_gitlab_mirroring"
 #   description = "The IAM Username for the GitLab Mirroring IAM User."
 # }
-# variable "sample_gitlab_mirroring_policy_name" {
+# variable "bc_gitlab_mirroring_policy_name" {
 #   type        = string
-#   default     = "sample_gitlab_mirroring_policy"
+#   default     = "bc_gitlab_mirroring_policy"
 #   description = "The name of the IAM policy attached to the GitLab Mirroring IAM User"
 # }
 
 
 
 # # CodeCommit
-# variable "sample_create_codecommit_repo" {
+# variable "bc_create_codecommit_repo" {
 #   type    = bool
 #   default = true
 # }
-# variable "sample_codecommit_repo_name" {
+# variable "bc_codecommit_repo_name" {
 #   type    = string
-#   default = "sample_codecommit_repo"
+#   default = "bc_codecommit_repo"
 # }
-# variable "sample_codecommit_repo_description" {
+# variable "bc_codecommit_repo_description" {
 #   type    = string
-#   default = "The CodeCommit repo created in the sample deployment"
+#   default = "The CodeCommit repo created in the bc deployment"
 # }
-# variable "sample_codecommit_repo_default_branch" {
+# variable "bc_codecommit_repo_default_branch" {
 #   type    = string
 #   default = "main"
 
@@ -511,35 +511,35 @@
 # #  - Step Function -
 # # State Management
 # # GenerateUUID
-# variable "sample_sfn_state_generate_uuid_name" {
+# variable "bc_sfn_state_generate_uuid_name" {
 #   type        = string
 #   default     = "GenerateUUID"
-#   description = "Name for SFN State that generates a UUID that is appended to the object key of the file copied from sample_landing to sample_input bucket"
+#   description = "Name for SFN State that generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
 
 # }
-# # variable "sample_sfn_state_generate_uuid_type" {
+# # variable "bc_sfn_state_generate_uuid_type" {
 # #   type        = string
 # #   default     = "Pass"
 # #   description = "Pass state type"
 
 # # }
-# variable "sample_sfn_state_generate_uuid_next_step" {
+# variable "bc_sfn_state_generate_uuid_next_step" {
 #   type    = string
-#   default = "GetSampleInputFile"
+#   default = "GetbcInputFile"
 
 # }
 
 # # GetInputFile
-# variable "create_sample_sfn_state_get_sample_input_file" {
+# variable "create_bc_sfn_state_get_bc_input_file" {
 #   type        = bool
 #   default     = true
-#   description = "Enables creation of GetSampleInputFile sfn state"
+#   description = "Enables creation of GetbcInputFile sfn state"
 
 # }
-# variable "sample_sfn_state_get_sample_input_file_name" {
+# variable "bc_sfn_state_get_bc_input_file_name" {
 #   type        = string
-#   default     = "GetSampleInputFile"
-#   description = "Generates a UUID that is appended to the object key of the file copied from sample_landing to sample_input bucket"
+#   default     = "GetbcInputFile"
+#   description = "Generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
 
 # }
 

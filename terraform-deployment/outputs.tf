@@ -1,19 +1,19 @@
 # # AWS Current Region
 # output "aws_current_region" {
-#   value = "AWS Region: ${module.sample-qs.aws_current_region.name}"
+#   value = "AWS Region: ${module.bc-qs.aws_current_region.name}"
 # }
 
 # # S3
-# output "sample_input_bucket" {
-#   value       = module.sample-qs.sample_input_bucket_id.id
+# output "bc_input_bucket" {
+#   value       = module.bc-qs.bc_input_bucket_id.id
 #   description = "The name of the S3 input bucket"
 # }
-# output "sample_output_bucket" {
-#   value       = module.sample-qs.sample_output_bucket_id.id
+# output "bc_output_bucket" {
+#   value       = module.bc-qs.bc_output_bucket_id.id
 #   description = "The name of the S3 output bucket"
 # }
-# output "sample_app_storage_bucket" {
-#   value       = module.sample-qs.sample_app_storage_bucket_id.id
+# output "bc_app_storage_bucket" {
+#   value       = module.bc-qs.bc_app_storage_bucket_id.id
 #   description = "The name of the S3 app storage bucket"
 # }
 
@@ -28,27 +28,27 @@
 # # DynamoDB
 
 # # Cognito
-# output "sample_user_pool_region" {
-#   value = module.sample-qs.sample_user_pool_region.name
+# output "bc_user_pool_region" {
+#   value = module.bc-qs.bc_user_pool_region.name
 # }
-# output "sample_user_pool_id" {
-#   value = module.sample-qs.sample_user_pool_id.id
+# output "bc_user_pool_id" {
+#   value = module.bc-qs.bc_user_pool_id.id
 # }
-# output "sample_user_pool_client" {
-#   value = module.sample-qs.sample_user_pool_client_id.id
+# output "bc_user_pool_client" {
+#   value = module.bc-qs.bc_user_pool_client_id.id
 # }
-# output "sample_identity_pool" {
-#   value = module.sample-qs.sample_identity_pool_id.id
+# output "bc_identity_pool" {
+#   value = module.bc-qs.bc_identity_pool_id.id
 # }
 
 # # AppSync (GraphQL)
-# output "sample_appsync_graphql_api_region" {
-#   value = module.sample-qs.sample_appsync_graphql_api_region.name
+# output "bc_appsync_graphql_api_region" {
+#   value = module.bc-qs.bc_appsync_graphql_api_region.name
 # }
-# output "sample_appsync_graphql_api_id" {
-#   value = module.sample-qs.sample_appsync_graphql_api_id.id
+# output "bc_appsync_graphql_api_id" {
+#   value = module.bc-qs.bc_appsync_graphql_api_id.id
 # }
-# output "sample_appsync_graphql_api_uris" {
-#   value = module.sample-qs.sample_appsync_graphql_api_uris.uris
+# output "bc_appsync_graphql_api_uris" {
+#   value = module.bc-qs.bc_appsync_graphql_api_uris.uris
 # }
 

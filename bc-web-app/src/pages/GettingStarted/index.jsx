@@ -31,7 +31,7 @@ import '../../common/styles/servicehomepage.scss';
 
 // Import images
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
-import iacBasicArch from '../../../../resources/architecture/IAC_SAMPLE_ARCH.png';
+import iacBasicArch from '../../../../resources/architecture/IAC_bc_ARCH.png';
 import iacAdvancedArch from '../../../../resources/architecture/IAC_ADVANCED_ARCH.png';
 
 const GettingStarted = () => {
@@ -132,8 +132,8 @@ const Content = () => {
                   </p>
                   <li>Secure Data Storage</li>
                   <li>Authentication, Authorization, and Auditing</li>
-                  <li>Sample Amplify Application</li>
-                  <li>Sample GraphQL API</li>
+                  <li>bc Amplify Application</li>
+                  <li>bc GraphQL API</li>
                   <p>
                     Data is ingested through the Landing Bucket, and can be
                     ingested from any service within or connected to the AWS
@@ -176,7 +176,7 @@ const Content = () => {
 
 export const ToolsContent = () => (
   <HelpPanel
-    header={<h2>Sample Amplify App</h2>}
+    header={<h2>bc Amplify App</h2>}
     footer={
       <>
         <h3>
@@ -233,7 +233,7 @@ export const ToolsContent = () => (
     }
   >
     <p>
-      This sample app is meant to serve as an example of an application you can
+      This bc app is meant to serve as an example of an application you can
       build with AWS Amplify, while leveraging Infrastructure as Code. It is
       built leveraging the AWS Amplify Libraries for JavaScript. For more
       information, see
