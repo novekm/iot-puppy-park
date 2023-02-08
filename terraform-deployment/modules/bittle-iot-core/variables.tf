@@ -12,126 +12,126 @@
 
 # # }
 
-# # SSM
-# variable "lookup_ssm_github_access_token" {
-#   type        = bool
-#   default     = false
-#   description = <<-EOF
-#   *IMPORTANT!*
-#   Conditional data fetch of SSM parameter store for GitHub access token.
-#   To ensure security of this token, you must manually add it via the AWS console
-#   before using.
-#   EOF
+# SSM
+variable "lookup_ssm_github_access_token" {
+  type        = bool
+  default     = false
+  description = <<-EOF
+  *IMPORTANT!*
+  Conditional data fetch of SSM parameter store for GitHub access token.
+  To ensure security of this token, you must manually add it via the AWS console
+  before using.
+  EOF
 
-# }
-# variable "ssm_github_access_token_name" {
-#   type        = string
-#   default     = null
-#   description = "The name (key) of the SSM parameter store of your GitHub access token"
+}
+variable "ssm_github_access_token_name" {
+  type        = string
+  default     = null
+  description = "The name (key) of the SSM parameter store of your GitHub access token"
 
-# }
+}
 
-# # - S3 -
-# variable "bc_landing_bucket_name" {
-#   type        = string
-#   default     = "bc-landing-bucket"
-#   description = "Name of the S3 bucket for audio file upload. Max 27 characters"
-# }
-# variable "bc_input_bucket_name" {
-#   type        = string
-#   default     = "bc-input-bucket"
-#   description = "Name of the S3 bucket for transcribe job source. Max 27 characters"
-# }
-# variable "bc_output_bucket_name" {
-#   type        = string
-#   default     = "bc-output-bucket"
-#   description = "Output bucket for completed transcriptions. Max 27 characters"
-# }
-# variable "bc_app_storage_bucket_name" {
-#   type        = string
-#   default     = "bc-app-storage-bucket"
-#   description = "Bucket used for Amplify app storage. Max 27 characters"
-# }
+# - S3 -
+variable "bc_landing_bucket_name" {
+  type        = string
+  default     = "bc-landing-bucket"
+  description = "Name of the S3 bucket for audio file upload. Max 27 characters"
+}
+variable "bc_input_bucket_name" {
+  type        = string
+  default     = "bc-input-bucket"
+  description = "Name of the S3 bucket for transcribe job source. Max 27 characters"
+}
+variable "bc_output_bucket_name" {
+  type        = string
+  default     = "bc-output-bucket"
+  description = "Output bucket for completed transcriptions. Max 27 characters"
+}
+variable "bc_app_storage_bucket_name" {
+  type        = string
+  default     = "bc-app-storage-bucket"
+  description = "Bucket used for Amplify app storage. Max 27 characters"
+}
 
-# variable "s3_enable_force_destroy" {
-#   type    = string
-#   default = "true"
+variable "s3_enable_force_destroy" {
+  type    = string
+  default = "true"
 
-# }
-# variable "bc_s3_enable_bucket_policy" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional creation of S3 bucket policies"
+}
+variable "bc_s3_enable_bucket_policy" {
+  type        = bool
+  default     = true
+  description = "Conditional creation of S3 bucket policies"
 
-# }
-# variable "bc_s3_block_public_access" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional enabling of the block public access S3 feature"
+}
+variable "bc_s3_block_public_access" {
+  type        = bool
+  default     = true
+  description = "Conditional enabling of the block public access S3 feature"
 
-# }
-# variable "bc_s3_block_public_acls" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional enabling of the block public ACLs S3 feature"
+}
+variable "bc_s3_block_public_acls" {
+  type        = bool
+  default     = true
+  description = "Conditional enabling of the block public ACLs S3 feature"
 
-# }
-# variable "bc_s3_block_public_policy" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional enabling of the block public policy S3 feature"
+}
+variable "bc_s3_block_public_policy" {
+  type        = bool
+  default     = true
+  description = "Conditional enabling of the block public policy S3 feature"
 
-# }
-# variable "bc_landing_bucket_enable_cors" {
-#   type        = bool
-#   default     = true
-#   description = "Contiditional enabling of CORS"
+}
+variable "bc_landing_bucket_enable_cors" {
+  type        = bool
+  default     = true
+  description = "Contiditional enabling of CORS"
 
-# }
-# variable "bc_landing_bucket_create_nuke_everything_lifecycle_config" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
-# }
-# variable "bc_landing_bucket_days_until_objects_expiration" {
-#   type        = number
-#   default     = 1
-#   description = "The number of days until objects in the bucket are deleted"
-# }
+}
+variable "bc_landing_bucket_create_nuke_everything_lifecycle_config" {
+  type        = bool
+  default     = true
+  description = "Conditional create of the lifecycle config to remove all objects from the bucket"
+}
+variable "bc_landing_bucket_days_until_objects_expiration" {
+  type        = number
+  default     = 1
+  description = "The number of days until objects in the bucket are deleted"
+}
 
-# variable "bc_input_bucket_enable_cors" {
-#   type        = bool
-#   default     = true
-#   description = "Contiditional enabling of CORS"
+variable "bc_input_bucket_enable_cors" {
+  type        = bool
+  default     = true
+  description = "Contiditional enabling of CORS"
 
-# }
-# variable "bc_input_bucket_create_nuke_everything_lifecycle_config" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
-# }
-# variable "bc_input_bucket_days_until_objects_expiration" {
-#   type        = number
-#   default     = 1
-#   description = "The number of days until objects in the bucket are deleted"
-# }
-# variable "bc_output_bucket_enable_cors" {
-#   type        = bool
-#   default     = true
-#   description = "Contiditional enabling of CORS"
+}
+variable "bc_input_bucket_create_nuke_everything_lifecycle_config" {
+  type        = bool
+  default     = true
+  description = "Conditional create of the lifecycle config to remove all objects from the bucket"
+}
+variable "bc_input_bucket_days_until_objects_expiration" {
+  type        = number
+  default     = 1
+  description = "The number of days until objects in the bucket are deleted"
+}
+variable "bc_output_bucket_enable_cors" {
+  type        = bool
+  default     = true
+  description = "Contiditional enabling of CORS"
 
-# }
-# variable "bc_output_bucket_create_nuke_everything_lifecycle_config" {
-#   type        = bool
-#   default     = true
-#   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
+}
+variable "bc_output_bucket_create_nuke_everything_lifecycle_config" {
+  type        = bool
+  default     = true
+  description = "Conditional create of the lifecycle config to remove all objects from the bucket"
 
-# }
-# variable "bc_output_bucket_days_until_objects_expiration" {
-#   type        = number
-#   default     = 1
-#   description = "The number of days until objects in the bucket are deleted"
-# }
+}
+variable "bc_output_bucket_days_until_objects_expiration" {
+  type        = number
+  default     = 1
+  description = "The number of days until objects in the bucket are deleted"
+}
 
 # - Amplify -
 variable "create_amplify_app" {
@@ -205,21 +205,21 @@ variable "bc_amplify_app_domain_name" {
 }
 
 
-# # AppSync - GraphQL
-# variable "bc_appsync_graphql_api_name" {
-#   type    = string
-#   default = "bc-graphql-api"
+# AppSync - GraphQL
+variable "bc_appsync_graphql_api_name" {
+  type    = string
+  default = "bc-graphql-api"
 
-# }
+}
 
 
-# # - Step Function -
-# variable "bc_sfn_state_machine_name" {
-#   type        = string
-#   default     = "bc-state-machine"
-#   description = "Name of the state machine used to orchestrate pipeline"
+# - Step Function -
+variable "bc_sfn_state_machine_name" {
+  type        = string
+  default     = "bc-state-machine"
+  description = "Name of the state machine used to orchestrate pipeline"
 
-# }
+}
 
 # - IAM -
 
@@ -231,29 +231,29 @@ variable "create_restricted_access_roles" {
 }
 
 
-# # - DynamoDB -
-# variable "dynamodb_ttl_enable" {
-#   type    = bool
-#   default = false
-# }
-# variable "dynamodb_ttl_attribute" {
-#   type    = string
-#   default = "TimeToExist"
-# }
-# variable "bc_output_billing_mode" {
-#   type    = string
-#   default = "PROVISIONED"
-# }
-# variable "bc_output_read_capacity" {
-#   type    = number
-#   default = 20
+# - DynamoDB -
+variable "dynamodb_ttl_enable" {
+  type    = bool
+  default = false
+}
+variable "dynamodb_ttl_attribute" {
+  type    = string
+  default = "TimeToExist"
+}
+variable "bc_output_billing_mode" {
+  type    = string
+  default = "PROVISIONED"
+}
+variable "bc_output_read_capacity" {
+  type    = number
+  default = 20
 
-# }
-# variable "bc_output_write_capacity" {
-#   type    = number
-#   default = 20
+}
+variable "bc_output_write_capacity" {
+  type    = number
+  default = 20
 
-# }
+}
 
 
 # - Cognito -
@@ -508,40 +508,40 @@ variable "bc_codecommit_repo_default_branch" {
 }
 
 
-# #  - Step Function -
-# # State Management
-# # GenerateUUID
-# variable "bc_sfn_state_generate_uuid_name" {
+#  - Step Function -
+# State Management
+# GenerateUUID
+variable "bc_sfn_state_generate_uuid_name" {
+  type        = string
+  default     = "GenerateUUID"
+  description = "Name for SFN State that generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
+
+}
+# variable "bc_sfn_state_generate_uuid_type" {
 #   type        = string
-#   default     = "GenerateUUID"
-#   description = "Name for SFN State that generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
+#   default     = "Pass"
+#   description = "Pass state type"
 
 # }
-# # variable "bc_sfn_state_generate_uuid_type" {
-# #   type        = string
-# #   default     = "Pass"
-# #   description = "Pass state type"
+variable "bc_sfn_state_generate_uuid_next_step" {
+  type    = string
+  default = "GetbcInputFile"
 
-# # }
-# variable "bc_sfn_state_generate_uuid_next_step" {
-#   type    = string
-#   default = "GetbcInputFile"
+}
 
-# }
+# GetInputFile
+variable "create_bc_sfn_state_get_bc_input_file" {
+  type        = bool
+  default     = true
+  description = "Enables creation of GetbcInputFile sfn state"
 
-# # GetInputFile
-# variable "create_bc_sfn_state_get_bc_input_file" {
-#   type        = bool
-#   default     = true
-#   description = "Enables creation of GetbcInputFile sfn state"
+}
+variable "bc_sfn_state_get_bc_input_file_name" {
+  type        = string
+  default     = "GetbcInputFile"
+  description = "Generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
 
-# }
-# variable "bc_sfn_state_get_bc_input_file_name" {
-#   type        = string
-#   default     = "GetbcInputFile"
-#   description = "Generates a UUID that is appended to the object key of the file copied from bc_landing to bc_input bucket"
-
-# }
+}
 
 
 # IoT Things
