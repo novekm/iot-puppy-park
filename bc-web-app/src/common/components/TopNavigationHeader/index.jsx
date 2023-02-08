@@ -27,7 +27,7 @@ const TopNavigationHeader = ({ user }) => {
         identity={{
           href: '/',
           // Your Company Name
-          title: `bc Amplify App`,
+          title: `Bittle Control`,
           logo: {
             src: logo,
             alt: 'Service',

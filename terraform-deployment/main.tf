@@ -38,11 +38,11 @@ module "bittle-iot-core" {
   create_amplify_app = true
   bc_create_codecommit_repo = false
   bc_enable_gitlab_mirroring = false
-  bc_existing_repo_url = "https://github.com/novekm/aws-amplify-cloudscape"
+  bc_existing_repo_url = "https://github.com/novekm/iot-puppy-park"
 
-  # # - SSM -
-  # lookup_ssm_github_access_token = true // find the github access token in ssm
-  # ssm_github_access_token_name = "github-access-token" // name of your ssm parameter
+  # - SSM -
+  lookup_ssm_github_access_token = true // find the github access token in ssm
+  ssm_github_access_token_name = "github-access-token" // name of your ssm parameter
 
   # - Cognito -
   # Admin Users to create

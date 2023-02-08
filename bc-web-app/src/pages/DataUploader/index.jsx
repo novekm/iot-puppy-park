@@ -256,7 +256,7 @@ const Content = () => {
               </Box>
               <div className="custom-home__header-title">
                 <Box fontSize="display-l" fontWeight="bold" color="inherit">
-                  bc Amplify App
+                  Bittle Control App
                 </Box>
                 <Box
                   fontSize="display-l"

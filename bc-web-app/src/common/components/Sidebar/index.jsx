@@ -11,7 +11,7 @@ const Sidebar = () => {
       // TODO - Make active link work for navigation
       // activeHref={activeHref}
       activeHref={location.pathname}
-      header={{ text: 'bc Amplify App', href: '/' }}
+      header={{ text: 'Bittle Control', href: '/' }}
       onFollow={(event) => {
         if (!event.detail.external) {
           event.preventDefault();

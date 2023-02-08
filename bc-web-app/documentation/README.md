@@ -129,7 +129,7 @@ You also may want to separate your backend and frontend into different repositor
 ![image info](/resources/app-screenshots/bc_amplify_app_cognito_change_password_blank.png)
 7. Set a new password that conforms to the password policy
 ![image info](/resources/app-screenshots/bc_amplify_app_change_password.png)
-8. Upon clicking **`Change Password`** you should be signed in and redirected to the bc Amplify App Dashboard Page.
+8. Upon clicking **`Change Password`** you should be signed in and redirected to the Bittle Control Amplify App Dashboard Page.
 ![image info](/resources/app-screenshots/bc_amplify_app_dashboard.png)
 9. To test the pipeline, head to the **``Data Uploader``** page
 ![image info](/resources/app-screenshots/bc_amplify_app_data_uploader_page.png)

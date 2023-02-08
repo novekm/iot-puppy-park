@@ -31,7 +31,7 @@ import '../../common/styles/servicehomepage.scss';
 
 // Import images
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
-import iacBasicArch from '../../../../resources/architecture/IAC_bc_ARCH.png';
+import iacBasicArch from '../../../../resources/architecture/IAC_SAMPLE_ARCH.png';
 import iacAdvancedArch from '../../../../resources/architecture/IAC_ADVANCED_ARCH.png';
 
 const GettingStarted = () => {
@@ -132,8 +132,8 @@ const Content = () => {
                   </p>
                   <li>Secure Data Storage</li>
                   <li>Authentication, Authorization, and Auditing</li>
-                  <li>bc Amplify Application</li>
-                  <li>bc GraphQL API</li>
+                  <li>Bittle Control Amplify Application</li>
+                  <li>Bittle Control GraphQL API</li>
                   <p>
                     Data is ingested through the Landing Bucket, and can be
                     ingested from any service within or connected to the AWS

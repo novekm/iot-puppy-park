@@ -2,7 +2,7 @@
 
 // import { Amplify, Auth, Storage } from 'aws-amplify';
 // eslint-disable-next-line import/no-unresolved
-import outputsJSON from '../../../terraform-deployment/modules/bc-module/outputs.json';
+import outputsJSON from '../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
 
 const AmplifyConfig = {
   // Existing API
