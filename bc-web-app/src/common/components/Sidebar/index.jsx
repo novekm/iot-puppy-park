@@ -47,6 +47,11 @@ const Sidebar = () => {
           href: '/dashboard',
         },
         {
+          type: 'link',
+          text: 'My Bittles',
+          href: '/my-bittles',
+        },
+        {
           type: 'section',
           text: 'Admin',
           expanded: true,

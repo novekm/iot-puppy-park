@@ -16,6 +16,7 @@ import { Route, Routes, Link, useParams } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import Dashboard from './Dashboard';
+import MyBittles from './MyBittles';
 import GettingStarted from './GettingStarted';
 import SetupGuide from './SetupGuide';
 import DataUploader from './DataUploader';
@@ -49,6 +50,7 @@ const App = ({ signOut, user }) => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/my-bittles" element={<MyBittles />} />
         <Route path="/getting-started" element={<GettingStarted />} />
         {/* <Route path="/setup-guide" element={<SetupGuide />} /> */}
         <Route path="/data-uploader" element={<DataUploader />} />
