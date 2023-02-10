@@ -1,11 +1,11 @@
 export const resourcesBreadcrumbs = [
   {
-    text: 'Bittle Control',
+    text: 'Bittle Control App',
     href: '/',
   },
   {
     text: 'My Bittles',
-    href: '/',
+    href: '/my-bittles',
   },
 ];
 

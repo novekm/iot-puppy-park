@@ -92,7 +92,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 
 **Amazon DynamoDB**
 - Table
-  - `bc_output`
+  - `bc_devices`
 
 **Amazon EventBridge**
 - Event Bus
@@ -127,7 +127,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 - Buckets
   - `bc_landing_bucket`
   - `bc_input_bucket`
-  - `bc_output_bucket`
+  - `bc_devices_bucket`
   - `bc_app_storage_bucket`
 
 
@@ -135,7 +135,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 - SSM Parameter
   - `ssm_github_access_token` (conditional)
   - `bc_input_bucket_name`
-  - `bc_output_bucket_name`
+  - `bc_devices_bucket_name`
   - `bc_app_storage_bucket_name`
   - `bc_dynamodb_output_table_name`
 

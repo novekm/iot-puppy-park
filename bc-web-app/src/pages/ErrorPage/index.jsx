@@ -75,8 +75,7 @@ const Content = () => {
                     {/* Click <Link to={{ pathname: "/about-carbonlake"}}  target="_blank">here</Link> to learn more. */}
                     <br />
                     <br />
-                    Click <a href="/bc-101">here</a> to find your way back
-                    home.
+                    Click <a href="/bc-101">here</a> to find your way back home.
                   </span>
                 </Box>
               </div>
@@ -106,34 +105,22 @@ export const ToolsContent = () => (
               text="AWS Energy & Utilities"
             />
           </li>
-          {/* <li>
-            <ExternalLinkItem
-              href="https://aws.amazon.com/energy/"
-              text="TBD - Amazon TCAQS Blog Post"
-            />
-          </li> */}
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/transcribe/call-analytics/"
-              text="Amazon Transcribe Call Analytics Service Page"
+              href="https://github.com/novekm/iot-puppy-park"
+              text="IoT Puppy Park GitHub Repo"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/transcribe/faqs/?nc=sn&loc=5"
-              text="Amazon Transcribe FAQs"
+              href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog"
+              text="Petoi Bittle"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://docs.aws.amazon.com/transcribe/latest/dg/custom-language-models.html"
-              text="Amazon Transcribe Custom Language Models"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
-              text="Amazon Transcribe Custom Vocabularies"
+              href="https://www.petoi.camp/forum/"
+              text="Petoi Forum"
             />
           </li>
         </ul>
@@ -142,8 +129,8 @@ export const ToolsContent = () => (
   >
     {/* TODO - Change href to /dashboard page once it is created */}
     <p>
-      You've reached this page by mistake. <a href="/bc-101">Click here</a>{' '}
-      to go home.
+      You've reached this page by mistake. <a href="/bc-101">Click here</a> to
+      go home.
     </p>
   </HelpPanel>
 );

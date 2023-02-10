@@ -469,16 +469,28 @@ export const ToolsContent = () => (
               text="AWS Energy & Utilities"
             />
           </li>
-          {/* <li>
-            <ExternalLinkItem
-              href="https://aws.amazon.com/energy/"
-              text="TBD - Amazon TCAQS Blog Post"
-            />
-          </li> */}
           <li>
             <ExternalLinkItem
               href="https://aws.amazon.com/s3/"
               text="Amazon S3"
+            />
+          </li>
+          <li>
+            <ExternalLinkItem
+              href="https://github.com/novekm/iot-puppy-park"
+              text="IoT Puppy Park GitHub Repo"
+            />
+          </li>
+          <li>
+            <ExternalLinkItem
+              href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog"
+              text="Petoi Bittle"
+            />
+          </li>
+          <li>
+            <ExternalLinkItem
+              href="https://www.petoi.camp/forum/"
+              text="Petoi Forum"
             />
           </li>
         </ul>

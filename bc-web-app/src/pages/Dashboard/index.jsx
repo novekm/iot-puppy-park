@@ -618,34 +618,22 @@ export const ToolsContent = () => (
               text="AWS Energy & Utilities"
             />
           </li>
-          {/* <li>
-            <ExternalLinkItem
-              href="https://aws.amazon.com/energy/"
-              text="TBD - Full Stack React Web Apps Blog Post"
-            />
-          </li> */}
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/transcribe/call-analytics/"
-              text="Amazon Transcribe Call Analytics Service Page"
+              href="https://github.com/novekm/iot-puppy-park"
+              text="IoT Puppy Park GitHub Repo"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/transcribe/faqs/?nc=sn&loc=5"
-              text="Amazon Transcribe FAQs"
+              href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog"
+              text="Petoi Bittle"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://docs.aws.amazon.com/transcribe/latest/dg/custom-language-models.html"
-              text="Amazon Transcribe Custom Language Models"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
-              text="Amazon Transcribe Custom Vocabularies"
+              href="https://www.petoi.camp/forum/"
+              text="Petoi Forum"
             />
           </li>
         </ul>

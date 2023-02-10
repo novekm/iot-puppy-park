@@ -144,12 +144,12 @@ This is because you are signed in as a user in the `Admin` Cognito User Pool gro
 ![image info](/resources/app-screenshots/bc_amplify_app_data_uploader_page_file_upload_failure.png)
 11. Once the upload of the media file is successful, you can click the **`View S3 Objects`** button, or **`S3 Objects`** in the sidebar to navigate to the S3 Objects page.
 ![image info](/resources/app-screenshots/bc_amplify_app_s3_object_page_empty.png)
-12. The S3 Objects page is performing an async request leveraging the **AppSync GraphQL API** and a GraphQL resolver. The resolver points to the DynamoDB data source which is the **`bc_output`** DynamoDB table. It can take some time for the pipeline to run. The table will be empty until the metadata is written to DynamoDB. To check the progress, visit your Step Function in the AWS Console. You should see one state machine running.
+12. The S3 Objects page is performing an async request leveraging the **AppSync GraphQL API** and a GraphQL resolver. The resolver points to the DynamoDB data source which is the **`bc_devices`** DynamoDB table. It can take some time for the pipeline to run. The table will be empty until the metadata is written to DynamoDB. To check the progress, visit your Step Function in the AWS Console. You should see one state machine running.
 ![image info](./images/aws_console_search_for_sfn.png)
 13. Click on the hyperlink for the name of your state machine `bc-state-machine` to navigate to a details page for the state machine. You should see one execution and the status should also be `Running`.
 14. Click on the hyperlink for the name of the execution to go to a details page for the execution.
 Within a few minutes, the Step Function Workflow should complete successfully.
-15. Head to the DynamoDB console and click `Explore Items` for the `bc_output` table. You should see the Amazon Transcribe Call Analytics metadata in your table.
+15. Head to the DynamoDB console and click `Explore Items` for the `bc_devices` table. You should see the Amazon Transcribe Call Analytics metadata in your table.
 ![image info](./images/dynamodb_console_search.png)
 ![image info](./images/dynamodb_dashboard.png)
 ![image info](./images/dynamodb_items.png)
