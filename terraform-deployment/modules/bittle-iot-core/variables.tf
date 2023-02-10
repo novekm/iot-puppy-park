@@ -42,7 +42,7 @@ variable "bc_input_bucket_name" {
   default     = "bc-input-bucket"
   description = "Name of the S3 bucket for transcribe job source. Max 27 characters"
 }
-variable "bc_output_bucket_name" {
+variable "bc_devices_bucket_name" {
   type        = string
   default     = "bc-output-bucket"
   description = "Output bucket for completed transcriptions. Max 27 characters"
@@ -115,19 +115,19 @@ variable "bc_input_bucket_days_until_objects_expiration" {
   default     = 1
   description = "The number of days until objects in the bucket are deleted"
 }
-variable "bc_output_bucket_enable_cors" {
+variable "bc_devices_bucket_enable_cors" {
   type        = bool
   default     = true
   description = "Contiditional enabling of CORS"
 
 }
-variable "bc_output_bucket_create_nuke_everything_lifecycle_config" {
+variable "bc_devices_bucket_create_nuke_everything_lifecycle_config" {
   type        = bool
   default     = true
   description = "Conditional create of the lifecycle config to remove all objects from the bucket"
 
 }
-variable "bc_output_bucket_days_until_objects_expiration" {
+variable "bc_devices_bucket_days_until_objects_expiration" {
   type        = number
   default     = 1
   description = "The number of days until objects in the bucket are deleted"
@@ -240,16 +240,16 @@ variable "dynamodb_ttl_attribute" {
   type    = string
   default = "TimeToExist"
 }
-variable "bc_output_billing_mode" {
+variable "bc_devices_billing_mode" {
   type    = string
   default = "PROVISIONED"
 }
-variable "bc_output_read_capacity" {
+variable "bc_devices_read_capacity" {
   type    = number
   default = 20
 
 }
-variable "bc_output_write_capacity" {
+variable "bc_devices_write_capacity" {
   type    = number
   default = 20
 

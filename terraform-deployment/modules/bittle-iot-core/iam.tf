@@ -166,8 +166,8 @@ data "aws_iam_policy_document" "bc_s3_restricted_access_policy" {
       "${aws_s3_bucket.bc_landing_bucket.arn}/*",
       "${aws_s3_bucket.bc_input_bucket.arn}",
       "${aws_s3_bucket.bc_input_bucket.arn}/*",
-      "${aws_s3_bucket.bc_output_bucket.arn}",
-      "${aws_s3_bucket.bc_output_bucket.arn}/*",
+      "${aws_s3_bucket.bc_devices_bucket.arn}",
+      "${aws_s3_bucket.bc_devices_bucket.arn}/*",
       "${aws_s3_bucket.bc_app_storage_bucket.arn}",
       "${aws_s3_bucket.bc_app_storage_bucket.arn}/*",
     ]
@@ -183,19 +183,19 @@ resource "aws_iam_policy" "bc_s3_restricted_access_policy" {
 # DynamoDB Customer Managed Policy (All Actions)
 data "aws_iam_policy_document" "bc_dynamodb_restricted_access_policy" {
   count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
   statement {
     effect  = "Allow"
     actions = ["dynamodb:*"]
     resources = [
-      "${aws_dynamodb_table.bc_output.arn}",
+      "${aws_dynamodb_table.bc_devices.arn}",
     ]
   }
 }
 resource "aws_iam_policy" "bc_dynamodb_restricted_access_policy" {
   count       = var.create_restricted_access_roles ? 1 : 0
   name        = "bc_dynamodb_restricted_access_policy"
-  description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+  description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
   policy      = data.aws_iam_policy_document.bc_dynamodb_restricted_access_policy[0].json
 
 }
@@ -203,7 +203,7 @@ resource "aws_iam_policy" "bc_dynamodb_restricted_access_policy" {
 # DynamoDB Customer Managed Policy (Read Only Actions)
 data "aws_iam_policy_document" "bc_dynamodb_restricted_access_read_only_policy" {
   count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
   statement {
     effect = "Allow"
     actions = [
@@ -212,14 +212,14 @@ data "aws_iam_policy_document" "bc_dynamodb_restricted_access_read_only_policy" 
       "dynamodb:Query",
     ]
     resources = [
-      "${aws_dynamodb_table.bc_output.arn}",
+      "${aws_dynamodb_table.bc_devices.arn}",
     ]
   }
 }
 resource "aws_iam_policy" "bc_dynamodb_restricted_access_read_only_policy" {
   count       = var.create_restricted_access_roles ? 1 : 0
   name        = "bc_dynamodb_restricted_access_read_only_policy"
-  description = "Policy granting restricted (read-only) DynamoDB permissions for the bc_output DynamoDB table."
+  description = "Policy granting restricted (read-only) DynamoDB permissions for the bc_devices DynamoDB table."
   policy      = data.aws_iam_policy_document.bc_dynamodb_restricted_access_read_only_policy[0].json
 
 }
@@ -228,7 +228,7 @@ resource "aws_iam_policy" "bc_dynamodb_restricted_access_read_only_policy" {
 # SSM Customer Managed Policy (Restricted Access)
 data "aws_iam_policy_document" "bc_ssm_restricted_access_policy" {
   count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
   statement {
     effect = "Allow"
     actions = [
@@ -236,7 +236,7 @@ data "aws_iam_policy_document" "bc_ssm_restricted_access_policy" {
     ]
     resources = [
       "${aws_ssm_parameter.bc_input_bucket_name.arn}",
-      "${aws_ssm_parameter.bc_output_bucket_name.arn}",
+      "${aws_ssm_parameter.bc_devices_bucket_name.arn}",
       "${aws_ssm_parameter.bc_app_storage_bucket_name.arn}",
       "${aws_ssm_parameter.bc_dynamodb_output_table_name.arn}",
     ]
@@ -254,7 +254,7 @@ resource "aws_iam_policy" "bc_ssm_restricted_access_policy" {
 # Allows Lambda function to invoke Step Function State machine
 # data "aws_iam_policy_document" "bc_lambda_invoke_sfn_state_machine_restricted_access_policy" {
 #   count = var.create_restricted_access_roles ? 1 : 0
-#   # description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+#   # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
 #   statement {
 #     effect = "Allow"
 #     actions = [
@@ -278,7 +278,7 @@ resource "aws_iam_policy" "bc_ssm_restricted_access_policy" {
 
 data "aws_iam_policy_document" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy" {
   count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_output DynamoDB table."
+  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
   statement {
     effect = "Allow"
     actions = [
@@ -371,7 +371,7 @@ resource "aws_iam_role" "bc_cognito_admin_group_restricted_access" {
 
   name               = "bc_cognito_admin_group_restricted_access"
   assume_role_policy = data.aws_iam_policy_document.bc_cognito_admin_group_trust_relationship.json
-  description        = "Role granting full DynamoDB permissions for the bc_outputs DynamoDB table."
+  description        = "Role granting full DynamoDB permissions for the bc_devicess DynamoDB table."
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
     aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
@@ -395,7 +395,7 @@ resource "aws_iam_role" "bc_cognito_standard_group_restricted_access" {
 
   name               = "bc_cognito_standard_group_restricted_access"
   assume_role_policy = data.aws_iam_policy_document.bc_cognito_standard_group_trust_relationship.json
-  description        = "Role granting restricted (read-only) DynamoDB permissions for the bc_outputs DynamoDB table."
+  description        = "Role granting restricted (read-only) DynamoDB permissions for the bc_devicess DynamoDB table."
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
     "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",

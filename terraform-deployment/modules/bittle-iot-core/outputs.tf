@@ -13,12 +13,12 @@ output "bc_input_bucket_arn" {
   value       = aws_s3_bucket.bc_input_bucket
   description = "The Arn of the S3 input bucket"
 }
-output "bc_output_bucket_id" {
-  value       = aws_s3_bucket.bc_output_bucket
+output "bc_devices_bucket_id" {
+  value       = aws_s3_bucket.bc_devices_bucket
   description = "The name of the S3 output bucket"
 }
-output "bc_output_bucket_arn" {
-  value       = aws_s3_bucket.bc_output_bucket
+output "bc_devices_bucket_arn" {
+  value       = aws_s3_bucket.bc_devices_bucket
   description = "The Arn of the S3 input bucket"
 }
 output "bc_app_storage_bucket_id" {
@@ -42,7 +42,7 @@ output "bc_step_function_arn" {
 
 # DynamoDB
 output "bc_dynamodb_output_table_name" {
-  value = aws_dynamodb_table.bc_output.name
+  value = aws_dynamodb_table.bc_devices.name
 }
 
 

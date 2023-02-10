@@ -2,14 +2,14 @@
 # https://docs.aws.amazon.com/appsync/latest/devguide/resolver-mapping-template-reference-dynamodb.html#aws-appsync-resolver-mapping-template-reference-dynamodb-getitem
 # https://docs.aws.amazon.com/appsync/latest/devguide/security-authz.html#amazon-cognito-user-pools-authorization
 # API Data Source
-resource "aws_appsync_datasource" "bc_appsync_dynamodb_datasource" {
+resource "aws_appsync_datasource" "bc_devices_appsync_dynamodb_datasource" {
   api_id           = aws_appsync_graphql_api.bc_appsync_graphql_api.id
-  name             = "bc_output_dynamodb_datasource"
+  name             = "sample_output_dynamodb_datasource"
   service_role_arn = aws_iam_role.bc_appsync_dynamodb_restricted_access[0].arn
   type             = "AMAZON_DYNAMODB"
 
   dynamodb_config {
-    table_name = aws_dynamodb_table.bc_output.name
+    table_name = aws_dynamodb_table.bc_devices.name
   }
 }
 # API
@@ -25,37 +25,29 @@ resource "aws_appsync_graphql_api" "bc_appsync_graphql_api" {
 
 
   schema = <<EOF
-type Object  @aws_auth(cognito_groups: ["Admin", "Standard"])  {
-  ObjectId: String!
-  Version: String
-  DetailType: String
-  Source: String
-  FilePath: String
-  AccountId: String
-  CreatedAt: String
-  Region: String
-  CurrentBucket: String
-  OriginalBucket: String
-  ObjectSize: Int
-  SourceIPAddress: String
-  LifecycleConfig: String
+type Bittle  @aws_auth(cognito_groups: ["Admin", "Standard"])  {
+  DeviceId: String!
+  Battery: Float
+  DeviceStatus: String
+  ShortName: String
+  NyboardVersion: String
 }
 
-type ObjectPaginated {
-  items: [Object]
+type BittlePaginated {
+  items: [Bittle]
   nextToken: String
   @aws_auth(cognito_groups: ["Admin", "Standard"])
 }
 
 
 type Query {
-  getAllObjects(limit: Int, nextToken: String): ObjectPaginated @aws_auth(cognito_groups: ["Admin", "Standard"])
-  getAllObjectsPaginated(limit: Int, nextToken: String): ObjectPaginated @aws_auth(cognito_groups: ["Admin", "Standard"])
-  getOneObject(ObjectId: String!): Object @aws_auth(cognito_groups: ["Admin", "Standard"])
+  getAllBittles(limit: Int, nextToken: String): BittlePaginated @aws_auth(cognito_groups: ["Admin", "Standard"])
+  getAllBittlesPaginated(limit: Int, nextToken: String): BittlePaginated @aws_auth(cognito_groups: ["Admin", "Standard"])
+  getOneBittle(DeviceId: String!): Bittle @aws_auth(cognito_groups: ["Admin", "Standard"])
   }
 
 type Mutation {
-  deleteOneObject(ObjectId: String!): Object
+  deleteOneBittle(BittleId: String!): Object
   @aws_auth(cognito_groups: ["Admin",])
 }
 
@@ -69,20 +61,20 @@ EOF
 
 # Resolvers
 # UNIT type resolver (default)
-# Query - Get One Object
-resource "aws_appsync_resolver" "bc_appsync_resolver_query_get_one_object" {
+# Query - Get One Bittle
+resource "aws_appsync_resolver" "bc_appsync_resolver_query_get_one_bittle" {
   api_id = aws_appsync_graphql_api.bc_appsync_graphql_api.id
-  field  = "getOneObject"
+  field  = "getOneBittle"
   type   = "Query"
-  # data_source = [aws_appsync_datasource.bc_appsync_dynamodb_datasource.name]
-  data_source = aws_appsync_datasource.bc_appsync_dynamodb_datasource.name
+  # data_source = [aws_appsync_datasource.sample_appsync_dynamodb_datasource.name]
+  data_source = aws_appsync_datasource.bc_devices_appsync_dynamodb_datasource.name
 
   request_template = <<EOF
 {
     "version" : "2017-02-28",
     "operation" : "GetItem",
     "key" : {
-       "ObjectId" : $util.dynamodb.toDynamoDBJson($ctx.args.ObjectId)
+       "DeviceId" : $util.dynamodb.toDynamoDBJson($ctx.args.DeviceId)
     },
     "consistentRead" : false
 }
@@ -92,12 +84,12 @@ EOF
     $util.toJson($ctx.result)
 EOF
 }
-# Scan - Get All Objects (Limit of 1,000,000)
-resource "aws_appsync_resolver" "bc_appsync_resolver_query_get_all_objects" {
+# Scan - Get All Bittles (Limit of 1,000,000)
+resource "aws_appsync_resolver" "sample_appsync_resolver_query_get_all_bittles" {
   api_id      = aws_appsync_graphql_api.bc_appsync_graphql_api.id
-  field       = "getAllObjects"
+  field       = "getAllBittles"
   type        = "Query"
-  data_source = aws_appsync_datasource.bc_appsync_dynamodb_datasource.name
+  data_source = aws_appsync_datasource.bc_devices_appsync_dynamodb_datasource.name
 
   request_template = <<EOF
 
@@ -114,12 +106,12 @@ EOF
    $util.toJson($ctx.result)
 EOF
 }
-# Scan - Get All Objects Paginated
-resource "aws_appsync_resolver" "bc_appsync_resolver_query_get_all_objects_paginated" {
+# Scan - Get All Bittles Paginated
+resource "aws_appsync_resolver" "bc_appsync_resolver_query_get_all_bittles_paginated" {
   api_id      = aws_appsync_graphql_api.bc_appsync_graphql_api.id
-  field       = "getAllObjectsPaginated"
+  field       = "getAllBittlesPaginated"
   type        = "Query"
-  data_source = aws_appsync_datasource.bc_appsync_dynamodb_datasource.name
+  data_source = aws_appsync_datasource.bc_devices_appsync_dynamodb_datasource.name
 
   request_template = <<EOF
 
@@ -138,19 +130,19 @@ EOF
 }
 
 
-# Mutation - Delete One Object
-resource "aws_appsync_resolver" "bc_appsync_resolver_mutation_delete_one_object" {
+# Mutation - Delete One Bittle
+resource "aws_appsync_resolver" "bc_appsync_resolver_mutation_delete_one_bittle" {
   api_id      = aws_appsync_graphql_api.bc_appsync_graphql_api.id
-  field       = "deleteOneObject"
+  field       = "deleteOneBittle"
   type        = "Mutation"
-  data_source = aws_appsync_datasource.bc_appsync_dynamodb_datasource.name
+  data_source = aws_appsync_datasource.bc_devices_appsync_dynamodb_datasource.name
 
   request_template = <<EOF
 {
     "version" : "2017-02-28",
     "operation" : "DeleteItem",
     "key" : {
-        "ObjectId" : $util.dynamodb.toDynamoDBJson($ctx.args.ObjectId)
+        "DeviceId" : $util.dynamodb.toDynamoDBJson($ctx.args.DeviceId)
     }
 }
 EOF

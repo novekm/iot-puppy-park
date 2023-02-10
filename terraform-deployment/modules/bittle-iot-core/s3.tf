@@ -4,7 +4,7 @@ resource "random_uuid" "bc_landing_bucket_uuid" {
 }
 resource "random_uuid" "bc_input_bucket_uuid" {
 }
-resource "random_uuid" "bc_output_bucket_uuid" {
+resource "random_uuid" "bc_devices_bucket_uuid" {
 }
 resource "random_uuid" "bc_app_storage_bucket_uuid" {
 }
@@ -107,7 +107,7 @@ resource "aws_s3_bucket_policy" "bc_input_bucket_restrict_file_types" {
 }
 
 # Output Bucket IAM Policy
-data "aws_iam_policy_document" "bc_output_bucket_restrict_file_types" {
+data "aws_iam_policy_document" "bc_devices_bucket_restrict_file_types" {
   statement {
     principals {
       type        = "AWS"
@@ -117,8 +117,8 @@ data "aws_iam_policy_document" "bc_output_bucket_restrict_file_types" {
     actions = ["s3:PutObject", "s3:GetObject"]
     # Allows all S3 operations for files matching the below suffixes
     resources = [
-      "${aws_s3_bucket.bc_output_bucket.arn}/*.json",
-      "${aws_s3_bucket.bc_output_bucket.arn}/*.temp",
+      "${aws_s3_bucket.bc_devices_bucket.arn}/*.json",
+      "${aws_s3_bucket.bc_devices_bucket.arn}/*.temp",
     ]
   }
   statement {
@@ -133,16 +133,16 @@ data "aws_iam_policy_document" "bc_output_bucket_restrict_file_types" {
     actions = ["s3:PutObject"]
     # Denys all S3 operations for files that do not match the below suffixes
     not_resources = [
-      "${aws_s3_bucket.bc_output_bucket.arn}/*.json",
-      "${aws_s3_bucket.bc_output_bucket.arn}/*.temp",
+      "${aws_s3_bucket.bc_devices_bucket.arn}/*.json",
+      "${aws_s3_bucket.bc_devices_bucket.arn}/*.temp",
     ]
   }
 }
 # # - Output S3 Bucket Policy -
-resource "aws_s3_bucket_policy" "bc_output_bucket_restrict_file_types" {
+resource "aws_s3_bucket_policy" "bc_devices_bucket_restrict_file_types" {
   count  = var.bc_s3_enable_bucket_policy ? 1 : 0
-  bucket = aws_s3_bucket.bc_output_bucket.id
-  policy = data.aws_iam_policy_document.bc_output_bucket_restrict_file_types.json
+  bucket = aws_s3_bucket.bc_devices_bucket.id
+  policy = data.aws_iam_policy_document.bc_devices_bucket_restrict_file_types.json
 }
 
 # - App Storage IAM Policy -
@@ -186,8 +186,8 @@ resource "aws_s3_bucket_notification" "bc_input_bucket_events" {
   # Send all S3 events for this bucket to EventBridge
   eventbridge = true
 }
-resource "aws_s3_bucket_notification" "bc_output_bucket_events" {
-  bucket = aws_s3_bucket.bc_output_bucket.id
+resource "aws_s3_bucket_notification" "bc_devices_bucket_events" {
+  bucket = aws_s3_bucket.bc_devices_bucket.id
   # Send all S3 events for this bucket to EventBridge
   eventbridge = true
 }
@@ -203,8 +203,8 @@ resource "aws_s3_bucket_notification" "bc_app_storage_bucket_events" {
 # S3 Output Bucket has the necessary files copied to other S3 buckets automatically.
 # This is handled by Lambda. This lifecycle configuration removes all of the objects
 # in the bucket after 1 day. You can configure the number of days by changing the value
-# for the variable 'bc_output_bucket_days_until_objects_expiration' or disable the
-# lifecycle policy completely by setting 'bc_output_bucket_create_nuke_everything_lifecycle_config'
+# for the variable 'bc_devices_bucket_days_until_objects_expiration' or disable the
+# lifecycle policy completely by setting 'bc_devices_bucket_create_nuke_everything_lifecycle_config'
 # to false.
 resource "aws_s3_bucket_lifecycle_configuration" "bc_landing_bucket_lifecycle_config" {
   count  = var.bc_landing_bucket_create_nuke_everything_lifecycle_config ? 1 : 0
@@ -230,14 +230,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "bc_input_bucket_lifecycle_conf
     status = "Enabled"
   }
 }
-resource "aws_s3_bucket_lifecycle_configuration" "bc_output_bucket_lifecycle_config" {
-  count  = var.bc_output_bucket_create_nuke_everything_lifecycle_config ? 1 : 0
-  bucket = aws_s3_bucket.bc_output_bucket.id
+resource "aws_s3_bucket_lifecycle_configuration" "bc_devices_bucket_lifecycle_config" {
+  count  = var.bc_devices_bucket_create_nuke_everything_lifecycle_config ? 1 : 0
+  bucket = aws_s3_bucket.bc_devices_bucket.id
   rule {
     id = "nuke-everything"
     filter {} // empty filter = rule applies to all objects in the bucket
     expiration {
-      days = var.bc_output_bucket_days_until_objects_expiration
+      days = var.bc_devices_bucket_days_until_objects_expiration
     }
     status = "Enabled"
   }
@@ -321,8 +321,8 @@ resource "aws_s3_bucket_cors_configuration" "bc_input_bucket_cors" {
 
 
 # S3 Output Bucket
-resource "aws_s3_bucket" "bc_output_bucket" {
-  bucket        = "${var.bc_output_bucket_name}-${random_uuid.bc_output_bucket_uuid.result}"
+resource "aws_s3_bucket" "bc_devices_bucket" {
+  bucket        = "${var.bc_devices_bucket_name}-${random_uuid.bc_devices_bucket_uuid.result}"
   force_destroy = var.s3_enable_force_destroy
 
   tags = merge(
@@ -333,16 +333,16 @@ resource "aws_s3_bucket" "bc_output_bucket" {
   )
 }
 # S3 Output Bucket - Block Public Access
-resource "aws_s3_bucket_public_access_block" "bc_output_bucket_block_public_access" {
+resource "aws_s3_bucket_public_access_block" "bc_devices_bucket_block_public_access" {
   count               = var.bc_s3_block_public_access ? 1 : 0
-  bucket              = aws_s3_bucket.bc_output_bucket.id
+  bucket              = aws_s3_bucket.bc_devices_bucket.id
   block_public_acls   = var.bc_s3_block_public_acls
   block_public_policy = var.bc_s3_block_public_policy
 }
 # S3 Output Bucket - CORS Policy
-resource "aws_s3_bucket_cors_configuration" "bc_output_bucket_cors" {
-  count  = var.bc_output_bucket_enable_cors ? 1 : 0
-  bucket = aws_s3_bucket.bc_output_bucket.id
+resource "aws_s3_bucket_cors_configuration" "bc_devices_bucket_cors" {
+  count  = var.bc_devices_bucket_enable_cors ? 1 : 0
+  bucket = aws_s3_bucket.bc_devices_bucket.id
 
   cors_rule {
     allowed_headers = ["*"]

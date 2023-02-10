@@ -8,8 +8,8 @@ output "bc_input_bucket" {
   value       = module.bittle-iot-core.bc_input_bucket_id.id
   description = "The name of the S3 input bucket"
 }
-output "bc_output_bucket" {
-  value       = module.bittle-iot-core.bc_output_bucket_id.id
+output "bc_devices_bucket" {
+  value       = module.bittle-iot-core.bc_devices_bucket_id.id
   description = "The name of the S3 output bucket"
 }
 output "bc_app_storage_bucket" {

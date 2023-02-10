@@ -35,7 +35,7 @@ resource "aws_cloudwatch_event_rule" "default_event_bus_to_bc_event_bus" {
         name = [
           "${aws_s3_bucket.bc_landing_bucket.id}",
           "${aws_s3_bucket.bc_input_bucket.id}",
-          "${aws_s3_bucket.bc_output_bucket.id}",
+          "${aws_s3_bucket.bc_devices_bucket.id}",
           "${aws_s3_bucket.bc_app_storage_bucket.id}",
         ]
       }
@@ -73,7 +73,7 @@ resource "aws_cloudwatch_event_rule" "sns_default_event_bus_to_bc_event_bus" {
         name = [
           "${aws_s3_bucket.bc_landing_bucket.id}",
           "${aws_s3_bucket.bc_input_bucket.id}",
-          "${aws_s3_bucket.bc_output_bucket.id}",
+          "${aws_s3_bucket.bc_devices_bucket.id}",
           "${aws_s3_bucket.bc_app_storage_bucket.id}",
         ]
       }

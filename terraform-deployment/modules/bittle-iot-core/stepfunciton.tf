@@ -68,7 +68,7 @@ resource "aws_sfn_state_machine" "bc_sfn_state_machine" {
           Comment    = "Write the S3 Object metadata to DynamoDB"
           ResultPath = "$.DynamoDB"
           Parameters = {
-            TableName = "${aws_dynamodb_table.bc_output.id}"
+            TableName = "${aws_dynamodb_table.bc_devices.id}"
             # IMPORTANT - Even if your value is not a string, you need to put a string value.
             # The data type ("N","S", etc.) will identify it as the type you describe
             # Note - the data type "SS" as of October 2022 is not supported by Step Functions

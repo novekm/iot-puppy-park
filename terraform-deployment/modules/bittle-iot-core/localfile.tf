@@ -357,8 +357,8 @@ resource "local_file" "outputs" {
       bc_input_bucket = {
         value = "${aws_s3_bucket.bc_input_bucket.id}"
       },
-      bc_output_bucket = {
-        value = "${aws_s3_bucket.bc_output_bucket.id}"
+      bc_devices_bucket = {
+        value = "${aws_s3_bucket.bc_devices_bucket.id}"
       },
       bc_app_storage_bucket = {
         value = "${aws_s3_bucket.bc_app_storage_bucket.id}"
@@ -398,8 +398,8 @@ resource "local_file" "outputs" {
   #     "bc_input_bucket": {
   #       "value": "${aws_s3_bucket.bc_input_bucket.id}"
   #     },
-  #     "bc_output_bucket": {
-  #       "value": "${aws_s3_bucket.bc_output_bucket.id}"
+  #     "bc_devices_bucket": {
+  #       "value": "${aws_s3_bucket.bc_devices_bucket.id}"
   #     },
   #     "bc_app_storage_bucket": {
   #       "value": "${aws_s3_bucket.bc_app_storage_bucket.id}"
