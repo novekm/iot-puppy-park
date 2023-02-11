@@ -366,50 +366,6 @@ resource "local_file" "outputs" {
 
     }
   })
-
-  # -- ugly way of doing it --
-  # content = <<-EOF
-  # {
-  #   "outputs": {
-  #     "bc_appsync_graphql_api_region": {
-  #       "value": "${data.aws_region.current.name}"
-  #     },
-  #     "bc_appsync_grapql_api_id": {
-  #       "value": "${aws_appsync_graphql_api.bc_appsync_grapql_api.id}"
-  #     },
-  #     "bc_appsync_grapql_api_uris": {
-  #       "value": {
-  #        "GRAPHQL": "${aws_appsync_graphql_api.bc_appsync_grapql_api.uris.GRAPHQL}",
-  #        "REALTIME": "${aws_appsync_graphql_api.bc_appsync_grapql_api.uris.REALTIME}"
-  #       }
-  #     },
-  #     "bc_user_pool_region": {
-  #       "value": "${data.aws_region.current.name}"
-  #     },
-  #     "bc_user_pool_id": {
-  #       "value": "${aws_cognito_user_pool.bc_user_pool.id}"
-  #     },
-  #     "bc_user_pool_client": {
-  #       "value": "${aws_cognito_user_pool_client.bc_user_pool_client.id}"
-  #     },
-  #     "bc_identity_pool_id": {
-  #       "value": "${aws_cognito_identity_pool.bc_identity_pool.id}"
-  #     },
-  #     "bc_input_bucket": {
-  #       "value": "${aws_s3_bucket.bc_input_bucket.id}"
-  #     },
-  #     "bc_devices_bucket": {
-  #       "value": "${aws_s3_bucket.bc_devices_bucket.id}"
-  #     },
-  #     "bc_app_storage_bucket": {
-  #       "value": "${aws_s3_bucket.bc_app_storage_bucket.id}"
-  #     }
-  #   }
-  # }
-  # EOF
-
-  # -- previously used but has unneccessary data from tfstate --
-  # source = "./terraform.tfstate.outputs" -- previously used but has unneccessary data
 }
 
 
