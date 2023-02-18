@@ -10,7 +10,7 @@
 
 #   tags = merge(
 #     # {
-#     #   "AppName" = var.app_name
+#     #   "AppName" = var.bc_app_name
 #     # },
 #     var.tags,
 #   )

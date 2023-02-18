@@ -6,6 +6,7 @@
 
 ![Petoi Bittle Image](resources/petio-bittle-image.jpg)
 
+
 This project is meant to serve as an example of how you can connect a fleet of Petoi Bittles to AWS. If you're not familiar with **[Petoi Bittle](https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog?utm_source=google-ads&utm_campaign=&utm_agid=141849525757&utm_term=&gclid=CjwKCAiA_vKeBhAdEiwAFb_nrQYeIL6zf0sH8S0_gRDafo5FqLmbhOD-LMhOhvEq_o5zeaInmnawqBoCe98QAvD_BwE)**, it is a palm-sized, servo-activated quadruped robot dog. It's board (NyBoard) is a based on an Arduino Uno. There are a number of modules you can connect to Bittle, and a main one we are leveraging is the **[ESP8266](https://docs.petoi.com/communication-modules/wifi-esp8266)**. While Bittle comes with a web and mobile app that you can use the included Bluetooth module to issue commands, we have extended upon this to connect Bittle to AWS for added functionality.
 
 We have connected Bittle to **[AWS IoT Core](https://aws.amazon.com/iot-core/)** and have created a serverless full stack **[AWS Amplify](https://aws.amazon.com/amplify/)** App to control Bittle, as well as view live video and other device information for not just one Bittle, but ***an entire fleet of Bittles***. To provide a streamlined and repeatable deployment, we are leveraging **[Terraform](https://www.terraform.io/)** for Infrastructure as Code (IaC). If you are not too familiar with Terraform, don't worry - we have created a custom Terraform module to abstract away most of the complexity down to a few lines of code. For those more experienced with Terraform, feel free to customize and add on to this solution, we are making it completely open-source.
@@ -14,16 +15,20 @@ We have connected Bittle to **[AWS IoT Core](https://aws.amazon.com/iot-core/)**
 
  ## 🛠 What you will build!
 
-**TODO - Add architecture here**
-<!-- ![Amplify IaC architectural diagram](resources/architecture/IAC_SAMPLE_ARCH.png) -->
+![IoT Puppy Park Arch](resources/architecture/IPP_BASIC_ARCH.png)
+
 
 By using this solution, you will be able to connect one or multiple Petoi Bittles to AWS IoT core, and control them via MQTT messages, as well as view live video streams and other device data through a full stack serverless AWS Amplify Application.
 
 **TODO - Add screenshots of AWS Amplify App**
+![Bittle Control App | Dashboard](resources/app-screenshots/bc-dashboard-page.png)
+![Bittle Control App | My Bittles](resources/app-screenshots/bc-my-bittles-page.png)
+![Bittle Control App | Single Bittle](resources/app-screenshots/bc-single-bittle-page.png)
 
 
 The Amplify App is leveraging [Cloudscape](https://cloudscape.design/) an open-source React component library released by AWS. If it looks familiar to you, it is because the AWS Console is built with it.
 ![Cloudscape Homepage](resources/cloudscape-website.png)
+
 ## AWS Service List
 **TODO - Update these, they are subject to change**
 There are a number of AWS services used in this solution including:
@@ -71,7 +76,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 #### 🚀 Resources to be Deployed
 **AWS Amplify**
 - Web Application (Optional)
-  - `iot-bittle-control-app`
+  - `bc-web-app`
 
 **AWS AppSync**
 - GraphQL API
@@ -92,7 +97,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 
 **Amazon DynamoDB**
 - Table
-  - `bc_output`
+  - `bc_devices`
 
 **Amazon EventBridge**
 - Event Bus
@@ -109,7 +114,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
   - `bc_cognito_authrole_restricted_access`
   - `bc_cognito_standard_group_restricted_access`
   - `bc_cognito_unauthrole_restricted_access`
-  - `bc_eventbridge_invoke_custom_sample_event_bus_restricted_access`
+  - `bc_eventbridge_invoke_custom_bc_event_bus_restricted_access`
   - `bc_eventbridge_invoke_sfn_state_machine_restricted_access`
   - `bc_step_functions_master_restricted_access`
 - Policies
@@ -117,7 +122,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
   - `bc_dynamodb_restricted_access_policy`
   - `bc_dynamodb_restricted_access_read_only_policy`
   - `bc_ssm_restricted_access_policy`
-  - `bc_eventbridge_invoke_custom_sample_event_bus_restricted_access_policy`
+  - `bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy`
   - `bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy`
   - `bc_gitlab_mirroring_policy` (conditional)
 - Users
@@ -127,7 +132,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 - Buckets
   - `bc_landing_bucket`
   - `bc_input_bucket`
-  - `bc_output_bucket`
+  - `bc_devices_bucket`
   - `bc_app_storage_bucket`
 
 
@@ -135,7 +140,7 @@ As mentioned, there are a number of **optional variables** exposed through the m
 - SSM Parameter
   - `ssm_github_access_token` (conditional)
   - `bc_input_bucket_name`
-  - `bc_output_bucket_name`
+  - `bc_devices_bucket_name`
   - `bc_app_storage_bucket_name`
   - `bc_dynamodb_output_table_name`
 
@@ -153,10 +158,10 @@ The data pipeline is an event-driven **AWS Step Functions Workflow** triggered b
 3. **Data Processing**: Once the file is copied to the Input bucket with the generated UUID, and this is where you could extend this to other AWS services. Perhaps when you upload a file to S3 and it is copied to the input bucket with the necessary UUID, an Amazon Transcribe job is started. For now, the next step is just simulated and the file is copied on to the app storage bucket.
 4. **Data Publishing**: If the file was successfully copied between the buckets, the original S3 object metadata will be written to theDynamoDB Table.
 
-Review the [Step Function Workflow](resources/step-function/sample-step-function-workflow.png) for a visual aid.
-![TCA architectural diagram](resources/step-function/sample-step-function-workflow.png)
+Review the [Step Function Workflow](resources/step-function/bc-step-function-workflow.png) for a visual aid.
+![TCA architectural diagram](resources/step-function/bc-step-function-workflow.png)
 
-**NOTE:** *To optimize costs, there is an [S3 Lifecycle Rule](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html) present on the **Landing Bucket**, and **Input Bucket**. By default, the rule will expire all objects in the buckets after 24 hours. The necessary data will still be retained however - the media file in the **App Storage Bucket** and the `JSON` data in the DynamoDB table. To modify this, you may disable or modify the lifecycle rules. They are accessible via [Terraform variables](https://www.terraform.io/language/values/variables). Additional costs may apply for removing these rules. For instructions, reference the [sample-module documentation](/terraform-deployment/modules/sample-module/README.md).* If you want to leverage Quicksight, you can modify the Step Function to also copy the `JSON` data from the **Output Bucket** to the optional **Quicksight Bucket**. However, the sample web application has native dashboarding support by leveraging [Cloudscape Design Components](https://cloudscape.design/), so this is not enabled by default. See a demo of an example of an example dashboard [here](https://cloudscape.design/examples/react/dashboard.html?). -->
+**NOTE:** *To optimize costs, there is an [S3 Lifecycle Rule](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html) present on the **Landing Bucket**, and **Input Bucket**. By default, the rule will expire all objects in the buckets after 24 hours. The necessary data will still be retained however - the media file in the **App Storage Bucket** and the `JSON` data in the DynamoDB table. To modify this, you may disable or modify the lifecycle rules. They are accessible via [Terraform variables](https://www.terraform.io/language/values/variables). Additional costs may apply for removing these rules. For instructions, reference the [bc-module documentation](/terraform-deployment/modules/bc-module/README.md).* If you want to leverage Quicksight, you can modify the Step Function to also copy the `JSON` data from the **Output Bucket** to the optional **Quicksight Bucket**. However, the bc web application has native dashboarding support by leveraging [Cloudscape Design Components](https://cloudscape.design/), so this is not enabled by default. See a demo of an example of an example dashboard [here](https://cloudscape.design/examples/react/dashboard.html?). -->
 
 ### AWS AppSync GraphQL API
 
@@ -165,12 +170,12 @@ A pre-built AWS **AppSync GraphQL API** provides flexible querying for applicati
 
 ### AWS Amplify - IoT Bittle Connect Web Application
 
-An AWS Amplify application is deployed and hosted with Amplify Hosting. This is **enabled by default** as it is the intended use of this project, however, you can disable this and connect the backend resources to your own web application if you wish. For more information on the IoT Bittle Connect Amplify Application, see the **[IoT Bittle Connect Web App Documentation](./sample-amplify-app/documentation/README.md)**.
+An AWS Amplify application is deployed and hosted with Amplify Hosting. This is **enabled by default** as it is the intended use of this project, however, you can disable this and connect the backend resources to your own web application if you wish. For more information on the IoT Bittle Connect Amplify Application, see the **[IoT Bittle Connect Web App Documentation](./bc-amplify-app/documentation/README.md)**.
 
 
-<!-- ### Sample Data Collection for Testing
+<!-- ### bc Data Collection for Testing
 
-This project comes with sample data for testing successful deployment of the application and can be found in the **`resources/sample-media`** directory. -->
+This project comes with bc data for testing successful deployment of the application and can be found in the **`resources/bc-media`** directory. -->
 
 ## 💲 Cost and Licenses
 
@@ -185,7 +190,7 @@ This solution doesn’t require any software license or AWS Marketplace subscrip
 
 ## How to Deploy - CHOOSE YOUR OWN ADVENTURE! 🚀
 
-As mentioned earlier, you can deploy this sample project using either [Terraform](https://www.terraform.io/) or *(coming at a later date)* [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/). We recommend use of VS Code and the AWS CLI. We also generally recommend a fresh AWS account that can be integrated with your existing infrastructure using AWS Organizations.
+As mentioned earlier, you can deploy this bc project using either [Terraform](https://www.terraform.io/) or *(coming at a later date)* [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/). We recommend use of VS Code and the AWS CLI. We also generally recommend a fresh AWS account that can be integrated with your existing infrastructure using AWS Organizations.
 
 [Terraform Deployment Instructions](/terraform-deployment/README.md)
 <!-- [AWS CDK Deployment Instructions](/cdk-deployment/README.md) -->
