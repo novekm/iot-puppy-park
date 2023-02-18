@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/no-array-index-key */
@@ -34,20 +35,9 @@ import {
   TableEmptyState,
   InfoLink,
 } from '../../common/common-components-config';
-// import { ORIGINS_COLUMN_DEFINITIONS, BEHAVIORS_COLUMN_DEFINITIONS, TAGS_COLUMN_DEFINITIONS } from './details-config';
 
 import { getOneBittle } from '../../graphql/queries';
 
-export const SINGLE_BITTLE = {
-  id: 'carbon-lake-AGKI571',
-  domainName: 'abcdef01234567890.cloudfront.net',
-  arn: 'arn:aws:cloudfront::abcdef01234567890.cloudfront.net/SLCCSMWOHOFUY0',
-  priceClass: 'Use only US, Canada, Europe, and Asia',
-  sslCertificate: 'Default CloudFront SSL certificate',
-  logging: 'Off',
-};
-
-// let { userId } = useParams();
 export const PageHeader = ({ buttons }) => {
   const { DeviceId } = useParams();
   return (
@@ -83,10 +73,7 @@ export const PageHeader = ({ buttons }) => {
 };
 
 // Content/formatting for the Bittle Device Details table
-export const BittleDeviceDetailsTableConfig = ({
-  emission = SINGLE_BITTLE,
-  isInProgress,
-}) => {
+export const BittleDeviceDetailsTableConfig = ({ isInProgress }) => {
   const { DeviceId } = useParams();
   const [singleBittle, setSingleBittle] = useState([]);
   useEffect(() => {
@@ -110,10 +97,6 @@ export const BittleDeviceDetailsTableConfig = ({
 
   const bittleData = singleBittle;
   console.log(bittleData);
-
-  // IMPORTANT - If 'undefined' error - Comment out lines 98-100, 148-152. Safe file, then remove comment
-  // const myEmissionOutput = JSON.parse(singleBittle.emissions_output);
-  // console.log('My Emission Output', myEmissionOutput);
 
   return (
     <ColumnLayout columns={3} variant="text-grid">
@@ -151,11 +134,13 @@ export const BittleDeviceDetailsTableConfig = ({
       {/* ------------ THIRD COLUMN ------------ */}
       <SpaceBetween size="l">
         {/* First Item */}
-        {emission.state ? (
+        {singleBittle.DeviceStatus ? (
           <StatusIndicator
-            type={emission.state === 'Deactivated' ? 'error' : 'success'}
+            type={
+              singleBittle.DeviceStatus === 'Disconnected' ? 'error' : 'success'
+            }
           >
-            {emission.state}
+            {singleBittle.DeviceStatus}
           </StatusIndicator>
         ) : (
           <ProgressBar
@@ -279,7 +264,6 @@ export const BittleCommandsTableConfig2 = () => {
       <SpaceBetween size="l">
         {/* First Item */}
         <div>
-          {/* TODO - Parse data for emissions_output with JSON.parse() */}
           <Box variant="awsui-key-label"> More Actions</Box>
           <div>
             <Button>Trot</Button>
@@ -296,7 +280,6 @@ export const BittleCommandsTableConfig2 = () => {
       <SpaceBetween size="l">
         {/* First Item */}
         <div>
-          {/* TODO - Parse data for emissions_output with JSON.parse() */}
           <Box variant="awsui-key-label">Even MORE Actions</Box>
           <div>
             <Button>Crawl</Button>
@@ -313,8 +296,6 @@ export const BittleCommandsTableConfig2 = () => {
     </ColumnLayout>
   );
 };
-
-// TODO - Add second Table with list of buttons mapped to bittle commands
 
 // May not need this
 

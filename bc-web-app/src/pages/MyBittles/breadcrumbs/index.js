@@ -1,7 +1,7 @@
 export const resourcesBreadcrumbs = [
   {
     text: 'Bittle Control',
-    href: '/',
+    href: '/dashboard',
   },
   {
     text: 'My Bittles',

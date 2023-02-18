@@ -53,7 +53,7 @@ import '../../common/styles/servicehomepage.scss';
 
 // NEW
 // import { DashboardHeader, EC2Info } from './Header';
-import { S3ObjectsOverview } from './S3ObjectsOverview';
+import { FleetOverview } from './FleetOverview';
 import { ServiceHealth } from './ServiceHealth';
 import { EmissionsBarChart } from './S3ObjectsBarChart';
 import { EmissionsLineChart } from './S3ObjectsLineChart';
@@ -62,7 +62,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
 
 import { API, graphqlOperation } from 'aws-amplify';
-import { getOneObject, getAllObjects } from '../../graphql/queries';
+import { getAllBittles } from '../../graphql/queries';
 
 const Dashboard = ({ user }) => {
   return (
@@ -85,475 +85,51 @@ const Dashboard = ({ user }) => {
 export default withAuthenticator(Dashboard);
 
 const Content = ({ user }) => {
-  const [s3Objects, setS3Objects] = useState([]);
+  const [bittles, setBittles] = useState([]);
 
   useEffect(() => {
-    fetchS3Objects();
+    fetchBittles();
   }, []);
 
-  // 1. Map through existing 's3ObjectDataList' array and create new array with date properties for filtering
-  const dateSeparatedS3Objects = s3Objects.map((s3Object) => ({
-    ObjectId: s3Object.ObjectId,
-    Version: s3Object.Version,
-    DetailType: s3Object.DetailType,
-    Source: s3Object.Source,
-    FilePath: s3Object.FilePath,
-    AccountId: s3Object.AccountId,
-    CreatedAt: s3Object.CreatedAt,
-    Region: s3Object.Region,
-    CurrentBucket: s3Object.CurrentBucket,
-    OriginalBucket: s3Object.OriginalBucket,
-    ObjectSize: s3Object.ObjectSize,
-    SourceIPAddress: s3Object.SourceIPAddress,
-    LifecycleConfig: s3Object.LifecycleConfig,
+  // // 1. Map through existing 's3ObjectDataList' array and create new array with date properties for filtering
+  // const dateSeparatedS3Objects = s3Objects.map((s3Object) => ({
+  //   ObjectId: s3Object.ObjectId,
+  //   Version: s3Object.Version,
+  //   DetailType: s3Object.DetailType,
+  //   Source: s3Object.Source,
+  //   FilePath: s3Object.FilePath,
+  //   AccountId: s3Object.AccountId,
+  //   CreatedAt: s3Object.CreatedAt,
+  //   Region: s3Object.Region,
+  //   CurrentBucket: s3Object.CurrentBucket,
+  //   OriginalBucket: s3Object.OriginalBucket,
+  //   ObjectSize: s3Object.ObjectSize,
+  //   SourceIPAddress: s3Object.SourceIPAddress,
+  //   LifecycleConfig: s3Object.LifecycleConfig,
 
-    // emissions_output: JSON.parse(emission.emissions_output),
-    year: new Date(s3Object.CreatedAt).getFullYear(),
-    month: new Date(s3Object.CreatedAt).getMonth() + 1,
-    day: new Date(s3Object.CreatedAt).getDate(),
-    // time: new Date(s3Object.CreatedAt).getTime(),
-  }));
-  console.log('Date Separated S3 Objects', dateSeparatedS3Objects);
+  //   // emissions_output: JSON.parse(emission.emissions_output),
+  //   year: new Date(s3Object.CreatedAt).getFullYear(),
+  //   month: new Date(s3Object.CreatedAt).getMonth() + 1,
+  //   day: new Date(s3Object.CreatedAt).getDate(),
+  //   // time: new Date(s3Object.CreatedAt).getTime(),
+  // }));
+  // console.log('Date Separated S3 Objects', dateSeparatedS3Objects);
 
-  // 2. Map through 'dateSeparatedS3Objects' array and create new array with 's3Objects' filtered by month for 2022
-  const filteredS3Objects2022 = {
-    // - JANUARY -
-    jan: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 1)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - FEBRUARY -
-    feb: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 2)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - MARCH -
-    march: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 3)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - APRIL -
-    april: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 4)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - MAY -
-    may: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 5)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-    // - JUNE -
-    june: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 6)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - JULY -
-    july: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 7)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - AUGUST -
-    aug: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 8)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - SEPTEMBER -
-    sept: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 9)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - OCTOBER -
-    oct: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 10)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - NOVEMBER -
-    nov: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 11)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-
-    // - DEC -
-    dec: {
-      // dataSize (Object size in bytes)
-      dataSize: dateSeparatedS3Objects
-        .filter((s3Object) => s3Object.month === 12)
-        .map((s3Object) => s3Object.ObjectSize),
-    },
-  };
-  console.log('filteredS3Object2022', filteredS3Objects2022);
-
-  // 3. Take the sum of each emission for each month in 2020 and assign those items to new object
-  const filteredS3ObjectsTotal2022 = {
-    // - January -
-    jan: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.jan.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.jan.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.jan.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - February -
-    feb: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.feb.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.feb.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.feb.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - March -
-    march: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.march.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.march.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.march.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - April -
-    april: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.april.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.april.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.april.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - May -
-    may: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.may.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.may.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.may.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - June -
-    june: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.june.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.june.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.june.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - July -
-    july: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.july.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.july.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.july.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - August -
-    aug: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.aug.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.aug.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.aug.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - September -
-    sept: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.sept.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.sept.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.sept.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - October -
-    oct: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.oct.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.oct.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.oct.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - November -
-    nov: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.nov.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.nov.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.nov.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-
-    // - December -
-    dec: {
-      dataSize: parseFloat(
-        filteredS3Objects2022.dec.dataSize
-          .reduce((total, value) => total + value, 0)
-          .toFixed(2)
-      ),
-      dataSizeMB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.dec.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000
-        ).toFixed(2)
-      ),
-      dataSizeGB: parseFloat(
-        parseFloat(
-          filteredS3Objects2022.dec.dataSize
-            .reduce((total, value) => total + value, 0)
-            .toFixed(2) / 1000000000
-        ).toFixed(2)
-      ),
-    },
-  };
-  console.log('filteredS3ObjectsTotal2022', filteredS3ObjectsTotal2022);
-  const filteredS3ObjectsTotalSumGB2022 =
-    filteredS3ObjectsTotal2022.jan.dataSizeGB +
-    filteredS3ObjectsTotal2022.feb.dataSizeGB +
-    filteredS3ObjectsTotal2022.march.dataSizeGB +
-    filteredS3ObjectsTotal2022.april.dataSizeGB +
-    filteredS3ObjectsTotal2022.may.dataSizeGB +
-    filteredS3ObjectsTotal2022.june.dataSizeGB +
-    filteredS3ObjectsTotal2022.july.dataSizeGB +
-    filteredS3ObjectsTotal2022.aug.dataSizeGB +
-    filteredS3ObjectsTotal2022.sept.dataSizeGB +
-    filteredS3ObjectsTotal2022.oct.dataSizeGB +
-    filteredS3ObjectsTotal2022.nov.dataSizeGB +
-    filteredS3ObjectsTotal2022.dec.dataSizeGB;
-  console.log(
-    'filteredS3ObjectsTotalSumGB2022',
-    filteredS3ObjectsTotalSumGB2022
-  );
-
-  const fetchS3Objects = async () => {
+  const fetchBittles = async () => {
     try {
-      const s3ObjectData = await API.graphql(
-        graphqlOperation(getAllObjects, { limit: 10000 })
+      const BittleData = await API.graphql(
+        graphqlOperation(getAllBittles, { limit: 10000 })
       );
-      const s3ObjectsDataList = s3ObjectData.data.getAllObjects.items;
-      console.log('S3 Object List', s3ObjectsDataList);
-      setS3Objects(s3ObjectsDataList);
+      const BittleDataList = BittleData.data.getAllBittles.items;
+      console.log('Bittle List', BittleDataList);
+      setBittles(BittleDataList);
     } catch (error) {
-      console.log('error on fetching s3 objects', error);
+      console.log('error on fetching bittles', error);
     }
   };
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return (
     <>
-      {/* <Grid
-        gridDefinition={[
-          { colspan: { l: 8, m: 8, default: 12 } },
-          { colspan: { l: 4, m: 4, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 6, m: 6, default: 12 } },
-          { colspan: { l: 8, m: 8, default: 12 } },
-          { colspan: { l: 4, m: 4, default: 12 } },
-        ]}
-      >
-        <ServiceOverview />
-        <ServiceHealth loadHelpPanelContent={props.loadHelpPanelContent} />
-      <CPUUtilisation />
-      <NetworkTraffic />
-      <Alarms />
-      <InstancesLimits />
-      <Events />
-      <ZoneStatus />
-      <FeaturesSpotlight />
-    <AccountAttributes />
-      </Grid> */}
-      {/* <h1>Dashboard</h1> */}
-
-      {/* <ServiceOverview /> */}
       <TextContent>
         <div>
           <Grid className="custom-home__header" disableGutters>
@@ -582,11 +158,8 @@ const Content = ({ user }) => {
           </Grid>
         </div>
       </TextContent>
-      <S3ObjectsOverview
-        s3Objects={s3Objects}
-        s3ObjectSizeSum={filteredS3ObjectsTotalSumGB2022}
-      />
-      <EmissionsBarChart s3ObjectsMonthlyTotal={filteredS3ObjectsTotal2022} />
+      <FleetOverview bittles={bittles} />
+      {/* <EmissionsBarChart s3ObjectsMonthlyTotal={filteredS3ObjectsTotal2022} /> */}
       <EmissionsLineChart />
     </>
   );

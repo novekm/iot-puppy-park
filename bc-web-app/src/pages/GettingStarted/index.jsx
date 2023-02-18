@@ -65,7 +65,7 @@ const Content = () => {
               />
               <div className="custom-home__header-title">
                 <Box fontSize="display-l" fontWeight="bold" color="inherit">
-                  AWS Amplify
+                  Bittle Control
                 </Box>
                 <Box
                   fontSize="display-l"
@@ -73,13 +73,13 @@ const Content = () => {
                   fontWeight="light"
                   color="inherit"
                 >
-                  Automated Deployment of AWS Amplify Apps with IaC.
+                  Control your fleet of Petoi Bittle robot dogs at scale.
                 </Box>
                 <Box fontWeight="light">
                   <span className="custom-home__header-sub-title">
-                    This project serves as an example of how you can automate
-                    deployment of AWS Amplify Applications with IaC
-                    (Infrastructure as Code).
+                    This project serves as an example of how you can use AWS IoT
+                    Core (and other services) to control and manage a fleet of
+                    Petoi Bittles.
                     {/* Click <Link to={{ pathname: "/about-carbonlake"}}  target="_blank">here</Link> to learn more. */}
                     <br />
                     <br />
@@ -87,12 +87,11 @@ const Content = () => {
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://aws.amazon.com/amplify/"
+                      href="https://github.com/novekm/iot-puppy-park"
                     >
                       here
                     </a>{' '}
                     to learn more.
-                    {/* TODO - Replace this link with blog post link */}
                   </span>
                 </Box>
               </div>
@@ -104,41 +103,39 @@ const Content = () => {
         <Box margin="xxl" padding="l">
           <SpaceBetween size="l">
             <div>
-              <h1>Getting Started</h1>
+              <h1>About Bittle Control</h1>
               <Container>
                 <div>
                   <p>
-                    {/* Amazon TCA Quickstart is a contact center analytics tool
-                    built on AWS Services. Amazon TCA Quickstart reduces the
-                    undifferentiated heavy lifting of creating ML Models, API,
-                    Data Storage, Authentication, and many other items that come
-                    with leveraging detailed call analytics, and integrating
-                    those in a web application. */}
-                    {/* <br />
-                    <br /> */}
-                    This project is built with the React framework and AWS
-                    Amplify, leveraging public{' '}
+                    This solution serves as an example of how you can use AWS
+                    IoT Core (and other services) to control and manage a fleet
+                    of Petoi Bittles through a web application. <br />
+                    The solution was built by a team of AWS Solutions Architects
+                    in the{' '}
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://cloudscape.design/"
+                      href="https://aws.amazon.com/energy/"
                     >
-                      Cloudscape Design Components
+                      Energy & Utilities team.
                     </a>
-                    .
                     <br />
                     <br />
                     This project provides the following:
                   </p>
-                  <li>Secure Data Storage</li>
-                  <li>Authentication, Authorization, and Auditing</li>
-                  <li>Bittle Control Amplify Application</li>
+                  <li>Bittle Control AWS Amplify Application</li>
                   <li>Bittle Control GraphQL API</li>
+                  <li>IoT Connectivity</li>
+                  <li>Realtime Video Streaming</li>
+                  <li>Computer Vision</li>
+                  <li>Amazon Alexa Integration</li>
+                  <li>Authentication, Authorization, and Auditing</li>
+                  <li>Secure Data Storage</li>
                   <p>
-                    Data is ingested through the Landing Bucket, and can be
+                    {/* Data is ingested through the Landing Bucket, and can be
                     ingested from any service within or connected to the AWS
                     cloud.
-                    <br />
+                    <br /> */}
                   </p>
                 </div>
               </Container>
@@ -176,7 +173,7 @@ const Content = () => {
 
 export const ToolsContent = () => (
   <HelpPanel
-    header={<h2>bc Amplify App</h2>}
+    header={<h2>About</h2>}
     footer={
       <>
         <h3>
@@ -194,32 +191,20 @@ export const ToolsContent = () => (
           </li>
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/amplify/"
-              text="AWS Amplify"
+              href="https://github.com/novekm/iot-puppy-park"
+              text="IoT Puppy Park GitHub Repo"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/s3/"
-              text="Amazon S3"
+              href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog"
+              text="Petoi Bittle"
             />
           </li>
           <li>
             <ExternalLinkItem
-              href="https://aws.amazon.com/step-functions/"
-              text="AWS Step Functions"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://www.terraform.io/"
-              text="Terraform"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://aws.amazon.com/cdk/"
-              text="AWS CDK (Cloud Development Kit)"
+              href="https://www.petoi.camp/forum/"
+              text="Petoi Forum"
             />
           </li>
         </ul>
@@ -233,17 +218,37 @@ export const ToolsContent = () => (
     }
   >
     <p>
-      This bc app is meant to serve as an example of an application you can
-      build with AWS Amplify, while leveraging Infrastructure as Code. It is
-      built leveraging the AWS Amplify Libraries for JavaScript. For more
-      information, see
+      This app is meant to serve as an example of an application you can build
+      to control and manage{' '}
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog?utm_source=google-ads&utm_campaign=&utm_agid=&utm_term=&gclid=Cj0KCQiA6LyfBhC3ARIsAG4gkF_2UaBXbb3ZYK9ByyeKexTDR-T0mHoVt15Ns3JeG9rYfrb9B9hyX_0aAtaYEALw_wcB"
+      >
+        {' '}
+        Petoi Bittles.
+      </a>
+      <span> </span>
+      <span>
+        The app is built leveraging AWS Amplify, Cloudscape, Terraform, and the
+        AWS Amplify Libraries for JavaScript. For more information, see
+      </span>
       <a
         target="_blank"
         rel="noopener noreferrer"
         href="https://docs.amplify.aws/lib/q/platform/js/"
       >
         {' '}
-        AWS Amplify Libraries for JavaScript
+        AWS Amplify Libraries for JavaScript,
+      </a>
+      <span> and</span>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://cloudscape.design/"
+      >
+        {' '}
+        Cloudscape
       </a>
     </p>
   </HelpPanel>

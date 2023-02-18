@@ -47,7 +47,7 @@ const Sidebar = () => {
           text: 'Getting Started',
           expanded: true,
           items: [
-            { type: 'link', text: 'Getting Started', href: '/getting-started' },
+            { type: 'link', text: 'About Bittle Control', href: '/getting-started' },
             // { type: 'link', text: 'Setup Guide', href: '/setup-guide' },
             // { type: 'link', text: 'Case Studies', href: '/case-studies' },
           ],
