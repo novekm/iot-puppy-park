@@ -6,6 +6,7 @@
 
 ![Petoi Bittle Image](resources/petio-bittle-image.jpg)
 
+
 This project is meant to serve as an example of how you can connect a fleet of Petoi Bittles to AWS. If you're not familiar with **[Petoi Bittle](https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog?utm_source=google-ads&utm_campaign=&utm_agid=141849525757&utm_term=&gclid=CjwKCAiA_vKeBhAdEiwAFb_nrQYeIL6zf0sH8S0_gRDafo5FqLmbhOD-LMhOhvEq_o5zeaInmnawqBoCe98QAvD_BwE)**, it is a palm-sized, servo-activated quadruped robot dog. It's board (NyBoard) is a based on an Arduino Uno. There are a number of modules you can connect to Bittle, and a main one we are leveraging is the **[ESP8266](https://docs.petoi.com/communication-modules/wifi-esp8266)**. While Bittle comes with a web and mobile app that you can use the included Bluetooth module to issue commands, we have extended upon this to connect Bittle to AWS for added functionality.
 
 We have connected Bittle to **[AWS IoT Core](https://aws.amazon.com/iot-core/)** and have created a serverless full stack **[AWS Amplify](https://aws.amazon.com/amplify/)** App to control Bittle, as well as view live video and other device information for not just one Bittle, but ***an entire fleet of Bittles***. To provide a streamlined and repeatable deployment, we are leveraging **[Terraform](https://www.terraform.io/)** for Infrastructure as Code (IaC). If you are not too familiar with Terraform, don't worry - we have created a custom Terraform module to abstract away most of the complexity down to a few lines of code. For those more experienced with Terraform, feel free to customize and add on to this solution, we are making it completely open-source.
@@ -14,16 +15,20 @@ We have connected Bittle to **[AWS IoT Core](https://aws.amazon.com/iot-core/)**
 
  ## 🛠 What you will build!
 
-**TODO - Add architecture here**
-<!-- ![Amplify IaC architectural diagram](resources/architecture/IAC_bc_ARCH.png) -->
+![IoT Puppy Park Arch](resources/architecture/IPP_BASIC_ARCH.png)
+
 
 By using this solution, you will be able to connect one or multiple Petoi Bittles to AWS IoT core, and control them via MQTT messages, as well as view live video streams and other device data through a full stack serverless AWS Amplify Application.
 
 **TODO - Add screenshots of AWS Amplify App**
+![Bittle Control App | Dashboard](resources/app-screenshots/bc-dashboard-page.png)
+![Bittle Control App | My Bittles](resources/app-screenshots/bc-my-bittles-page.png)
+![Bittle Control App | Single Bittle](resources/app-screenshots/bc-single-bittle-page.png)
 
 
 The Amplify App is leveraging [Cloudscape](https://cloudscape.design/) an open-source React component library released by AWS. If it looks familiar to you, it is because the AWS Console is built with it.
 ![Cloudscape Homepage](resources/cloudscape-website.png)
+
 ## AWS Service List
 **TODO - Update these, they are subject to change**
 There are a number of AWS services used in this solution including:
