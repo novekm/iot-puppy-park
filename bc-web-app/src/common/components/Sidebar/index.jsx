@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { SideNavigation, Badge } from '@cloudscape-design/components';
@@ -32,16 +33,6 @@ const Sidebar = () => {
         //   ],
         // },
         {
-          type: 'section',
-          text: 'Getting Started',
-          expanded: true,
-          items: [
-            { type: 'link', text: 'Getting Started', href: '/getting-started' },
-            // { type: 'link', text: 'Setup Guide', href: '/setup-guide' },
-            // { type: 'link', text: 'Case Studies', href: '/case-studies' },
-          ],
-        },
-        {
           type: 'link',
           text: 'Dashboard',
           href: '/dashboard',
@@ -51,6 +42,17 @@ const Sidebar = () => {
           text: 'My Bittles',
           href: '/my-bittles',
         },
+        {
+          type: 'section',
+          text: 'Getting Started',
+          expanded: true,
+          items: [
+            { type: 'link', text: 'Getting Started', href: '/getting-started' },
+            // { type: 'link', text: 'Setup Guide', href: '/setup-guide' },
+            // { type: 'link', text: 'Case Studies', href: '/case-studies' },
+          ],
+        },
+
         {
           type: 'section',
           text: 'Admin',
@@ -76,39 +78,39 @@ const Sidebar = () => {
             },
           ],
         },
-        {
-          type: 'section',
-          text: 'Data Explorer',
-          expanded: true,
-          items: [
-            { type: 'link', text: 'S3 Objects', href: '/s3-objects' },
-            { type: 'link', text: 'Data Uploader', href: '/data-uploader' },
-            // {
-            //   type: 'link',
-            //   text: 'CLM Uploader',
-            //   href: '/custom-language-model-uploader',
-            // },
-            // {
-            //   type: 'link',
-            //   text: 'CV Uploader',
-            //   href: '/custom-vocabulary-uploader',
-            // },
-          ],
-        },
-        // Example of notifications in sidebar, uncomment this if not needed
-        {
-          type: 'link',
-          text: 'Notifications',
-          href: '#/notifications',
-          info: <Badge color="red">8</Badge>,
-        },
-        {
-          type: 'link',
-          text: 'Documentation',
-          // TODO - Link to public GitHub repo Amplify App Documentation
-          // href: "https://example.com",
-          external: true,
-        },
+        // {
+        //   type: 'section',
+        //   text: 'Data Explorer',
+        //   expanded: true,
+        //   items: [
+        //     { type: 'link', text: 'S3 Objects', href: '/s3-objects' },
+        //     { type: 'link', text: 'Data Uploader', href: '/data-uploader' },
+        //     // {
+        //     //   type: 'link',
+        //     //   text: 'CLM Uploader',
+        //     //   href: '/custom-language-model-uploader',
+        //     // },
+        //     // {
+        //     //   type: 'link',
+        //     //   text: 'CV Uploader',
+        //     //   href: '/custom-vocabulary-uploader',
+        //     // },
+        //   ],
+        // },
+        // // Example of notifications in sidebar, uncomment this if not needed
+        // {
+        //   type: 'link',
+        //   text: 'Notifications',
+        //   href: '#/notifications',
+        //   info: <Badge color="red">8</Badge>,
+        // },
+        // {
+        //   type: 'link',
+        //   text: 'Documentation',
+        //   // TODO - Link to public GitHub repo Amplify App Documentation
+        //   // href: "https://example.com",
+        //   external: true,
+        // },
       ]}
     />
   );

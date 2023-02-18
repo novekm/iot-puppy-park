@@ -27,6 +27,7 @@ resource "aws_appsync_graphql_api" "bc_appsync_graphql_api" {
   schema = <<EOF
 type Bittle  @aws_auth(cognito_groups: ["Admin", "Standard"])  {
   DeviceId: String!
+  DeviceName: String
   Battery: Float
   DeviceStatus: String
   ShortName: String

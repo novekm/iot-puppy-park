@@ -45,13 +45,13 @@ import Sidebar from '../../common/components/Sidebar';
 
 import { COLUMN_DEFINITIONS } from './MyBittlesTable/table-property-filter-config';
 
-import S3ObjectsTable from './MyBittlesTable';
+import MyBittlesTable from './MyBittlesTable';
 import { resourcesBreadcrumbs } from './breadcrumbs';
 
 // Styles
 import '../../common/styles/base.scss';
 
-const S3Objects = () => {
+const MyBittles = () => {
   const [columnDefinitions, saveWidths] = useColumnWidths(
     'React-TableServerSide-Widths',
     COLUMN_DEFINITIONS
@@ -63,7 +63,7 @@ const S3Objects = () => {
       // notifications={<Notifications successNotification={false} />}
       breadcrumbs={<Breadcrumbs />} // define these values in /breadcrumbs/index.js
       content={
-        <S3ObjectsTable
+        <MyBittlesTable
           columnDefinitions={columnDefinitions} // define these values in /TCAJobsTable/table-property-filter-config.jsx
           saveWidths={saveWidths}
           updateTools={() => setToolsOpen(true)}
@@ -78,7 +78,7 @@ const S3Objects = () => {
   );
 };
 
-export default S3Objects;
+export default MyBittles;
 
 const Content = () => {
   const [columnDefinitions, saveWidths] = useColumnWidths(
@@ -87,7 +87,7 @@ const Content = () => {
   );
   const { userId } = useParams();
   return (
-    <S3ObjectsTable
+    <MyBittlesTable
       columnDefinitions={columnDefinitions} // define these values in /TCAJobsTable/table-property-filter-config.jsx
       saveWidths={saveWidths}
       updateTools={() => setToolsOpen(true)}
@@ -104,9 +104,8 @@ export const Breadcrumbs = () => (
 );
 
 export const FullPageHeader = ({
-  resourceName = 'My Bittles',
+  resourceName = 'Bittles',
   createButtonText = 'Add Bittle',
-  // createButtonText = 'Upload File',
   ...props
 }) => {
   const navigate = useNavigate();
@@ -162,54 +161,17 @@ export const ToolsContent = () => (
               text="Amazon S3"
             />
           </li>
-          <li>
-            <ExternalLinkItem
-              href="https://github.com/novekm/iot-puppy-park"
-              text="IoT Puppy Park GitHub Repo"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://www.petoi.com/pages/bittle-open-source-bionic-robot-dog"
-              text="Petoi Bittle"
-            />
-          </li>
-          <li>
-            <ExternalLinkItem
-              href="https://www.petoi.camp/forum/"
-              text="Petoi Forum"
-            />
-          </li>
         </ul>
       </>
     }
   >
     <p>
-      View your current Bittles and relevant information. To drill down even
-      further into the details, and issue commands, choose the name of an
-      individual Bittle.
+      View your current current Bittes and relevant device information. To drill
+      down even further into the details and issue commands, select the name of
+      an individual Bittle.
     </p>
   </HelpPanel>
 );
-
-// export const InstanceHeader = ({ ...props }) => {
-//   const isOnlyOneSelected = props.selectedItems.length === 1;
-
-//   return (
-//     <TableHeader
-//       {...props}
-//       title="Instances"
-//       actionButtons={
-//         <SpaceBetween size="xs" direction="horizontal">
-//           <Button disabled={!isOnlyOneSelected}>View details</Button>
-//           <Button disabled={!isOnlyOneSelected}>Edit</Button>
-//           <Button disabled={props.selectedItems.length === 0}>Delete</Button>
-//           <Button variant="primary">Create instance</Button>
-//         </SpaceBetween>
-//       }
-//     />
-//   );
-// };
 
 export const MyBittlesTableEmptyState = ({ resourceName }) => {
   const navigate = useNavigate();
@@ -218,10 +180,10 @@ export const MyBittlesTableEmptyState = ({ resourceName }) => {
     <Box margin={{ vertical: 'xs' }} textAlign="center" color="inherit">
       <SpaceBetween size="xxs">
         <div>
-          <b>No {resourceName}s</b>
+          <b>No {resourceName}</b>
           <Box variant="p" color="inherit">
-            No {resourceName}s found. Click 'Create {resourceName}' to start the
-            pipeline.
+            No {resourceName}s found. Click 'Create {resourceName}' to add a
+            Bittle.
           </Box>
         </div>
         <Button onClick={() => navigate('/data-uploader')}>

@@ -1,6 +1,6 @@
 export const resourcesBreadcrumbs = [
   {
-    text: 'Bittle Control App',
+    text: 'Bittle Control',
     href: '/',
   },
   {

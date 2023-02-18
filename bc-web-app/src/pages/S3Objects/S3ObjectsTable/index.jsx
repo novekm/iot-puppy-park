@@ -28,7 +28,7 @@ import {
   getAllObjectsPaginated,
   getOneObject,
 } from '../../../graphql/queries';
-import { deleteOneJob } from '../../../graphql/mutations';
+import { deleteOneBittle } from '../../../graphql/mutations';
 
 import { getFilterCounterText } from '../../../common/resources/tableCounterStrings';
 import { FullPageHeader, S3ObjectsTableEmptyState } from '..';

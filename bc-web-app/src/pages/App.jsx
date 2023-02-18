@@ -17,6 +17,7 @@ import { Amplify } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import Dashboard from './Dashboard';
 import MyBittles from './MyBittles';
+import SingleBittle from './SingleBittle';
 import GettingStarted from './GettingStarted';
 import SetupGuide from './SetupGuide';
 import DataUploader from './DataUploader';
@@ -51,6 +52,7 @@ const App = ({ signOut, user }) => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/my-bittles" element={<MyBittles />} />
+        <Route path="/my-bittles/:DeviceId" element={<SingleBittle />} />
         <Route path="/getting-started" element={<GettingStarted />} />
         {/* <Route path="/setup-guide" element={<SetupGuide />} /> */}
         <Route path="/data-uploader" element={<DataUploader />} />

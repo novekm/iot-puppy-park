@@ -28,7 +28,7 @@ import {
   getAllBittlesPaginated,
   getOneBittle,
 } from '../../../graphql/queries';
-import { deleteOneJob } from '../../../graphql/mutations';
+import { deleteOneBittle } from '../../../graphql/mutations';
 
 import { getFilterCounterText } from '../../../common/resources/tableCounterStrings';
 import { FullPageHeader, MyBittlesTableEmptyState } from '../index';
@@ -57,7 +57,7 @@ const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
   // They use the general format: [x, setX] = useState(defaultX), where x is the attribute you want to keep track of.
   // For more info about state variables and hooks, see https://reactjs.org/docs/hooks-state.html.
 
-  const [s3Objects, setS3Objects] = useState([]);
+  const [Bittles, setBittles] = useState([]);
   // const [selectedTranscripts, setSelectedTranscripts] = useState([]);
 
   const [distributions, setDistributions] = useState([]);
@@ -76,7 +76,7 @@ const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
     collectionProps,
     paginationProps,
     propertyFilterProps,
-  } = useCollection(s3Objects, {
+  } = useCollection(Bittles, {
     propertyFiltering: {
       filteringProperties: FILTERING_PROPERTIES,
       empty: <MyBittlesTableEmptyState resourceName="Bittle" />,
@@ -94,17 +94,17 @@ const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
   });
 
   useEffect(() => {
-    fetchS3Objects();
+    fetchBittles();
   }, []);
 
-  const fetchS3Objects = async () => {
+  const fetchBittles = async () => {
     try {
       const BittleData = await API.graphql(
         graphqlOperation(getAllBittles, { limit: 10000 })
       );
       const BittleDataList = BittleData.data.getAllBittles.items;
       console.log('Bittles List', BittleDataList);
-      setS3Objects(BittleDataList);
+      setBittles(BittleDataList);
       setLoading(false);
     } catch (error) {
       console.log('error on fetching Bittles', error);
@@ -127,7 +127,7 @@ const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
       header={
         <FullPageHeader
           selectedItems={collectionProps.selectedItems}
-          totalItems={s3Objects}
+          totalItems={Bittles}
           updateTools={updateTools}
           serverSide={false}
         />
