@@ -1,7 +1,7 @@
 <!-- TODO - Update screenshots that say TCA, add GitHub instructions -->
-# Bittle Control App Documentation
+# Bittle Control App Documentation (WIP)
 ### Created by [Kevon Mayers](https://www.linkedin.com/in/kevonmayers)
-![image info](/resources/app-screenshots/bc_amplify_app_dashboard.png)
+![image info](/resources/app-screenshots/bc-dashboard-page.png)
 ## Introduction
 This bc app is used to serve as a demonstration for what you can do with the bc project's core features. This code is meant to be used purely for development/demo purpose. For production workloads it is ***highly*** recommended that you do your own extensive internal testing before using.
 
