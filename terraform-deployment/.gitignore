@@ -2,6 +2,8 @@
 .vscode/
 .vscode/*
 
+outputs.json
+
 ESP8266_AWS_IOT/
 ESP8266_AWS_IOT/*
 # Local .terraform directories
