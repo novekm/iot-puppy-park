@@ -31,8 +31,7 @@ import '../../common/styles/servicehomepage.scss';
 
 // Import images
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
-import iacBasicArch from '../../../../resources/architecture/IAC_SAMPLE_ARCH.png';
-import iacAdvancedArch from '../../../../resources/architecture/IAC_ADVANCED_ARCH.png';
+import ippBasicArch from '../../../../resources/architecture/IPP_BASIC_ARCH.png';
 
 const GettingStarted = () => {
   return (
@@ -146,14 +145,14 @@ const Content = () => {
                 {/* Make this flex later. maxWidth is not mobile responsive */}
                 <div>
                   <img
-                    src={iacBasicArch}
+                    src={ippBasicArch}
                     alt=""
                     style={{ maxWidth: '100%', paddingRight: '2em' }}
                   />
                 </div>
                 <div>{/* <p>This is the basic architecture.</p> */}</div>
               </Container>
-              <Container header={<Header>Detailed Architecture</Header>}>
+              {/* <Container header={<Header>Detailed Architecture</Header>}>
                 <div>
                   <img
                     src={iacAdvancedArch}
@@ -161,8 +160,7 @@ const Content = () => {
                     style={{ maxWidth: '100%', paddingRight: '2em' }}
                   />
                 </div>
-                <div>{/* <p>This is the detailed architecture.</p> */}</div>
-              </Container>
+              </Container> */}
             </div>
           </SpaceBetween>
         </Box>
