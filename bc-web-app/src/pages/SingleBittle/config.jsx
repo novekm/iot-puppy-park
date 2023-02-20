@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
@@ -30,14 +31,32 @@ import {
   SpaceBetween,
   Table,
 } from '@cloudscape-design/components';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Amplify, PubSub, Auth } from 'aws-amplify';
+import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import {
   TableEmptyState,
   InfoLink,
 } from '../../common/common-components-config';
 
 import { getOneBittle } from '../../graphql/queries';
+import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
 
+// Apply plugin with configuration
+Amplify.addPluggable(
+  new AWSIoTProvider({
+    aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
+
+    aws_pubsub_endpoint: `${outputsJSON.outputs.bc_iot_endpoint.value}`,
+    // aws_pubsub_endpoint:
+    //   'wss://xxxxxxxxxxxxx.iot.<YOUR-IOT-REGION>.amazonaws.com/mqtt',
+  })
+);
+// Auth.currentCredentials().then((info) => {
+//   const cognitoIdentityId = info.identityId;
+// });
+// console.log('cognito identity id:', cognitoIdentityId);
+console.log('aws_region:', outputsJSON.outputs.bc_aws_current_region.value);
+console.log('bc_iot_endpoint:', outputsJSON.outputs.bc_iot_endpoint.value);
 export const PageHeader = ({ buttons }) => {
   const { DeviceId } = useParams();
   return (
