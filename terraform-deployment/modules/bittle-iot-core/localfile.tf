@@ -324,6 +324,10 @@ resource "local_file" "outputs" {
       bc_aws_current_region = {
         value = "${data.aws_region.current.name}"
       },
+      # IoT
+      bc_iot_endpoint = {
+        value = "${data.aws_iot_endpoint.current.endpoint_address}"
+      }
       # AppSync
       bc_appsync_graphql_api_region = {
         value = "${data.aws_region.current.name}"
