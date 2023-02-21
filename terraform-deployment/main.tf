@@ -35,14 +35,10 @@ module "bittle-iot-core" {
   }
 
   # - Amplify App -
-  create_amplify_app = true
-  bc_create_codecommit_repo = false
+  create_amplify_app         = true
+  bc_create_codecommit_repo  = false
   bc_enable_gitlab_mirroring = false
-  bc_existing_repo_url = "https://github.com/novekm/iot-puppy-park"
 
-  # - SSM -
-  lookup_ssm_github_access_token = true // find the github access token in ssm
-  ssm_github_access_token_name = "github-access-token" // name of your ssm parameter
 
   # - Cognito -
   # Admin Users to create
@@ -51,13 +47,13 @@ module "bittle-iot-core" {
       username       = "admin"
       given_name     = "Default"
       family_name    = "Admin"
-      email          = "novekm@amazon.com"
+      email          = "admin@example.com"
       email_verified = true // no touchy
     },
-    KevonMayers : {
-      username       = "kmayers"
-      given_name     = "Kevon"
-      family_name    = "Mayers"
+    NarutoUzumaki : {
+      username       = "nuzumaki"
+      given_name     = "Naruto"
+      family_name    = "Uzumaki"
       email          = "kevonmayers31@gmail.com"
       email_verified = true // no touchy
     }
@@ -68,7 +64,7 @@ module "bittle-iot-core" {
       username       = "default"
       given_name     = "Default"
       family_name    = "User"
-      email          = "kevon_mayers@yahoo.com"
+      email          = "default@example.com"
       email_verified = true // no touchy
     }
   }
