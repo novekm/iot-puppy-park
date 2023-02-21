@@ -54,7 +54,7 @@ import { getOneBittle } from '../../graphql/queries';
 import '../../common/styles/base.scss';
 
 // Main component for page
-const SingleBittle = () => {
+const BittleFleetControl = () => {
   const [toolsOpen, setToolsOpen] = useState(false);
   const { DeviceId } = useParams();
   const [singleBittle, setSingleBittle] = useState([]);
@@ -81,20 +81,7 @@ const SingleBittle = () => {
 
   // Subscribe to the specific topic relating to the current bittle on the page on page load
   useEffect(() => {
-    const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
-      next: (data) => console.log('Message received', data),
-      error: (error) => console.error(error),
-      complete: () => console.log('Done'),
-    });
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
-  // Subscribe to the specific global topic relating to the current bittle on the page on page load
-  useEffect(() => {
-    const sub = PubSub.subscribe(
-      `${singleBittle.DeviceName}/sub-global`
-    ).subscribe({
+    const sub = PubSub.subscribe(`bittles-global/sub`).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
       complete: () => console.log('Done'),
@@ -106,14 +93,13 @@ const SingleBittle = () => {
 
   return (
     <AppLayout
-      navigation={<Sidebar activeHref="/single-bittle" />}
+      navigation={<Sidebar activeHref="/bittle-fleet-control" />}
       // notifications={<Notifications successNotification={false} />}
-      breadcrumbs={<Breadcrumbs singleBittle={singleBittle} />} // define these values in /breadcrumbs/index.js
+      breadcrumbs={<Breadcrumbs />} // define these values in /breadcrumbs/index.js
       content={
         <ContentLayout
           header={
             <PageHeader
-              singleBittle={singleBittle}
               buttons={[{ text: 'My Bittles', href: '/my-bittles' }]}
               // buttons={[{ text: 'Edit' }, { text: 'Delete' }]}
               // loadHelpPanelContent={this.loadHelpPanelContent.bind(this)}
@@ -121,10 +107,7 @@ const SingleBittle = () => {
           }
         >
           <SpaceBetween size="l">
-            <BittleDeviceDetailsTable
-              singleBittle={singleBittle}
-              isInProgress
-            />
+            <BittleDeviceDetailsTable isInProgress />
           </SpaceBetween>
         </ContentLayout>
       }
@@ -137,7 +120,7 @@ const SingleBittle = () => {
   );
 };
 
-export default SingleBittle;
+export default BittleFleetControl;
 
 // Bittle Device Details Table - Configuration is in config.jsx
 const BittleDeviceDetailsTable = ({
@@ -151,16 +134,16 @@ const BittleDeviceDetailsTable = ({
       header={
         <Header variant="h2">
           {/* Table Title */}
-          Device Details
+          Global Commands
         </Header>
       }
     >
-      <BittleDeviceDetailsTableConfig
+      {/* <BittleDeviceDetailsTableConfig
         // Pass singleBittle data as prop
-        singleBittle={singleBittle}
+
         isInProgress={isInProgress}
-      />
-      <BittleCommandsTableConfig singleBittle={singleBittle} />
+      /> */}
+      <BittleCommandsTableConfig />
       {/* Option 2 for commands layout */}
       {/* <BittleCommandsTableConfig2 /> */}
     </Container>
@@ -179,7 +162,7 @@ export const Breadcrumbs = ({ singleBittle }) => (
         href: '/my-bittles',
       },
       {
-        text: `${singleBittle.DeviceName}`,
+        text: 'Fleet Control',
         href: '#',
       },
     ]}
@@ -191,7 +174,7 @@ export const Breadcrumbs = ({ singleBittle }) => (
 // Info pop out window seen when clicking 'info' or the i in a circle button on right side of page
 export const ToolsContent = () => (
   <HelpPanel
-    header={<h2>Device Details</h2>}
+    header={<h2>Fleet Control</h2>}
     footer={
       <>
         <h3>
@@ -224,8 +207,8 @@ export const ToolsContent = () => (
     }
   >
     <p>
-      This page is a view into your selected Bittle and related information such
-      as the Device Name, Device Id, Device Status, Battery, and more.
+      This page is for managing your entire fleet at scale. Click the buttons to
+      issue global commands to all connected bittles.
     </p>
   </HelpPanel>
 );

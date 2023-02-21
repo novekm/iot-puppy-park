@@ -153,6 +153,26 @@ data "aws_iam_policy_document" "bc_amplify_trust_relationship" {
 
 
 # --- CUSTOMER MANAGED POLICIES (RESTRICTED ACCESS) ---
+# - IoT Policies -
+# IoT Customer Managed Policy (All Actions)
+# data "aws_iam_policy_document" "bc_iot_restricted_access_policy" {
+#   count = var.create_restricted_access_roles ? 1 : 0
+#   # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
+#   statement {
+#     effect  = "Allow"
+#     actions = ["iot:Connect", "iot:Publish", "iot:Subscribe", "iot:Receive"]
+#     resources = [
+#       "*",
+#     ]
+#   }
+# }
+# resource "aws_iam_policy" "bc_iot_restricted_access_policy" {
+#   count       = var.create_restricted_access_roles ? 1 : 0
+#   name        = "bc_ioy_restricted_access_policy"
+#   description = "Policy granting necessary IoT permissions fleet management of Petoi Bittles via Bittle Control App."
+#   policy      = data.aws_iam_policy_document.bc_iot_restricted_access_policy[0].json
+
+# }
 # - S3 Policies-
 # S3 Customer Managed Policy (Restricted Access) - Admin
 data "aws_iam_policy_document" "bc_s3_restricted_access_policy" {
@@ -328,10 +348,13 @@ resource "aws_iam_role" "bc_cognito_authrole_restricted_access" {
   assume_role_policy = data.aws_iam_policy_document.bc_cognito_authrole_trust_relationship.json
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+    "arn:aws:iam::aws:policy/AWSIoTConfigAccess",
+    "arn:aws:iam::aws:policy/AWSIoTDataAccess",
     aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn
+    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_iot_restricted_access_policy[0].arn,
   ]
-
+  max_session_duration  = "43200" // duration in seconds
   force_detach_policies = true
   path                  = "/${var.bc_app_name}/"
   tags = merge(
@@ -353,7 +376,7 @@ resource "aws_iam_role" "bc_cognito_unauthrole_restricted_access" {
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
   ]
-
+  max_session_duration  = "43200" // duration in seconds
   force_detach_policies = true
   path                  = "/${var.bc_app_name}/"
   tags = merge(
@@ -374,10 +397,13 @@ resource "aws_iam_role" "bc_cognito_admin_group_restricted_access" {
   description        = "Role granting full DynamoDB permissions for the bc_devicess DynamoDB table."
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+    "arn:aws:iam::aws:policy/AWSIoTConfigAccess",
+    "arn:aws:iam::aws:policy/AWSIoTDataAccess",
     aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn
+    aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_iot_restricted_access_policy[0].arn,
   ]
-
+  max_session_duration  = "43200" // duration in seconds
   force_detach_policies = true
   path                  = "/${var.bc_app_name}/"
   tags = merge(
@@ -401,7 +427,7 @@ resource "aws_iam_role" "bc_cognito_standard_group_restricted_access" {
     "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
     aws_iam_policy.bc_dynamodb_restricted_access_read_only_policy[0].arn
   ]
-
+  max_session_duration  = "43200" // duration in seconds
   force_detach_policies = true
   path                  = "/${var.bc_app_name}/"
   tags = merge(
@@ -525,7 +551,7 @@ resource "aws_iam_role" "bc_step_functions_master_restricted_access" {
 # Amplify
 
 resource "aws_iam_role" "bc_amplify_codecommit" {
-  count = var.bc_create_codecommit_repo ? 1 : 0
+  count               = var.bc_create_codecommit_repo ? 1 : 0
   name                = "bc_amplify_codecommit"
   assume_role_policy  = data.aws_iam_policy_document.bc_amplify_trust_relationship.json
   managed_policy_arns = ["arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"]

@@ -13,6 +13,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@aws-amplify/pubsub": "^5.0.15",
     "@aws-amplify/ui-react": "^3.5.1",
     "@cloudscape-design/collection-hooks": "^1.0.7",
     "@cloudscape-design/components": "^3.0.45",

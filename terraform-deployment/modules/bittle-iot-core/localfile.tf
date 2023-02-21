@@ -113,6 +113,8 @@ resource "local_file" "dynamic_ino" {
     // These must match what is in IoT Core
     #define AWS_IOT_PUBLISH_TOPIC   "${each.value.name}/pub"
     #define AWS_IOT_SUBSCRIBE_TOPIC "${each.value.name}/sub"
+    #define AWS_IOT_PUBLISH_TOPIC_GLOBAL   "bittles-global/pub"
+    #define AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL "bittles-global/sub"
 
     WiFiClientSecure net;
 
@@ -241,6 +243,7 @@ resource "local_file" "dynamic_ino" {
       }
       // Subscribe to a topic
       client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
+      client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL);
 
       Serial.println("AWS IoT Connected!");
     }
@@ -324,6 +327,10 @@ resource "local_file" "outputs" {
       bc_aws_current_region = {
         value = "${data.aws_region.current.name}"
       },
+      # IoT
+      bc_iot_endpoint = {
+        value = "${data.aws_iot_endpoint.current.endpoint_address}"
+      }
       # AppSync
       bc_appsync_graphql_api_region = {
         value = "${data.aws_region.current.name}"
