@@ -113,8 +113,8 @@ resource "local_file" "dynamic_ino" {
     // These must match what is in IoT Core
     #define AWS_IOT_PUBLISH_TOPIC   "${each.value.name}/pub"
     #define AWS_IOT_SUBSCRIBE_TOPIC "${each.value.name}/sub"
-    //#define AWS_IOT_PUBLISH_TOPIC_GLOBAL   "bittles-global/pub"
-    //# define AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL "bittles-global/sub"
+    #define AWS_IOT_PUBLISH_TOPIC_GLOBAL   "bittles-global/pub"
+    #define AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL "bittles-global/sub"
 
     WiFiClientSecure net;
 
@@ -243,7 +243,7 @@ resource "local_file" "dynamic_ino" {
       }
       // Subscribe to a topic
       client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
-      //client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL);
+      client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC_GLOBAL);
 
       Serial.println("AWS IoT Connected!");
     }
