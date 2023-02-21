@@ -9,3 +9,7 @@ There are several examples you can leverage to get started with deployment. Some
 6. Plan Terraform deployment **`terraform plan`**
 7. Apply Terraform plan **`terraform apply`**
 8. ✅ 🎉 Your infrastructure should be successfully deployed into your AWS account.
+
+
+# Basic Deployment
+This deploys all necessities with the exception of the AWS Amplify App. The app will however still be available locally. To start the dev server, navigate to 'bc-web-app' run 'npm i' then 'npm run dev' to start the dev server. To deploy the full AWS Amplify App, see either the github-deployment or gitlab-deployment folders
