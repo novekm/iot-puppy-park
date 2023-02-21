@@ -45,16 +45,6 @@ import {
 import { getOneBittle } from '../../graphql/queries';
 import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
 
-// Apply plugin with configuration
-Amplify.addPluggable(
-  new AWSIoTProvider({
-    aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
-    aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
-    // aws_pubsub_endpoint:
-    //   'wss://xxxxxxxxxxxxx.iot.<YOUR-IOT-REGION>.amazonaws.com/mqtt',
-  })
-);
-
 Hub.listen('pubsub', (data) => {
   const { payload } = data;
   if (payload.event === CONNECTION_STATE_CHANGE) {
@@ -64,10 +54,10 @@ Hub.listen('pubsub', (data) => {
   }
 });
 
-// console.log('aws_region:', outputsJSON.outputs.bc_aws_current_region.value);
-// console.log('bc_iot_endpoint:', outputsJSON.outputs.bc_iot_endpoint.value);
-
 export const PageHeader = ({ buttons, singleBittle }) => {
+  useEffect(() => {
+    console.log('rendered');
+  });
   return (
     <Header
       variant="h1"
@@ -195,9 +185,9 @@ export const BittleCommandsTableConfig = () => {
           </div>
           <div>
             <Button
-              onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kwkL' })
-              }
+              onClick={() => {
+                PubSub.publish(`bittles-global/sub`, { message: 'kwkL' });
+              }}
             >
               Forward L
             </Button>
