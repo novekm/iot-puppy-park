@@ -31,8 +31,12 @@ import {
   SpaceBetween,
   Table,
 } from '@cloudscape-design/components';
-import { API, graphqlOperation, Amplify, PubSub, Auth } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub';
+import { API, graphqlOperation, Amplify, PubSub, Auth, Hub } from 'aws-amplify';
+import {
+  AWSIoTProvider,
+  CONNECTION_STATE_CHANGE,
+  ConnectionState,
+} from '@aws-amplify/pubsub';
 import {
   TableEmptyState,
   InfoLink,
@@ -45,20 +49,25 @@ import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-cor
 Amplify.addPluggable(
   new AWSIoTProvider({
     aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
-
-    aws_pubsub_endpoint: `${outputsJSON.outputs.bc_iot_endpoint.value}`,
+    aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
     // aws_pubsub_endpoint:
     //   'wss://xxxxxxxxxxxxx.iot.<YOUR-IOT-REGION>.amazonaws.com/mqtt',
   })
 );
-// Auth.currentCredentials().then((info) => {
-//   const cognitoIdentityId = info.identityId;
-// });
-// console.log('cognito identity id:', cognitoIdentityId);
-console.log('aws_region:', outputsJSON.outputs.bc_aws_current_region.value);
-console.log('bc_iot_endpoint:', outputsJSON.outputs.bc_iot_endpoint.value);
-export const PageHeader = ({ buttons }) => {
-  const { DeviceId } = useParams();
+
+Hub.listen('pubsub', (data) => {
+  const { payload } = data;
+  if (payload.event === CONNECTION_STATE_CHANGE) {
+    // const connectionState = payload.data.connectionState as ConnectionState;
+    // const connectionState = payload.data.connectionState;
+    console.log(payload.data.connectionState, payload);
+  }
+});
+
+// console.log('aws_region:', outputsJSON.outputs.bc_aws_current_region.value);
+// console.log('bc_iot_endpoint:', outputsJSON.outputs.bc_iot_endpoint.value);
+
+export const PageHeader = ({ buttons, singleBittle }) => {
   return (
     <Header
       variant="h1"
@@ -82,38 +91,17 @@ export const PageHeader = ({ buttons }) => {
         </SpaceBetween>
       }
     >
-      {/* {SINGLE_BITTLE.id} */}
-      {/* hello */}
-      {/* TODO - Pass in Bittle prop and reference the DeviceName below */}
-      {DeviceId}
-      {/* Bittle 2 */}
+      {/* Reference 'singleBittle' prop passed by SingleBittle component in index.jsx */}
+      {singleBittle.DeviceName}
     </Header>
   );
 };
 
 // Content/formatting for the Bittle Device Details table
-export const BittleDeviceDetailsTableConfig = ({ isInProgress }) => {
-  const { DeviceId } = useParams();
-  const [singleBittle, setSingleBittle] = useState([]);
-  useEffect(() => {
-    fetchSingleBittle();
-  }, []);
-
-  const fetchSingleBittle = async () => {
-    // let { DeviceId } = useParams();
-    try {
-      const singleBittleData = await API.graphql(
-        graphqlOperation(getOneBittle, { DeviceId: `${DeviceId}` })
-      );
-      const singleBittleDataList = singleBittleData.data.getOneBittle;
-      console.log('Single Bittle List', singleBittleDataList);
-      setSingleBittle(singleBittleDataList);
-      // setLoading(false)
-    } catch (error) {
-      console.log('error on fetching single bittle', error);
-    }
-  };
-
+export const BittleDeviceDetailsTableConfig = ({
+  isInProgress,
+  singleBittle,
+}) => {
   const bittleData = singleBittle;
   console.log(bittleData);
 
@@ -182,7 +170,13 @@ export const BittleDeviceDetailsTableConfig = ({ isInProgress }) => {
   );
 };
 // OPTION 1 - Content/formatting for the Bittle Commands table
-export const BittleCommandsTableConfig = () => {
+export const BittleCommandsTableConfig = ({ singleBittle }) => {
+  const singleBittleName = singleBittle.DeviceName;
+  console.log(
+    'BittleCommandsTableConfig - Single Bittle Name:',
+    singleBittleName
+  );
+
   return (
     <ColumnLayout columns={3} variant="text-grid">
       {/* ------------ FIRST COLUMN ------------ */}
@@ -191,19 +185,72 @@ export const BittleCommandsTableConfig = () => {
         <div>
           <Box variant="awsui-key-label">Movements</Box>
           <div>
-            <Button>Forward</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkF' })
+              }
+            >
+              Forward
+            </Button>
           </div>
           <div>
-            <Button>Forward L</Button>
-            <Button>Forward R</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkL' })
+              }
+            >
+              Forward L
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkR' })
+              }
+            >
+              Forward R
+            </Button>
           </div>
           <div>
-            <Button>Back L</Button>
-            <Button>Back R</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbkL' })
+              }
+            >
+              Back L
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbkR' })
+              }
+            >
+              Back R
+            </Button>
           </div>
           <div>
-            <Button>Back</Button>
-            <Button variant="primary">Stop</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbk' })
+              }
+            >
+              Back
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, {
+                  message: 'kbalance',
+                })
+              }
+              variant="primary"
+            >
+              Stop
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'd' })
+              }
+              variant="primary"
+            >
+              Rest
+            </Button>
           </div>
         </div>
       </SpaceBetween>
@@ -215,13 +262,33 @@ export const BittleCommandsTableConfig = () => {
           {/* TODO - Parse data for emissions_output with JSON.parse() */}
           <Box variant="awsui-key-label">Mode</Box>
           <div>
-            <Button>Gyro On/Off</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'g' })
+              }
+            >
+              Gyro On/Off
+            </Button>
           </div>
           <div>
-            <Button>Calibration</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'c' })
+              }
+            >
+              Calibration
+            </Button>
           </div>
           <div>
-            <Button>Balanced</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, {
+                  message: 'kbalance',
+                })
+              }
+            >
+              Balanced
+            </Button>
           </div>
         </div>
       </SpaceBetween>
@@ -233,24 +300,98 @@ export const BittleCommandsTableConfig = () => {
           {/* TODO - Parse data for emissions_output with JSON.parse() */}
           <Box variant="awsui-key-label">Actions</Box>
           <div>
-            <Button>Walk</Button>
-            <Button>Sit</Button>
-            <Button>Hello</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkF' })
+              }
+            >
+              Walk
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'ksit' })
+              }
+            >
+              Sit
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'khi' })
+              }
+            >
+              Hello
+            </Button>
           </div>
           <div>
-            <Button>Pee</Button>
-            <Button>Trot</Button>
-            <Button>Check</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kpee' })
+              }
+            >
+              Pee
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'ktrF' })
+              }
+            >
+              Trot
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kck' })
+              }
+            >
+              Check
+            </Button>
           </div>
           <div>
-            <Button>Stepping</Button>
-            <Button>Push Ups</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kvtF' })
+              }
+            >
+              Stepping
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kpu' })
+              }
+            >
+              Push Ups
+            </Button>
           </div>
           <div>
-            <Button>Stretch</Button>
-            <Button>Butt Up</Button>
-            <Button>Run</Button>
-            <Button>Crawl</Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kstr' })
+              }
+            >
+              Stretch
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, {
+                  message: 'kbuttUp',
+                })
+              }
+            >
+              Butt Up
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'krnF' })
+              }
+            >
+              Run
+            </Button>
+            <Button
+              onClick={() =>
+                PubSub.publish(`${singleBittleName}/sub`, { message: 'kcrF' })
+              }
+            >
+              Crawl
+            </Button>
           </div>
         </div>
       </SpaceBetween>

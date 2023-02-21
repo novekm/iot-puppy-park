@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
@@ -25,6 +27,9 @@ import {
   ContentLayout,
 } from '@cloudscape-design/components';
 
+// Amplify
+import { API, graphqlOperation, Amplify, PubSub, Auth, Hub } from 'aws-amplify';
+
 // Common
 import {
   ExternalLinkItem,
@@ -34,8 +39,7 @@ import {
 } from '../../common/common-components-config';
 import Sidebar from '../../common/components/Sidebar';
 
-import { resourcesBreadcrumbs } from './breadcrumbs';
-
+// Page configuration components
 import {
   PageHeader,
   BittleDeviceDetailsTableConfig,
@@ -43,54 +47,84 @@ import {
   BittleCommandsTableConfig2,
 } from './config';
 
+// API functions
+import { getOneBittle } from '../../graphql/queries';
+
 // Styles
 import '../../common/styles/base.scss';
-// import toolsContent from '../SingleBittle/tools-content';
 
-const BittleDeviceDetailsTable = ({
-  loadHelpPanelContent,
-  isInProgress,
-  setToolsOpen,
-}) => (
-  <Container
-    header={
-      <Header
-        variant="h2"
-        // info={
-        //   <InfoLink onFollow={() =>  setToolsOpen(true)} ariaLabel={'Information about distribution settings.'} />
-        // }
-      >
-        Device Details
-      </Header>
-    }
-  >
-    <BittleDeviceDetailsTableConfig isInProgress={isInProgress} />
-    <BittleCommandsTableConfig />
-    {/* Option 2 for commands layout */}
-    {/* <BittleCommandsTableConfig2 /> */}
-  </Container>
-);
-
+// Main component for page
 const SingleBittle = () => {
   const [toolsOpen, setToolsOpen] = useState(false);
+  const { DeviceId } = useParams();
+  const [singleBittle, setSingleBittle] = useState([]);
 
-  // let {activityEventId} = useParams();
+  // Fetch data for one bittle by 'DeviceId' specified in browser URL via useParams hook
+  const fetchSingleBittle = async () => {
+    try {
+      const singleBittleData = await API.graphql(
+        graphqlOperation(getOneBittle, { DeviceId: `${DeviceId}` })
+      );
+      const singleBittleDataList = singleBittleData.data.getOneBittle;
+      console.log('Single Bittle List', singleBittleDataList);
+      setSingleBittle(singleBittleDataList);
+      // setLoading(false)
+    } catch (error) {
+      console.log('error on fetching single bittle', error);
+    }
+  };
+
+  // Run the fetchSingleBittle() function on page load
+  useEffect(() => {
+    fetchSingleBittle();
+  }, []);
+
+  // Subscribe to the specific topic relating to the current bittle on the page on page load
+  useEffect(() => {
+    const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
+      next: (data) => console.log('Message received', data),
+      error: (error) => console.error(error),
+      complete: () => console.log('Done'),
+    });
+    return () => {
+      sub.unsubscribe();
+    };
+  }, []);
+  // Subscribe to the specific global topic relating to the current bittle on the page on page load
+  useEffect(() => {
+    const sub = PubSub.subscribe(
+      `${singleBittle.DeviceName}/sub-global`
+    ).subscribe({
+      next: (data) => console.log('Message received', data),
+      error: (error) => console.error(error),
+      complete: () => console.log('Done'),
+    });
+    return () => {
+      sub.unsubscribe();
+    };
+  }, []);
+
   return (
     <AppLayout
       navigation={<Sidebar activeHref="/single-bittle" />}
       // notifications={<Notifications successNotification={false} />}
-      breadcrumbs={<Breadcrumbs />} // define these values in /breadcrumbs/index.js
+      breadcrumbs={<Breadcrumbs singleBittle={singleBittle} />} // define these values in /breadcrumbs/index.js
       content={
         <ContentLayout
           header={
             <PageHeader
-              buttons={[{ text: 'Edit' }, { text: 'Delete' }]}
+              singleBittle={singleBittle}
+              buttons={[{ text: 'My Bittles', href: '/my-bittles' }]}
+              // buttons={[{ text: 'Edit' }, { text: 'Delete' }]}
               // loadHelpPanelContent={this.loadHelpPanelContent.bind(this)}
             />
           }
         >
           <SpaceBetween size="l">
-            <BittleDeviceDetailsTable isInProgress />
+            <BittleDeviceDetailsTable
+              singleBittle={singleBittle}
+              isInProgress
+            />
           </SpaceBetween>
         </ContentLayout>
       }
@@ -105,41 +139,54 @@ const SingleBittle = () => {
 
 export default SingleBittle;
 
-export const Breadcrumbs = () => (
+// Bittle Device Details Table - Configuration is in config.jsx
+const BittleDeviceDetailsTable = ({
+  singleBittle,
+  loadHelpPanelContent,
+  isInProgress,
+  setToolsOpen,
+}) => {
+  return (
+    <Container
+      header={
+        <Header variant="h2">
+          {/* Table Title */}
+          Device Details
+        </Header>
+      }
+    >
+      <BittleDeviceDetailsTableConfig
+        // Pass singleBittle data as prop
+        singleBittle={singleBittle}
+        isInProgress={isInProgress}
+      />
+      <BittleCommandsTableConfig singleBittle={singleBittle} />
+      {/* Option 2 for commands layout */}
+      {/* <BittleCommandsTableConfig2 /> */}
+    </Container>
+  );
+};
+
+export const Breadcrumbs = ({ singleBittle }) => (
   <BreadcrumbGroup
-    items={resourcesBreadcrumbs}
+    items={[
+      {
+        text: ' Bittle Control',
+        href: '/dashboard',
+      },
+      {
+        text: 'My Bittles',
+        href: '/my-bittles',
+      },
+      {
+        text: `${singleBittle.DeviceName}`,
+        href: '#',
+      },
+    ]}
     expandAriaLabel="Show path"
     ariaLabel="Breadcrumbs"
   />
 );
-
-// export const FullPageHeader = ({
-
-//   resourceName = 'carbon-lake-AGKI571',
-//   createButtonText = 'Upload Emission Data',
-//   // createButtonText = 'Upload File',
-//   ...props
-// }) => {
-//   const navigate = useNavigate();
-//   const isOnlyOneSelected = props.selectedItems.length === 1;
-
-//   return (
-//     <TableHeader
-//       variant="awsui-h1-sticky"
-//       title={resourceName}
-//       actionButtons={
-//         <SpaceBetween size="xs" direction="horizontal">
-//           {/* <Button disabled={!isOnlyOneSelected}>View details</Button> */}
-//           <Button disabled={!isOnlyOneSelected}>Edit</Button>
-//           <Button disabled={props.selectedItems.length === 0}>Delete</Button>
-//           {/* <Button onClick={() => navigate("/data-uploader")} variant="primary">{createButtonText}</Button> */}
-//           {/* <Button onClick={() => navigate("/data-uploader")} variant="primary">{createButtonText}</Button> */}
-//         </SpaceBetween>
-//       }
-//       {...props}
-//     />
-//   );
-// };
 
 // Info pop out window seen when clicking 'info' or the i in a circle button on right side of page
 export const ToolsContent = () => (
