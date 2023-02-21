@@ -13,11 +13,12 @@ import React from 'react';
 import { Route, Routes, Link, useParams } from 'react-router-dom';
 
 // Components
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import Dashboard from './Dashboard';
 import MyBittles from './MyBittles';
 import SingleBittle from './SingleBittle';
+import BittleFleetControl from './BittleFleetControl';
 import GettingStarted from './GettingStarted';
 import SetupGuide from './SetupGuide';
 import DataUploader from './DataUploader';
@@ -40,6 +41,13 @@ import { AmplifyConfig } from '../config/amplify-config';
 
 Amplify.configure(AmplifyConfig);
 
+// Uncomment line 44 for debugging
+// Amplify.Logger.LOG_LEVEL = 'DEBUG';
+Auth.currentCredentials().then((info) => {
+  const cognitoIdentityId = info.identityId;
+  console.log('cognito identity id', cognitoIdentityId);
+});
+
 // eslint-disable-next-line react/prop-types
 const App = ({ signOut, user }) => {
   // let { userId } = useParams();
@@ -53,6 +61,7 @@ const App = ({ signOut, user }) => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/my-bittles" element={<MyBittles />} />
         <Route path="/my-bittles/:DeviceId" element={<SingleBittle />} />
+        <Route path="/bittle-fleet-control" element={<BittleFleetControl />} />
         <Route path="/getting-started" element={<GettingStarted />} />
         {/* <Route path="/setup-guide" element={<SetupGuide />} /> */}
         <Route path="/data-uploader" element={<DataUploader />} />

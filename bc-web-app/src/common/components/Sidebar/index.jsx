@@ -43,11 +43,20 @@ const Sidebar = () => {
           href: '/my-bittles',
         },
         {
+          type: 'link',
+          text: 'Fleet Control',
+          href: '/bittle-fleet-control',
+        },
+        {
           type: 'section',
           text: 'Getting Started',
           expanded: true,
           items: [
-            { type: 'link', text: 'About Bittle Control', href: '/getting-started' },
+            {
+              type: 'link',
+              text: 'About Bittle Control',
+              href: '/getting-started',
+            },
             // { type: 'link', text: 'Setup Guide', href: '/setup-guide' },
             // { type: 'link', text: 'Case Studies', href: '/case-studies' },
           ],
