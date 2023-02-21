@@ -1,8 +1,19 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // -- AWS AMPLIFY CONFIGURATION PARAMETERS --
 
-// import { Amplify, Auth, Storage } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
+import { AWSIoTProvider } from '@aws-amplify/pubsub';
 // eslint-disable-next-line import/no-unresolved
 import outputsJSON from '../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
+
+// Apply plugin with configuration - make sure you only declare this once or you will get
+// Duplicate messages in IoT Core.
+Amplify.addPluggable(
+  new AWSIoTProvider({
+    aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
+    aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
+  })
+);
 
 const AmplifyConfig = {
   // Existing API
