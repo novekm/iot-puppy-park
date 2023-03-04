@@ -28,7 +28,12 @@ import {
 } from '@cloudscape-design/components';
 
 // Amplify
-import { API, graphqlOperation, Amplify, PubSub, Auth, Hub } from 'aws-amplify';
+import { API, graphqlOperation, Amplify, Auth, PubSub, Hub } from 'aws-amplify';
+import {
+  AWSIoTProvider,
+  CONNECTION_STATE_CHANGE,
+  ConnectionState,
+} from '@aws-amplify/pubsub';
 
 // Common
 import {
@@ -53,6 +58,15 @@ import { getOneBittle } from '../../graphql/queries';
 // Styles
 import '../../common/styles/base.scss';
 
+// import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
+
+// Amplify.addPluggable(
+//   new AWSIoTProvider({
+//     aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
+//     aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
+//   })
+// );
+
 // Main component for page
 const SingleBittle = () => {
   const [toolsOpen, setToolsOpen] = useState(false);
@@ -75,17 +89,20 @@ const SingleBittle = () => {
   };
 
   // Run the fetchSingleBittle() function on page load
-  useEffect(() => {
-    fetchSingleBittle();
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   // Subscribe to the specific topic relating to the current bittle on the page on page load
   useEffect(() => {
-    const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
+    fetchSingleBittle();
+    // const sub = PubSub.subscribe(`Bittle1/sub`).subscribe({
+      const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
       complete: () => console.log('Done'),
     });
+    console.log('subscribe');
+    console.log(`${singleBittle.DeviceName}`);
     return () => {
       sub.unsubscribe();
     };

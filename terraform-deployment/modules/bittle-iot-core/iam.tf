@@ -175,29 +175,29 @@ data "aws_iam_policy_document" "bc_amplify_trust_relationship" {
 # }
 # - S3 Policies-
 # S3 Customer Managed Policy (Restricted Access) - Admin
-data "aws_iam_policy_document" "bc_s3_restricted_access_policy" {
-  count = var.create_restricted_access_roles ? 1 : 0
-  statement {
-    effect  = "Allow"
-    actions = ["s3:*"]
-    # Allows all S3 operations for files matching the below suffixes
-    resources = [
-      "${aws_s3_bucket.bc_landing_bucket.arn}",
-      "${aws_s3_bucket.bc_landing_bucket.arn}/*",
-      "${aws_s3_bucket.bc_input_bucket.arn}",
-      "${aws_s3_bucket.bc_input_bucket.arn}/*",
-      "${aws_s3_bucket.bc_devices_bucket.arn}",
-      "${aws_s3_bucket.bc_devices_bucket.arn}/*",
-      "${aws_s3_bucket.bc_app_storage_bucket.arn}",
-      "${aws_s3_bucket.bc_app_storage_bucket.arn}/*",
-    ]
-  }
-}
-resource "aws_iam_policy" "bc_s3_restricted_access_policy" {
-  count  = var.create_restricted_access_roles ? 1 : 0
-  name   = "bc_s3_restricted_access_policy"
-  policy = data.aws_iam_policy_document.bc_s3_restricted_access_policy[0].json
-}
+# data "aws_iam_policy_document" "bc_s3_restricted_access_policy" {
+#   count = var.create_restricted_access_roles ? 1 : 0
+#   statement {
+#     effect  = "Allow"
+#     actions = ["s3:*"]
+#     # Allows all S3 operations for files matching the below suffixes
+#     resources = [
+#       "${aws_s3_bucket.bc_landing_bucket.arn}",
+#       "${aws_s3_bucket.bc_landing_bucket.arn}/*",
+#       "${aws_s3_bucket.bc_input_bucket.arn}",
+#       "${aws_s3_bucket.bc_input_bucket.arn}/*",
+#       "${aws_s3_bucket.bc_devices_bucket.arn}",
+#       "${aws_s3_bucket.bc_devices_bucket.arn}/*",
+#       "${aws_s3_bucket.bc_app_storage_bucket.arn}",
+#       "${aws_s3_bucket.bc_app_storage_bucket.arn}/*",
+#     ]
+#   }
+# }
+# resource "aws_iam_policy" "bc_s3_restricted_access_policy" {
+#   count  = var.create_restricted_access_roles ? 1 : 0
+#   name   = "bc_s3_restricted_access_policy"
+#   policy = data.aws_iam_policy_document.bc_s3_restricted_access_policy[0].json
+# }
 
 # - DynamoDB Policies -
 # DynamoDB Customer Managed Policy (All Actions)
@@ -245,29 +245,29 @@ resource "aws_iam_policy" "bc_dynamodb_restricted_access_read_only_policy" {
 }
 
 # - SSM Policies -
-# SSM Customer Managed Policy (Restricted Access)
-data "aws_iam_policy_document" "bc_ssm_restricted_access_policy" {
-  count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
-  statement {
-    effect = "Allow"
-    actions = [
-      "ssm:DescribeParameters",
-    ]
-    resources = [
-      "${aws_ssm_parameter.bc_input_bucket_name.arn}",
-      "${aws_ssm_parameter.bc_devices_bucket_name.arn}",
-      "${aws_ssm_parameter.bc_app_storage_bucket_name.arn}",
-      "${aws_ssm_parameter.bc_dynamodb_output_table_name.arn}",
-    ]
-  }
-}
-resource "aws_iam_policy" "bc_ssm_restricted_access_policy" {
-  count  = var.create_restricted_access_roles ? 1 : 0
-  name   = "bc_ssm_restricted_access_policy"
-  policy = data.aws_iam_policy_document.bc_ssm_restricted_access_policy[0].json
+# # SSM Customer Managed Policy (Restricted Access)
+# data "aws_iam_policy_document" "bc_ssm_restricted_access_policy" {
+#   count = var.create_restricted_access_roles ? 1 : 0
+#   # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
+#   statement {
+#     effect = "Allow"
+#     actions = [
+#       "ssm:DescribeParameters",
+#     ]
+#     resources = [
+#       # "${aws_ssm_parameter.bc_input_bucket_name.arn}",
+#       # "${aws_ssm_parameter.bc_devices_bucket_name.arn}",
+#       # "${aws_ssm_parameter.bc_app_storage_bucket_name.arn}",
+#       "${aws_ssm_parameter.bc_dynamodb_output_table_name.arn}",
+#     ]
+#   }
+# }
+# resource "aws_iam_policy" "bc_ssm_restricted_access_policy" {
+#   count  = var.create_restricted_access_roles ? 1 : 0
+#   name   = "bc_ssm_restricted_access_policy"
+#   policy = data.aws_iam_policy_document.bc_ssm_restricted_access_policy[0].json
 
-}
+# }
 
 # - Lambda Policies -
 # Lambda Invoke Step Functions Customer Managed Policy (Restricted Access)
@@ -296,44 +296,44 @@ resource "aws_iam_policy" "bc_ssm_restricted_access_policy" {
 # - Eventbridge Policies -
 # Eventbridge Invoke Custom TCA Event Bus Customer Managed Policy (Restricted Access)
 
-data "aws_iam_policy_document" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy" {
-  count = var.create_restricted_access_roles ? 1 : 0
-  # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
-  statement {
-    effect = "Allow"
-    actions = [
-      "events:PutEvents",
-    ]
-    resources = [
-      "${aws_cloudwatch_event_bus.bc_event_bus.arn}",
-    ]
-  }
-}
-resource "aws_iam_policy" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy" {
-  count  = var.create_restricted_access_roles ? 1 : 0
-  name   = "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy"
-  policy = data.aws_iam_policy_document.bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy[0].json
-}
+# data "aws_iam_policy_document" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy" {
+#   count = var.create_restricted_access_roles ? 1 : 0
+#   # description = "Policy granting full DynamoDB permissions for the bc_devices DynamoDB table."
+#   statement {
+#     effect = "Allow"
+#     actions = [
+#       "events:PutEvents",
+#     ]
+#     resources = [
+#       "${aws_cloudwatch_event_bus.bc_event_bus.arn}",
+#     ]
+#   }
+# }
+# resource "aws_iam_policy" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy" {
+#   count  = var.create_restricted_access_roles ? 1 : 0
+#   name   = "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy"
+#   policy = data.aws_iam_policy_document.bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy[0].json
+# }
 
 # Eventbridge Invoke Step Functions Customer Managed Policy (Restricted Access)
 # Allows EventBridge to invoke Step Function State machine
-data "aws_iam_policy_document" "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy" {
-  count = var.create_restricted_access_roles ? 1 : 0
-  statement {
-    effect = "Allow"
-    actions = [
-      "states:*",
-    ]
-    resources = [
-      "${aws_sfn_state_machine.bc_sfn_state_machine.arn}",
-    ]
-  }
-}
-resource "aws_iam_policy" "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy" {
-  count  = var.create_restricted_access_roles ? 1 : 0
-  name   = "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy"
-  policy = data.aws_iam_policy_document.bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy[0].json
-}
+# data "aws_iam_policy_document" "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy" {
+#   count = var.create_restricted_access_roles ? 1 : 0
+#   statement {
+#     effect = "Allow"
+#     actions = [
+#       "states:*",
+#     ]
+#     resources = [
+#       "${aws_sfn_state_machine.bc_sfn_state_machine.arn}",
+#     ]
+#   }
+# }
+# resource "aws_iam_policy" "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy" {
+#   count  = var.create_restricted_access_roles ? 1 : 0
+#   name   = "bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy"
+#   policy = data.aws_iam_policy_document.bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy[0].json
+# }
 
 
 # --- IAM ROLES ---
@@ -350,8 +350,8 @@ resource "aws_iam_role" "bc_cognito_authrole_restricted_access" {
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
     "arn:aws:iam::aws:policy/AWSIoTConfigAccess",
     "arn:aws:iam::aws:policy/AWSIoTDataAccess",
-    aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
     # aws_iam_policy.bc_iot_restricted_access_policy[0].arn,
   ]
   max_session_duration  = "43200" // duration in seconds
@@ -399,7 +399,7 @@ resource "aws_iam_role" "bc_cognito_admin_group_restricted_access" {
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
     "arn:aws:iam::aws:policy/AWSIoTConfigAccess",
     "arn:aws:iam::aws:policy/AWSIoTDataAccess",
-    aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
     aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn,
     # aws_iam_policy.bc_iot_restricted_access_policy[0].arn,
   ]
@@ -449,7 +449,7 @@ resource "aws_iam_role" "bc_appsync_dynamodb_restricted_access" {
   # Managed Policies
   managed_policy_arns = [
     aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+    # aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
   ]
   force_detach_policies = true
@@ -467,86 +467,86 @@ resource "aws_iam_role" "bc_appsync_dynamodb_restricted_access" {
 # Eventbrige Invoke Step Functions Restricted Access
 # Role granting Eventbridge S3 restricted access, SSM restricted read-only access, and the ablity to access to CloudWatch Logs.
 # Role allows Eventbridge to invoke step functions
-resource "aws_iam_role" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access" {
-  # Conditional create of the role - default is 'TRUE'
-  count              = var.create_restricted_access_roles ? 1 : 0
-  name               = "bc_eventbridge_invoke_custom_event_bus_restricted_access"
-  assume_role_policy = data.aws_iam_policy_document.bc_eventbridge_trust_relationship.json
-  # Managed Policies
-  managed_policy_arns = [
-    aws_iam_policy.bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy[0].arn,
-    # aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    # aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
-    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-  ]
+# resource "aws_iam_role" "bc_eventbridge_invoke_custom_bc_event_bus_restricted_access" {
+#   # Conditional create of the role - default is 'TRUE'
+#   count              = var.create_restricted_access_roles ? 1 : 0
+#   name               = "bc_eventbridge_invoke_custom_event_bus_restricted_access"
+#   assume_role_policy = data.aws_iam_policy_document.bc_eventbridge_trust_relationship.json
+#   # Managed Policies
+#   managed_policy_arns = [
+#     aws_iam_policy.bc_eventbridge_invoke_custom_bc_event_bus_restricted_access_policy[0].arn,
+#     # aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
+#     # aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+#     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+#   ]
 
-  force_detach_policies = true
-  path                  = "/${var.bc_app_name}/"
+#   force_detach_policies = true
+#   path                  = "/${var.bc_app_name}/"
 
-  tags = merge(
-    {
-      "AppName" = var.bc_app_name
-    },
-    var.tags,
-  )
-}
+#   tags = merge(
+#     {
+#       "AppName" = var.bc_app_name
+#     },
+#     var.tags,
+#   )
+# }
 # Eventbrige Invoke Step Functions Restricted Access
 # Role granting Eventbridge S3 restricted access, SSM restricted read-only access, and the ablity to access to CloudWatch Logs.
 # Role allows Eventbridge to invoke step functions
-resource "aws_iam_role" "bc_eventbridge_invoke_sfn_state_machine_restricted_access" {
-  # Conditional create of the role - default is 'TRUE'
-  count              = var.create_restricted_access_roles ? 1 : 0
-  name               = "bc_eventbridge_invoke_sfn_state_machine_restricted_access"
-  assume_role_policy = data.aws_iam_policy_document.bc_eventbridge_trust_relationship.json
-  # Managed Policies
-  managed_policy_arns = [
-    aws_iam_policy.bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
-    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-  ]
+# resource "aws_iam_role" "bc_eventbridge_invoke_sfn_state_machine_restricted_access" {
+#   # Conditional create of the role - default is 'TRUE'
+#   count              = var.create_restricted_access_roles ? 1 : 0
+#   name               = "bc_eventbridge_invoke_sfn_state_machine_restricted_access"
+#   assume_role_policy = data.aws_iam_policy_document.bc_eventbridge_trust_relationship.json
+#   # Managed Policies
+#   managed_policy_arns = [
+#     # aws_iam_policy.bc_eventbridge_invoke_sfn_state_machine_restricted_access_policy[0].arn,
+#     aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
+#     aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+#     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+#   ]
 
-  force_detach_policies = true
-  path                  = "/${var.bc_app_name}/"
+#   force_detach_policies = true
+#   path                  = "/${var.bc_app_name}/"
 
-  tags = merge(
-    {
-      "AppName" = var.bc_app_name
-    },
-    var.tags,
-  )
-}
+#   tags = merge(
+#     {
+#       "AppName" = var.bc_app_name
+#     },
+#     var.tags,
+#   )
+# }
 
 # - Step Function Roles -
 # Step Functions Master Role Restricted Access
 # Role granting Step Functions S3 restricted access, SSM restricted read-only access,
 # DynamoDB restricted access, and the ablity to access to CloudWatch Logs.
 # Role allows Step Function to invoke lambda functions
-resource "aws_iam_role" "bc_step_functions_master_restricted_access" {
-  # Conditional create of the role - default is 'TRUE'
-  count              = var.create_restricted_access_roles ? 1 : 0
-  name               = "bc_step_functions_master_restricted_access"
-  description        = "Master step function role that grants S3 restricted access, SSM restricted access, DynamoDB restricted access as well as CloudWatch full access. "
-  assume_role_policy = data.aws_iam_policy_document.bc_step_function_trust_relationship.json
-  # Managed Policies
-  managed_policy_arns = [
-    aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
-    aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn,
-    "arn:aws:iam::aws:policy/AmazonSNSFullAccess",
-    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-  ]
+# resource "aws_iam_role" "bc_step_functions_master_restricted_access" {
+#   # Conditional create of the role - default is 'TRUE'
+#   count              = var.create_restricted_access_roles ? 1 : 0
+#   name               = "bc_step_functions_master_restricted_access"
+#   description        = "Master step function role that grants S3 restricted access, SSM restricted access, DynamoDB restricted access as well as CloudWatch full access. "
+#   assume_role_policy = data.aws_iam_policy_document.bc_step_function_trust_relationship.json
+#   # Managed Policies
+#   managed_policy_arns = [
+#     aws_iam_policy.bc_s3_restricted_access_policy[0].arn,
+#     aws_iam_policy.bc_ssm_restricted_access_policy[0].arn,
+#     aws_iam_policy.bc_dynamodb_restricted_access_policy[0].arn,
+#     "arn:aws:iam::aws:policy/AmazonSNSFullAccess",
+#     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+#   ]
 
-  force_detach_policies = true
-  path                  = "/${var.bc_app_name}/"
+#   force_detach_policies = true
+#   path                  = "/${var.bc_app_name}/"
 
-  tags = merge(
-    {
-      "AppName" = var.bc_app_name
-    },
-    var.tags,
-  )
-}
+#   tags = merge(
+#     {
+#       "AppName" = var.bc_app_name
+#     },
+#     var.tags,
+#   )
+# }
 
 # Amplify
 

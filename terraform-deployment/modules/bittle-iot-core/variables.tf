@@ -144,6 +144,12 @@ variable "bc_app_name" {
   default     = "bc-App"
   description = "The name of the Amplify Application"
 }
+variable "bc_enable_amplify_app_pr_preview" {
+  type = bool
+  default = false
+  description = "Enables pull request previews when Git Repo is connected to the Amplify App"
+
+}
 variable "bc_existing_repo_url" {
   type        = string
   default     = null
@@ -549,20 +555,66 @@ variable "all_bittles" {
   type    = map(any)
   default = {}
 }
+variable "all_gas_sensors" {
+  type    = map(any)
+  default = {}
+}
 
 # WiFi Information
-variable "bc_local_ssid" {
-  type = string
-  default = null
-  description = "The SSID for the local network you want Bittle to connect to."
-  sensitive = true
+variable "bc_wifi_ssid_1" {
+  type        = string
+  default     = ""
+  description = "The SSID for the primary local network you want Bittle to connect to."
+  sensitive   = true
 
 }
-variable "bc_local_network_password" {
-  type = string
-  default = null
-  description = "The password for the local network you want Bittle to connect to."
-  sensitive = true
+variable "bc_wifi_password_1" {
+  type        = string
+  default     = ""
+  description = "The password for the primary local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_ssid_2" {
+  type        = string
+  default     = ""
+  description = "The SSID for the 1st backup local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_password_2" {
+  type        = string
+  default     = ""
+  description = "The password for the 1st backup local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_ssid_3" {
+  type        = string
+  default     = ""
+  description = "The SSID for the 2nd backup local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_password_3" {
+  type        = string
+  default     = ""
+  description = "The password for the 2nd backup local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_ssid_4" {
+  type        = string
+  default     = ""
+  description = "The SSID for the 3rd backup local network you want Bittle to connect to."
+  sensitive   = true
+
+}
+variable "bc_wifi_password_4" {
+  type        = string
+  default     = ""
+  description = "The password for the 3rd backup local network you want Bittle to connect to."
+  sensitive   = true
 
 }
 

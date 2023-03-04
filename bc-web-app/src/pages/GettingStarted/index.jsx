@@ -31,7 +31,7 @@ import '../../common/styles/servicehomepage.scss';
 
 // Import images
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
-import ippBasicArch from '../../../../resources/architecture/IPP_BASIC_ARCH.png';
+import ippBasicArch from '../../../../resources/architecture/IPP_BASIC_ARC_v2_numbered.png';
 
 const GettingStarted = () => {
   return (

@@ -9,10 +9,15 @@
 # - Relevant S3 Buckets
 
 resource "aws_amplify_app" "bc_app" {
-  count                    = var.create_amplify_app ? 1 : 0
-  name                     = var.bc_app_name
-  repository               = var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].clone_url_http : var.bc_existing_repo_url
-  enable_branch_auto_build = true
+  count                       = var.create_amplify_app ? 1 : 0
+  name                        = var.bc_app_name
+  repository                  = var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].clone_url_http : var.bc_existing_repo_url
+  enable_branch_auto_build    = true
+  enable_auto_branch_creation = true
+  auto_branch_creation_config {
+    enable_auto_build           = true
+    enable_pull_request_preview = var.bc_enable_amplify_app_pr_preview
+  }
 
   # OPTIONAL - Necessary if not using oauth_token or access_token (used for GitLab and GitHub repos)
   iam_service_role_arn = var.bc_create_codecommit_repo ? aws_iam_role.bc_amplify_codecommit[0].arn : null
@@ -28,14 +33,14 @@ resource "aws_amplify_app" "bc_app" {
   }
 
   environment_variables = {
-    bc_REGION = "${data.aws_region.current.id}"
-    bc_CODECOMMIT_REPO_ID  = "${var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].repository_id : null}" //return null if no cc repo is created
-    bc_USER_POOL_ID        = "${aws_cognito_user_pool.bc_user_pool.id}"
-    bc_IDENTITY_POOL_ID    = "${aws_cognito_identity_pool.bc_identity_pool.id}"
-    bc_APP_CLIENT_ID       = "${aws_cognito_user_pool_client.bc_user_pool_client.id}"
-    bc_GRAPHQL_ENDPOINT    = "${aws_appsync_graphql_api.bc_appsync_graphql_api.uris.GRAPHQL}"
-    bc_GRAPHQL_API_ID      = "${aws_appsync_graphql_api.bc_appsync_graphql_api.id}"
-    bc_LANDING_BUCKET_NAME = "${aws_s3_bucket.bc_landing_bucket.id}"
+    bc_REGION             = "${data.aws_region.current.id}"
+    bc_CODECOMMIT_REPO_ID = "${var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].repository_id : null}" //return null if no cc repo is created
+    bc_USER_POOL_ID       = "${aws_cognito_user_pool.bc_user_pool.id}"
+    bc_IDENTITY_POOL_ID   = "${aws_cognito_identity_pool.bc_identity_pool.id}"
+    bc_APP_CLIENT_ID      = "${aws_cognito_user_pool_client.bc_user_pool_client.id}"
+    bc_GRAPHQL_ENDPOINT   = "${aws_appsync_graphql_api.bc_appsync_graphql_api.uris.GRAPHQL}"
+    bc_GRAPHQL_API_ID     = "${aws_appsync_graphql_api.bc_appsync_graphql_api.id}"
+    # bc_LANDING_BUCKET_NAME = "${aws_s3_bucket.bc_landing_bucket.id}"
   }
 }
 
