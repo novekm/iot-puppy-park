@@ -74,6 +74,7 @@ module "bittle-iot-core" {
   bc_create_codecommit_repo  = false
   bc_enable_gitlab_mirroring = false
   # Connect Amplify to GitHub
+  bc_existing_repo_url             = "https://github.com/novekm/iot-puppy-park"
   lookup_ssm_github_access_token   = true
   ssm_github_access_token_name     = "github-access-token"
   bc_enable_amplify_app_pr_preview = true
