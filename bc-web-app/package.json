@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@aws-amplify/pubsub": "^5.0.15",
-    "@aws-amplify/ui-react": "^3.5.1",
+    "@aws-amplify/ui-react": "^4.3.9",
     "@cloudscape-design/collection-hooks": "^1.0.7",
     "@cloudscape-design/components": "^3.0.45",
     "@cloudscape-design/design-tokens": "^3.0.1",
