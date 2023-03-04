@@ -68,14 +68,14 @@ const AmplifyConfig = {
     },
   },
 
-  Storage: {
-    AWSS3: {
-      bucket: outputsJSON.outputs.bc_landing_bucket.value, // REQUIRED -  Amazon S3 bucket name
-      region: outputsJSON.outputs.bc_aws_current_region.value, // Required -  Amazon service region
-      // bucket: import.meta.VITE_LANDING_BUCKET, // REQUIRED -  Amazon S3 bucket name
-      // region: import.meta.VITE_REGION, // Required -  Amazon service region
-    },
-  },
+  // Storage: {
+  //   AWSS3: {
+  //     bucket: outputsJSON.outputs.bc_landing_bucket.value, // REQUIRED -  Amazon S3 bucket name
+  //     region: outputsJSON.outputs.bc_aws_current_region.value, // Required -  Amazon service region
+  //     // bucket: import.meta.VITE_LANDING_BUCKET, // REQUIRED -  Amazon S3 bucket name
+  //     // region: import.meta.VITE_REGION, // Required -  Amazon service region
+  //   },
+  // },
 };
 
 export { AmplifyConfig };
