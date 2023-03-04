@@ -10,7 +10,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '',
   build: {
-    outDir: './build', // specifies the out directory as build to match react-app specs
+    outDir: './build', // specifies the out directory as build to match react app specs
   },
   plugins: [react()],
   resolve: {
