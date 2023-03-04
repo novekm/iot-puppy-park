@@ -18,7 +18,6 @@ frontend:
         - echo "VITE_IDENTITY_POOL_ID=$bc_IDENTITY_POOL_ID" >> .env
         - echo "VITE_USER_POOL_ID=$bc_USER_POOL_ID" >> .env
         - echo "VITE_APP_CLIENT_ID=$bc_APP_CLIENT_ID" >> .env
-        - echo "VITE_LANDING_BUCKET=$bc_LANDING_BUCKET_NAME" >> .env
         - echo "Printing environmental variables to the console to ensure they are correct"
         - cat .env
         - npm run build
