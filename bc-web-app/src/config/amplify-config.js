@@ -4,7 +4,7 @@
 import { Amplify } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 // eslint-disable-next-line import/no-unresolved
-import outputsJSON from '../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
+// import outputsJSON from '../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
 
 // Apply plugin with configuration - make sure you only declare this once or you will get
 // Duplicate messages in IoT Core.
