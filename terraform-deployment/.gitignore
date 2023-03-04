@@ -6,6 +6,8 @@ outputs.json
 
 ESP8266_AWS_IOT/
 ESP8266_AWS_IOT/*
+M5STICKCPLUS_AWS_IOT/
+M5STICKCPLUS_AWS_IOT/*
 # Local .terraform directories
 **/.terraform
 
