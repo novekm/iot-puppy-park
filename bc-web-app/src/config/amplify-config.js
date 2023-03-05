@@ -19,11 +19,11 @@ console.log('env', import.meta.env);
 const AmplifyConfig = {
   // Existing API
   API: {
-    // aws_appsync_graphqlEndpoint: `${import.meta.env.VITE_GRAPHQL_URL}`, // Replace with your GraphQL Endpoint
-    aws_appsync_graphqlEndpoint:
-      'https://hkagnorptjadfge5ppmmytc5ua.appsync-api.us-east-1.amazonaws.com/graphql', // Replace with your GraphQL Endpoint
-    // aws_appsync_region: `${import.meta.env.VITE_REGION}`, // Replace with the region you deployed CDK with
-    aws_appsync_region: 'us-east-1', // Replace with the region you deployed CDK with
+    aws_appsync_graphqlEndpoint: `${import.meta.env.VITE_GRAPHQL_URL}`, // Replace with your GraphQL Endpoint
+    // aws_appsync_graphqlEndpoint:
+    //   'https://hkagnorptjadfge5ppmmytc5ua.appsync-api.us-east-1.amazonaws.com/graphql', // Replace with your GraphQL Endpoint
+    aws_appsync_region: `${import.meta.env.VITE_REGION}`, // Replace with the region you deployed CDK with
+    // aws_appsync_region: 'us-east-1', // Replace with the region you deployed CDK with
     aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS', // No touchy
   },
 
@@ -39,12 +39,12 @@ const AmplifyConfig = {
     identityPoolRegion: `${import.meta.env.VITE_REGION}`,
 
     // REQUIRED - Amazon Cognito User Pool ID
-    // userPoolId: `${import.meta.env.VITE_USER_POOL_ID}`, // Replace with your User Pool ID
-    userPoolId: 'us-east-1_QvjYMnFVB', // Replace with your User Pool ID
+    userPoolId: `${import.meta.env.VITE_USER_POOL_ID}`, // Replace with your User Pool ID
+    // userPoolId: 'us-east-1_QvjYMnFVB', // Replace with your User Pool ID
 
     // REQUIRED - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    // userPoolWebClientId: import.meta.env.VITE_APP_CLIENT_ID, // Replace with your User Pool Web Client ID
-    userPoolWebClientId: '1hubl5clq7itul6p556o64ah6a', // Replace with your User Pool Web Client ID
+    userPoolWebClientId: import.meta.env.VITE_APP_CLIENT_ID, // Replace with your User Pool Web Client ID
+    // userPoolWebClientId: '1hubl5clq7itul6p556o64ah6a', // Replace with your User Pool Web Client ID
 
     // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
     mandatorySignIn: true,
