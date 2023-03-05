@@ -43,7 +43,6 @@ import {
 } from '../../common/common-components-config';
 
 import { getOneBittle } from '../../graphql/queries';
-import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
 
 Hub.listen('pubsub', (data) => {
   const { payload } = data;

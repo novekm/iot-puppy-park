@@ -44,14 +44,6 @@ import {
 } from '../../common/common-components-config';
 
 import { getOneBittle } from '../../graphql/queries';
-// import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
-
-// Amplify.addPluggable(
-//   new AWSIoTProvider({
-//     aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
-//     aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
-//   })
-// );
 
 Hub.listen('pubsub', (data) => {
   const { payload } = data;
