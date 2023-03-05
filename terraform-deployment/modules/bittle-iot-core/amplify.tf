@@ -31,6 +31,11 @@ resource "aws_amplify_app" "bc_app" {
     status = "200"
     target = "/index.html"
   }
+  # custom_rule {
+  #   source = "/<*>"
+  #   status = "404"
+  #   target = "/index.html"
+  # }
 
   environment_variables = {
     bc_REGION             = "${data.aws_region.current.id}"

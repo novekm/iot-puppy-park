@@ -59,7 +59,7 @@ const App = ({ signOut, user }) => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/my-bittles" element={<MyBittles />} />
+        <Route path="/my-bittles/" element={<MyBittles />} />
         <Route path="/my-bittles/:DeviceId" element={<SingleBittle />} />
         <Route path="/bittle-fleet-control" element={<BittleFleetControl />} />
         <Route path="/getting-started" element={<GettingStarted />} />
