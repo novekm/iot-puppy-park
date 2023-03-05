@@ -1,34 +1,34 @@
 // Bittles
 resource "local_file" "device_certificate_bittle" {
   for_each = var.all_bittles == null ? {} : var.all_bittles
-  filename = "${path.module}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-device-certificate.pem"
+  filename = "${path.root}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-device-certificate.pem"
   content  = aws_iot_certificate.cert_bittles[each.key].certificate_pem
 }
 resource "local_file" "private_key_bittle" {
   for_each = var.all_bittles == null ? {} : var.all_bittles
-  filename = "${path.module}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-private-key.pem.key"
+  filename = "${path.root}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-private-key.pem.key"
   content  = aws_iot_certificate.cert_bittles[each.key].private_key
 }
 resource "local_file" "public_key_bittle" {
   for_each = var.all_bittles == null ? {} : var.all_bittles
-  filename = "${path.module}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-public-key.pem.key"
+  filename = "${path.root}/ESP8266_AWS_IOT/${each.value.name}/${each.value.name}-public-key.pem.key"
   content  = aws_iot_certificate.cert_bittles[each.key].public_key
 }
 
 // Gas Sensors
 resource "local_file" "device_certificate_gas_sensor" {
   for_each = var.all_gas_sensors == null ? {} : var.all_gas_sensors
-  filename = "${path.module}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-device-certificate.pem"
+  filename = "${path.root}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-device-certificate.pem"
   content  = aws_iot_certificate.cert_gas_sensors[each.key].certificate_pem
 }
 resource "local_file" "private_key_gas_sensor" {
   for_each = var.all_gas_sensors == null ? {} : var.all_gas_sensors
-  filename = "${path.module}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-private-key.pem.key"
+  filename = "${path.root}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-private-key.pem.key"
   content  = aws_iot_certificate.cert_gas_sensors[each.key].private_key
 }
 resource "local_file" "public_key_gas_sensor" {
   for_each = var.all_gas_sensors == null ? {} : var.all_gas_sensors
-  filename = "${path.module}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-public-key.pem.key"
+  filename = "${path.root}/M5STICKCPLUS_AWS_IOT/${each.value.name}/${each.value.name}-public-key.pem.key"
   content  = aws_iot_certificate.cert_gas_sensors[each.key].public_key
 }
 
@@ -36,7 +36,7 @@ resource "local_file" "public_key_gas_sensor" {
 // Bittles
 resource "local_file" "dynamic_secrets_h_bittles" {
   for_each = var.all_bittles == null ? {} : var.all_bittles
-  filename = "${path.module}/ESP8266_AWS_IOT/${each.value.name}/BittleIoTCommands-${each.value.name}/Secrets-${each.value.name}.h"
+  filename = "${path.root}/ESP8266_AWS_IOT/${each.value.name}/BittleIoTCommands-${each.value.name}/Secrets-${each.value.name}.h"
   content  = <<-EOF
   #include <pgmspace.h>
 
@@ -96,7 +96,7 @@ resource "local_file" "dynamic_secrets_h_bittles" {
 }
 resource "local_file" "dynamic_ino_bittles" {
   for_each = var.all_bittles == null ? {} : var.all_bittles
-  filename = "${path.module}/ESP8266_AWS_IOT/${each.value.name}/BittleIoTCommands-${each.value.name}/BittleIoTCommands-${each.value.name}.ino"
+  filename = "${path.root}/ESP8266_AWS_IOT/${each.value.name}/BittleIoTCommands-${each.value.name}/BittleIoTCommands-${each.value.name}.ino"
   # content  = aws_iot_certificate.cert.public_key
   content = <<-EOF
     #include <ESP8266WiFi.h>
@@ -340,7 +340,7 @@ resource "local_file" "dynamic_ino_bittles" {
 // Gas Sensors
 resource "local_file" "dynamic_secrets_h_gas_sensors" {
   for_each = var.all_gas_sensors == null ? {} : var.all_gas_sensors
-  filename = "${path.module}/M5STICKCPLUS_AWS_IOT/${each.value.name}/GasSensorIoT-${each.value.name}/Secrets-${each.value.name}.h"
+  filename = "${path.root}/M5STICKCPLUS_AWS_IOT/${each.value.name}/GasSensorIoT-${each.value.name}/Secrets-${each.value.name}.h"
   content  = <<-EOF
   #include <pgmspace.h>
 
@@ -423,7 +423,7 @@ resource "local_file" "dynamic_secrets_h_gas_sensors" {
 }
 resource "local_file" "dynamic_ino_gas_sensors" {
   for_each = var.all_gas_sensors == null ? {} : var.all_gas_sensors
-  filename = "${path.module}/M5STICKCPLUS_AWS_IOT/${each.value.name}/GasSensorIoT-${each.value.name}/GasSensorIoT-${each.value.name}.ino"
+  filename = "${path.root}/M5STICKCPLUS_AWS_IOT/${each.value.name}/GasSensorIoT-${each.value.name}/GasSensorIoT-${each.value.name}.ino"
   # content  = aws_iot_certificate.cert.public_key
   content = <<-EOF
     // Includes
@@ -878,7 +878,7 @@ resource "local_file" "dynamic_ino_gas_sensors" {
 
 }
 resource "local_file" "env" {
-  filename = "${path.root}/../bc-web-app/src/.env"
+  filename = "${path.root}/../bc-web-app/.env"
   content  = <<-EOF
   VITE_REGION=${data.aws_region.current.name}
   VITE_API_ID=${aws_appsync_graphql_api.bc_appsync_graphql_api.id}
