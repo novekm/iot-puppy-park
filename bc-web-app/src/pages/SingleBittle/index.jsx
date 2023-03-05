@@ -58,15 +58,6 @@ import { getOneBittle } from '../../graphql/queries';
 // Styles
 import '../../common/styles/base.scss';
 
-// import outputsJSON from '../../../../terraform-deployment/modules/bittle-iot-core/outputs.json';
-
-// Amplify.addPluggable(
-//   new AWSIoTProvider({
-//     aws_pubsub_region: `${outputsJSON.outputs.bc_aws_current_region.value}`,
-//     aws_pubsub_endpoint: `wss://${outputsJSON.outputs.bc_iot_endpoint.value}/mqtt`,
-//   })
-// );
-
 // Main component for page
 const SingleBittle = () => {
   const [toolsOpen, setToolsOpen] = useState(false);
@@ -96,7 +87,7 @@ const SingleBittle = () => {
   useEffect(() => {
     fetchSingleBittle();
     // const sub = PubSub.subscribe(`Bittle1/sub`).subscribe({
-      const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
+    const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
       complete: () => console.log('Done'),
