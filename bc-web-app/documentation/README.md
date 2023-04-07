@@ -115,7 +115,7 @@ bc_landing_bucket
 3. Ensure you are in the **`/bc-bc-amplify-app/`** directory and run the command **`npm install`** to install all dependencies.
 4. Once dependencies are installed, run the command **`npm run dev`** to run the development server on your `localhost`. The Terraform module is configured to write the outputs of Terraform to a .env file (**`/bc-web-app/src/.env`**). This file is referenced in the custom Amplify configuration file at **`/bc-web-app/src/config/amplify-config.js`**.
 
-Note: A similar process takes place for the production Amplify App. In the Terraform configuration, the necessary environmental variables are passed directly to Amplify. Then during the build phase, those values are read from Amplify and a .env file is created within the docker instance during the build phase. This is then used by vite to render things correctly.
+Note: A similar process takes place for the hosted Amplify App. In the Terraform configuration, the necessary environmental variables are passed directly to Amplify. Then during the build phase, those values are read from Amplify and a .env file is created within the docker instance during the build phase. This is then used by vite to render things correctly.
 
 ```yaml
     build:
