@@ -14,5 +14,6 @@ To see this in action, check out **[this video from CERAWeek 2023 in Houston, TX
  For getting started quickly, check out some of our provided **[code examples](https://github.com/novekm/iot-puppy-park/tree/main/terraform-deployment/examples)**.
 
  For detailed information and step-by-step guidance, check out the full workshop on **[AWS Workshop Studio](https://workshops.aws/).**
- // TODO - Update this with public URL when it is out
+
+ <!-- TODO - Update this with public URL when it is out -->
 
