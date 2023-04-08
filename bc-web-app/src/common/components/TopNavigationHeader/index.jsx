@@ -83,8 +83,8 @@ const TopNavigationHeader = ({ user }) => {
                   {
                     id: 'documentation',
                     text: 'Documentation',
-                    // TODO - Replace this with link to our GitHub docs
-                    href: 'https://github.com/aws-quickstart/quickstart-aws-carbonlake',
+                    // TODO - Replace this with link to our Workshop URL
+                    href: 'https://workshops.aws/',
                     external: true,
                     externalIconAriaLabel: ' (opens in new tab)',
                   },
@@ -93,7 +93,7 @@ const TopNavigationHeader = ({ user }) => {
                     id: 'feedback',
                     text: 'Feedback',
                     // TODO - Replace this with link to our GitHub feedback mechanism
-                    href: 'https://github.com/aws-quickstart/quickstart-aws-carbonlake',
+                    href: 'https://github.com/novekm/iot-puppy-park',
                     external: true,
                     externalIconAriaLabel: ' (opens in new tab)',
                   },

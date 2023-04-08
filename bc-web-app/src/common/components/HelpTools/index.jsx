@@ -17,11 +17,7 @@ const HelpTools = () => {
     <HelpPanel header={<h2>Help panel</h2>}>
       <p>
         For issues with the app, please submit a{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/aws-quickstart/quickstart-aws-carbonlake/issues/new"
-        >
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/">
           GitHub issue
         </a>
         .{' '}
