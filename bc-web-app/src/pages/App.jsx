@@ -43,10 +43,10 @@ Amplify.configure(AmplifyConfig);
 
 // Uncomment line 44 for debugging
 // Amplify.Logger.LOG_LEVEL = 'DEBUG';
-// Auth.currentCredentials().then((info) => {
-//   const cognitoIdentityId = info.identityId;
-//   console.log('cognito identity id', cognitoIdentityId);
-// });
+Auth.currentCredentials().then((info) => {
+  const cognitoIdentityId = info.identityId;
+  console.log('cognito identity id', cognitoIdentityId);
+});
 
 // eslint-disable-next-line react/prop-types
 const App = ({ signOut, user }) => {
