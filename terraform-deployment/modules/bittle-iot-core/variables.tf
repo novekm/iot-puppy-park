@@ -144,10 +144,45 @@ variable "bc_app_name" {
   default     = "bc-App"
   description = "The name of the Amplify Application"
 }
+variable "bc_enable_auto_branch_creation" {
+  type        = bool
+  default     = true
+  description = "Enables automated branch creation for the Amplify app"
+
+}
+variable "bc_enable_auto_branch_deletion" {
+  type        = bool
+  default     = true
+  description = "Automatically disconnects a branch in the Amplify Console when you delete a branch from your Git repository"
+
+}
+variable "bc_auto_branch_creation_patterns" {
+  type        = list(any)
+  default     = ["main", "dev", ]
+  description = "Automated branch creation glob patterns for the Amplify app. Ex. feat*/*"
+
+}
+variable "bc_enable_auto_build" {
+  type        = bool
+  default     = true
+  description = "Enables auto-building of autocreated branches for the Amplify App."
+
+}
 variable "bc_enable_amplify_app_pr_preview" {
-  type = bool
-  default = false
-  description = "Enables pull request previews when Git Repo is connected to the Amplify App"
+  type        = bool
+  default     = false
+  description = "Enables pull request previews for the autocreated branch"
+
+}
+variable "bc_enable_performance_mode" {
+  type        = bool
+  default     = false
+  description = "Enables performance mode for the branch. This keeps cache at Edge Locations for up to 10min after changes"
+}
+variable "bc_framework" {
+  type        = string
+  default     = "React"
+  description = "Framework for the autocreated branch"
 
 }
 variable "bc_existing_repo_url" {
@@ -167,37 +202,6 @@ variable "bc_amplify_app_framework" {
   default = "React"
 
 }
-variable "create_bc_amplify_branch_main" {
-  type        = bool
-  default     = true
-  description = "Conditional creation of main branch for amplify app"
-
-}
-variable "bc_amplify_branch_main_name" {
-  type    = string
-  default = "main"
-}
-variable "bc_amplify_branch_main_stage" {
-  type    = string
-  default = "PRODUCTION"
-
-}
-variable "create_bc_amplify_branch_dev" {
-  type        = bool
-  default     = true
-  description = "Conditional creation of dev branch for amplify app"
-
-}
-variable "bc_amplify_branch_dev_name" {
-  type    = string
-  default = "dev"
-}
-variable "bc_amplify_branch_dev_stage" {
-  type    = string
-  default = "DEVELOPMENT"
-
-}
-
 variable "create_bc_amplify_domain_association" {
   type    = bool
   default = false

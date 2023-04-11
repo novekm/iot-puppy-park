@@ -9,15 +9,20 @@
 # - Relevant S3 Buckets
 
 resource "aws_amplify_app" "bc_app" {
-  count                    = var.create_amplify_app ? 1 : 0
-  name                     = var.bc_app_name
-  repository               = var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].clone_url_http : var.bc_existing_repo_url
-  enable_branch_auto_build = true
-  # enable_auto_branch_creation = true
-  # auto_branch_creation_config {
-  #   enable_auto_build           = true
-  #   enable_pull_request_preview = var.bc_enable_amplify_app_pr_preview
-  # }
+  count      = var.create_amplify_app ? 1 : 0
+  name       = var.bc_app_name
+  repository = var.bc_create_codecommit_repo ? aws_codecommit_repository.bc_codecommit_repo[0].clone_url_http : var.bc_existing_repo_url
+  # enable_branch_auto_build = true // if not using auto branch creation
+
+  enable_auto_branch_creation   = var.bc_enable_auto_branch_creation
+  enable_branch_auto_deletion   = var.bc_enable_auto_branch_deletion
+  auto_branch_creation_patterns = var.bc_auto_branch_creation_patterns // default is just main
+  auto_branch_creation_config {
+    enable_auto_build           = var.bc_enable_auto_build
+    enable_pull_request_preview = var.bc_enable_amplify_app_pr_preview
+    enable_performance_mode     = var.bc_enable_performance_mode
+    framework                   = var.bc_framework
+  }
 
   # OPTIONAL - Necessary if not using oauth_token or access_token (used for GitLab and GitHub repos)
   iam_service_role_arn = var.bc_create_codecommit_repo ? aws_iam_role.bc_amplify_codecommit[0].arn : null
@@ -47,62 +52,34 @@ resource "aws_amplify_app" "bc_app" {
     bc_GRAPHQL_API_ID     = "${aws_appsync_graphql_api.bc_appsync_graphql_api.id}"
     bc_GRAPHQL_API_ID     = "${aws_appsync_graphql_api.bc_appsync_graphql_api.id}"
     bc_IOT_ENDPOINT       = "${data.aws_iot_endpoint.current.endpoint_address}"
-    # bc_LANDING_BUCKET_NAME = "${aws_s3_bucket.bc_landing_bucket.id}"
   }
 }
 
 
-resource "aws_amplify_branch" "bc_amplify_branch_main" {
-  count       = var.create_bc_amplify_branch_main ? 1 : 0
-  app_id      = aws_amplify_app.bc_app[0].id
-  branch_name = var.bc_amplify_branch_main_name
+# resource "aws_amplify_domain_association" "example" {
+#   count       = var.create_bc_amplify_domain_association ? 1 : 0
+#   app_id      = aws_amplify_app.bc_app[0].id
+#   domain_name = var.bc_amplify_app_domain_name
 
-  framework = var.bc_amplify_app_framework
-  stage     = var.bc_amplify_branch_main_stage
+#   # https://example.com
+#   sub_domain {
+#     branch_name = aws_amplify_branch.bc_amplify_branch_main[0].branch_name
+#     prefix      = ""
+#   }
 
-  environment_variables = {
-    Env = "prod"
-  }
-}
-
-resource "aws_amplify_branch" "bc_amplify_branch_dev" {
-  count       = var.create_bc_amplify_branch_dev ? 1 : 0
-  app_id      = aws_amplify_app.bc_app[0].id
-  branch_name = var.bc_amplify_branch_dev_name
-
-  framework = var.bc_amplify_app_framework
-  stage     = var.bc_amplify_branch_dev_stage
-
-  environment_variables = {
-    ENV = "dev"
-  }
-}
-
-
-resource "aws_amplify_domain_association" "example" {
-  count       = var.create_bc_amplify_domain_association ? 1 : 0
-  app_id      = aws_amplify_app.bc_app[0].id
-  domain_name = var.bc_amplify_app_domain_name
-
-  # https://example.com
-  sub_domain {
-    branch_name = aws_amplify_branch.bc_amplify_branch_main[0].branch_name
-    prefix      = ""
-  }
-
-  # https://www.example.com
-  sub_domain {
-    branch_name = aws_amplify_branch.bc_amplify_branch_main[0].branch_name
-    prefix      = "www"
-  }
-  # https://dev.example.com
-  sub_domain {
-    branch_name = aws_amplify_branch.bc_amplify_branch_dev[0].branch_name
-    prefix      = "dev"
-  }
-  # https://www.dev.example.com
-  sub_domain {
-    branch_name = aws_amplify_branch.bc_amplify_branch_dev[0].branch_name
-    prefix      = "www.dev"
-  }
-}
+#   # https://www.example.com
+#   sub_domain {
+#     branch_name = aws_amplify_branch.bc_amplify_branch_main[0].branch_name
+#     prefix      = "www"
+#   }
+#   # https://dev.example.com
+#   sub_domain {
+#     branch_name = aws_amplify_branch.bc_amplify_branch_dev[0].branch_name
+#     prefix      = "dev"
+#   }
+#   # https://www.dev.example.com
+#   sub_domain {
+#     branch_name = aws_amplify_branch.bc_amplify_branch_dev[0].branch_name
+#     prefix      = "www.dev"
+#   }
+# }
