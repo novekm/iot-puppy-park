@@ -70,9 +70,6 @@ module "bittle-iot-core" {
   }
 
   # - Amplify App -
-  create_amplify_app         = true
-  bc_create_codecommit_repo  = false
-  bc_enable_gitlab_mirroring = false
   # Connect Amplify to GitHub
   bc_existing_repo_url           = "https://github.com/your-repo-url"
   lookup_ssm_github_access_token = true                      // set to true if the resource exists in your AWS Account

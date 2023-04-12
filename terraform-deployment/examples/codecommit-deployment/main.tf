@@ -70,7 +70,6 @@ module "bittle-iot-core" {
   }
 
   # - Amplify App -
-  create_amplify_app         = true
   bc_create_codecommit_repo  = true
   bc_enable_gitlab_mirroring = false
 

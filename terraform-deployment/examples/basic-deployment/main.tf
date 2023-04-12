@@ -68,12 +68,6 @@ module "bittle-iot-core" {
     # },
   }
 
-  # - Amplify App -
-  create_amplify_app         = true
-  bc_create_codecommit_repo  = false
-  bc_enable_gitlab_mirroring = false
-
-
   # - Cognito -
   # Admin Users to create
   bc_admin_cognito_users = {

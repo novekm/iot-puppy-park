@@ -136,7 +136,7 @@ variable "bc_devices_bucket_days_until_objects_expiration" {
 # - Amplify -
 variable "create_amplify_app" {
   type        = bool
-  default     = false
+  default     = true
   description = "Conditional creation of AWS Amplify Web Application"
 }
 variable "bc_app_name" {
