@@ -28,12 +28,8 @@ import {
 } from '@cloudscape-design/components';
 
 // Amplify
-import { API, graphqlOperation, Amplify, Auth, PubSub, Hub } from 'aws-amplify';
-import {
-  AWSIoTProvider,
-  CONNECTION_STATE_CHANGE,
-  ConnectionState,
-} from '@aws-amplify/pubsub';
+import { generateClient } from 'aws-amplify/api';
+import { pubsub } from '../../config/amplify-config';
 
 // Common
 import {
@@ -64,12 +60,15 @@ const SingleBittle = () => {
   const { DeviceId } = useParams();
   const [singleBittle, setSingleBittle] = useState([]);
 
+  const client = generateClient();
+
   // Fetch data for one bittle by 'DeviceId' specified in browser URL via useParams hook
   const fetchSingleBittle = async () => {
     try {
-      const singleBittleData = await API.graphql(
-        graphqlOperation(getOneBittle, { DeviceId: `${DeviceId}` })
-      );
+      const singleBittleData = await client.graphql({
+        query: getOneBittle,
+        variables: { DeviceId: `${DeviceId}` },
+      });
       const singleBittleDataList = singleBittleData.data.getOneBittle;
       console.log('Single Bittle List', singleBittleDataList);
       setSingleBittle(singleBittleDataList);
@@ -87,26 +86,24 @@ const SingleBittle = () => {
   useEffect(() => {
     fetchSingleBittle();
     // const sub = PubSub.subscribe(`Bittle1/sub`).subscribe({
-    const sub = PubSub.subscribe(`${singleBittle.DeviceName}/sub`).subscribe({
+    const sub = pubsub.subscribe({ topics:`${singleBittle.DeviceName}/sub` }).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
-      complete: () => console.log('Done'),
+      complete: () => console.log('Done')
     });
-    console.log('subscribe');
-    console.log(`${singleBittle.DeviceName}`);
     return () => {
       sub.unsubscribe();
     };
+    
+
   }, []);
   // Subscribe to the specific global topic relating to the current bittle on the page on page load
   useEffect(() => {
-    const sub = PubSub.subscribe(
-      `${singleBittle.DeviceName}/sub-global`
-    ).subscribe({
+    const sub = pubsub.subscribe({ topics:  `${singleBittle.DeviceName}/sub-global` }).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
-      complete: () => console.log('Done'),
-    });
+      complete: () => console.log('Done')
+    }); 
     return () => {
       sub.unsubscribe();
     };

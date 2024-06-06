@@ -14,42 +14,32 @@ integration guidelines:
 https://cloudscape.design/patterns/patterns/overview/
 *********************************************************************** */
 
-import React, { useState, useEffect } from 'react';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import {
-  PropertyFilter,
   Pagination,
+  PropertyFilter,
   Table,
 } from '@cloudscape-design/components';
+import React, { useEffect, useState } from 'react';
 
-import { API, graphqlOperation } from 'aws-amplify';
-import {
-  getAllObjects,
-  getAllObjectsPaginated,
-  getOneObject,
-} from '../../../graphql/queries';
-import { deleteOneBittle } from '../../../graphql/mutations';
+import { generateClient } from 'aws-amplify/api';
+import { getAllObjects } from '../../../graphql/queries';
 
-import { getFilterCounterText } from '../../../common/resources/tableCounterStrings';
 import { FullPageHeader, S3ObjectsTableEmptyState } from '..';
-import {
-  CustomAppLayout,
-  Navigation,
-  TableNoMatchState,
-  Notifications,
-} from '../../../common/common-components-config';
+import { TableNoMatchState } from '../../../common/common-components-config';
+import { getFilterCounterText } from '../../../common/resources/tableCounterStrings';
 import { paginationLabels, transcriptSelectionLabels } from '../labels';
 import {
+  DEFAULT_PREFERENCES,
   FILTERING_PROPERTIES,
   PROPERTY_FILTERING_I18N_CONSTANTS,
-  DEFAULT_PREFERENCES,
   Preferences,
 } from './table-property-filter-config';
 
-import '../../../common/styles/base.scss';
 import { useLocalStorage } from '../../../common/resources/localStorage';
+import '../../../common/styles/base.scss';
 
-import { useTCAJobs, useTCAJobsPropertyFiltering } from './hooks';
+const client = generateClient();
 
 const TCAJobsTable = ({ updateTools, saveWidths, columnDefinitions }) => {
   // Below are variables declared to maintain the table's state.
@@ -99,9 +89,12 @@ const TCAJobsTable = ({ updateTools, saveWidths, columnDefinitions }) => {
 
   const fetchS3Objects = async () => {
     try {
-      const s3ObjectData = await API.graphql(
-        graphqlOperation(getAllObjects, { limit: 10000 })
-      );
+      const s3ObjectData = await client.graphql({
+        query: getAllObjects,
+        variables: { limit: 10000 },
+      });
+      console.log("🚀 ~ file: index.jsx:93 ~ s3ObjectData:", s3ObjectData)
+
       const s3ObjectsDataList = s3ObjectData.data.getAllObjects.items;
       console.log('S3 Object List', s3ObjectsDataList);
       setS3Objects(s3ObjectsDataList);

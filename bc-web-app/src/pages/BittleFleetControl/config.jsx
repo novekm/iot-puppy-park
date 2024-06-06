@@ -17,6 +17,7 @@ integration guidelines:
 https://cloudscape.design/patterns/patterns/overview/
 *********************************************************************** */
 import React, { useState, useEffect } from 'react';
+import { CONNECTION_STATE_CHANGE } from '@aws-amplify/pubsub';
 import { useParams } from 'react-router';
 import {
   Box,
@@ -31,12 +32,8 @@ import {
   SpaceBetween,
   Table,
 } from '@cloudscape-design/components';
-import { API, graphqlOperation, Amplify, PubSub, Auth, Hub } from 'aws-amplify';
-import {
-  AWSIoTProvider,
-  CONNECTION_STATE_CHANGE,
-  ConnectionState,
-} from '@aws-amplify/pubsub';
+import { Hub } from 'aws-amplify/utils';
+import { pubsub } from '../../config/amplify-config';
 import {
   TableEmptyState,
   InfoLink,
@@ -176,7 +173,7 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kwkF' })
+                pubsub.publish(`bittles-global/sub`, { message: 'kwkF' })
               }
             >
               Forward
@@ -185,14 +182,14 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() => {
-                PubSub.publish(`bittles-global/sub`, { message: 'kwkL' });
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kwkL' } })
               }}
             >
               Forward L
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kwkR' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kwkR' } })
               }
             >
               Forward R
@@ -200,15 +197,15 @@ export const BittleCommandsTableConfig = () => {
           </div>
           <div>
             <Button
-              onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kbkL' })
+              onClick={() => 
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kbkL' } })
               }
             >
               Back L
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kbkR' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kbkR' } })
               }
             >
               Back R
@@ -217,16 +214,14 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kbk' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kbk' } })
               }
             >
               Back
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, {
-                  message: 'kbalance',
-                })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kbalance' } })
               }
               variant="primary"
             >
@@ -234,7 +229,7 @@ export const BittleCommandsTableConfig = () => {
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'd' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'd' } })
               }
               variant="primary"
             >
@@ -288,22 +283,22 @@ export const BittleCommandsTableConfig = () => {
           <Box variant="awsui-key-label">Actions</Box>
           <div>
             <Button
-              onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kwkF' })
+              onClick={() => 
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kwkF' } })
               }
             >
               Walk
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'ksit' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'ksit' } })
               }
             >
               Sit
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'khi' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'khi' } })
               }
             >
               Hello
@@ -312,21 +307,21 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kpee' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kpee' } })
               }
             >
               Pee
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'ktrF' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'ktrF' } })
               }
             >
               Trot
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kck' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kck' } })
               }
             >
               Check
@@ -335,14 +330,14 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kvtF' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kvtF' } })
               }
             >
               Stepping
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kpu' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kpu' } })
               }
             >
               Push Ups
@@ -351,30 +346,28 @@ export const BittleCommandsTableConfig = () => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kstr' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kstr' } })
               }
             >
               Stretch
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, {
-                  message: 'kbuttUp',
-                })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kbuttUp' } })
               }
             >
               Butt Up
             </Button>
             <Button
-              onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'krnF' })
+              onClick={() => 
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'krnF' } })
               }
             >
               Run
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`bittles-global/sub`, { message: 'kcrF' })
+                pubsub.publish({ topics: 'bittles-global/sub', message: { msg: 'kcrF' } })
               }
             >
               Crawl

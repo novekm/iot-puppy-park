@@ -22,7 +22,7 @@ import {
   Table,
 } from '@cloudscape-design/components';
 
-import { API, graphqlOperation } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
 import {
   getAllBittles,
   getAllBittlesPaginated,
@@ -50,6 +50,8 @@ import '../../../common/styles/base.scss';
 import { useLocalStorage } from '../../../common/resources/localStorage';
 
 import { useTCAJobs, useTCAJobsPropertyFiltering } from './hooks';
+
+const client = generateClient();
 
 const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
   // Below are variables declared to maintain the table's state.
@@ -99,9 +101,7 @@ const BittlesTable = ({ updateTools, saveWidths, columnDefinitions }) => {
 
   const fetchBittles = async () => {
     try {
-      const BittleData = await API.graphql(
-        graphqlOperation(getAllBittles, { limit: 10000 })
-      );
+      const BittleData = await client.graphql({ query: getAllBittles,variables: { limit: 10000 }});
       const BittleDataList = BittleData.data.getAllBittles.items;
       console.log('Bittles List', BittleDataList);
       setBittles(BittleDataList);

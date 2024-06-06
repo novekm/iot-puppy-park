@@ -13,25 +13,25 @@ integration guidelines:
 https://cloudscape.design/patterns/patterns/overview/
 *********************************************************************** */
 
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
+  Alert,
   AppLayout,
+  Box,
+  Button,
   Container,
+  Flashbar,
+  Form,
+  Grid,
   Header,
   HelpPanel,
-  Grid,
-  Box,
-  TextContent,
-  SpaceBetween,
-  Flashbar,
-  Alert,
-  Form,
-  Button,
-  Table,
   Icon,
   ProgressBar,
+  SpaceBetween,
+  Table,
+  TextContent,
 } from '@cloudscape-design/components';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../common/components/Sidebar';
 
 import { ExternalLinkItem } from '../../common/common-components-config';
@@ -42,8 +42,7 @@ import '../../common/styles/servicehomepage.scss';
 import { COLUMN_DEFINITIONS } from './TableConfig';
 
 // Amplify
-import { Storage } from 'aws-amplify';
-
+import { uploadData } from 'aws-amplify/storage';
 // Image imports
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
 
@@ -166,41 +165,45 @@ const Content = () => {
 
       // eslint-disable-next-line camelcase, no-unused-vars
 
-      const put_s3_file = await Storage.put(files.name, files, {
-        // bucket: "your-bucket-name", - use this parameter to add to bucket beyond amplify-config
-        progressCallback(progress) {
-          const percent_uploaded = Math.floor(
-            (progress.loaded / progress.total) * 100
-          );
-          console.log('Uploading file to S3 Bucket ...');
-          console.log(
-            `Uploaded: ${progress.loaded}/${progress.total} | ${percent_uploaded}%`
-          );
-          setFilePercentUploaded(percent_uploaded);
-          setFileName(files.name);
+      const put_s3_file = await uploadData({
+        path: files.name,
+        data: files,
+        options: {
+          // bucket: "your-bucket-name", - use this parameter to add to bucket beyond amplify-config
+          onProgress: ({ transferredBytes, totalBytes }) => {
+            const percent_uploaded = Math.round(
+              (transferredBytes / totalBytes) * 100
+            );
+            console.log('Uploading file to S3 Bucket ...');
+            console.log(
+              `Uploaded: ${transferredBytes}/${totalBytes} | ${percent_uploaded}%`
+            );
+            setFilePercentUploaded(percent_uploaded);
+            setFileName(files.name);
 
-          setFlashbarItems([
-            {
-              type: 'success',
-              content: `File: ${files.name} has been successfully uploaded.`,
-              action: (
-                <Button onClick={() => navigate('/s3-objects')}>
-                  View S3 Objects
-                </Button>
-              ), // TODO - make this nav to TCA jobs page
-              dismissible: true,
-              dismissLabel: 'Dismiss message',
-              // onDismiss: () => {setItems([]); setShowSuccessFlashbar(false)},
-              onDismiss: () => setShowSuccessFlashbar(false),
-              id: 'success_message_1',
-            },
-          ]);
+            setFlashbarItems([
+              {
+                type: 'success',
+                content: `File: ${files.name} has been successfully uploaded.`,
+                action: (
+                  <Button onClick={() => navigate('/s3-objects')}>
+                    View S3 Objects
+                  </Button>
+                ), // TODO - make this nav to TCA jobs page
+                dismissible: true,
+                dismissLabel: 'Dismiss message',
+                // onDismiss: () => {setItems([]); setShowSuccessFlashbar(false)},
+                onDismiss: () => setShowSuccessFlashbar(false),
+                id: 'success_message_1',
+              },
+            ]);
+          },
+          // level: 'public',
+          customPrefix: {
+            public: '',
+          },
+          contentType: files.type,
         },
-        // level: 'public',
-        customPrefix: {
-          public: '',
-        },
-        contentType: files.type,
       });
 
       // setVisibleAlert(true) // old success method

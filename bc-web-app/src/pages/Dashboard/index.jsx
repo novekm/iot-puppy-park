@@ -61,10 +61,10 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import awsLogo from '../../public/images/AWS_logo_RGB_REV.png';
 
-import { API, graphqlOperation } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
 import { getAllBittles } from '../../graphql/queries';
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ userInfo, userAttributes, user }) => {
   return (
     <AppLayout
       breadcrumbs={<Breadcrumbs />}
@@ -73,7 +73,7 @@ const Dashboard = ({ user }) => {
         // <ContentLayout header={<DashboardHeader />}>
         //   <Content />
         // </ContentLayout>
-        <Content user={user} />
+        <Content userInfo={userInfo} userAttributes={userAttributes} user={user} />
       }
       tools={<ToolsContent />}
       headerSelector="#h"
@@ -84,7 +84,7 @@ const Dashboard = ({ user }) => {
 
 export default withAuthenticator(Dashboard);
 
-const Content = ({ user }) => {
+const Content = ({ userInfo, user, isInProgress }) => {
   const [bittles, setBittles] = useState([]);
 
   useEffect(() => {
@@ -114,12 +114,13 @@ const Content = ({ user }) => {
   //   // time: new Date(s3Object.CreatedAt).getTime(),
   // }));
   // console.log('Date Separated S3 Objects', dateSeparatedS3Objects);
-
+  const client = generateClient();
   const fetchBittles = async () => {
     try {
-      const BittleData = await API.graphql(
-        graphqlOperation(getAllBittles, { limit: 10000 })
-      );
+      const BittleData = await client.graphql({
+        query: getAllBittles,
+        variables: { limit: 10000 },
+      });
       const BittleDataList = BittleData.data.getAllBittles.items;
       console.log('Bittle List', BittleDataList);
       setBittles(BittleDataList);
@@ -143,7 +144,7 @@ const Content = ({ user }) => {
               />
               <div className="custom-home__header-title">
                 <Box fontSize="display-l" fontWeight="bold" color="inherit">
-                  Hi, {user.attributes.given_name} 👋
+                  Hi, {userInfo.given_name} 👋
                 </Box>
                 <Box
                   fontSize="heading-l"
