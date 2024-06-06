@@ -28,7 +28,8 @@ import {
 } from '@cloudscape-design/components';
 
 // Amplify
-import { API, graphqlOperation, Amplify, PubSub, Auth, Hub } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
+import { pubsub } from '../../config/amplify-config';
 
 // Common
 import {
@@ -60,11 +61,13 @@ const BittleFleetControl = () => {
   const [singleBittle, setSingleBittle] = useState([]);
 
   // Fetch data for one bittle by 'DeviceId' specified in browser URL via useParams hook
+  const client = generateClient();
   const fetchSingleBittle = async () => {
     try {
-      const singleBittleData = await API.graphql(
-        graphqlOperation(getOneBittle, { DeviceId: `${DeviceId}` })
-      );
+      const singleBittleData = await client.graphql({
+        query: getOneBittle,
+        variables: { DeviceId: `${DeviceId}` },
+      });
       const singleBittleDataList = singleBittleData.data.getOneBittle;
       console.log('Single Bittle List', singleBittleDataList);
       setSingleBittle(singleBittleDataList);
@@ -81,10 +84,11 @@ const BittleFleetControl = () => {
 
   // Subscribe to the specific topic relating to the current bittle on the page on page load
   useEffect(() => {
-    const sub = PubSub.subscribe(`bittles-global/sub`).subscribe({
+    console.log("Global")
+   const sub= pubsub.subscribe({ topics: 'bittles-global/sub' }).subscribe({
       next: (data) => console.log('Message received', data),
       error: (error) => console.error(error),
-      complete: () => console.log('Done'),
+      complete: () => console.log('Done')
     });
     return () => {
       sub.unsubscribe();

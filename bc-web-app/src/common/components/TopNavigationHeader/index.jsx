@@ -5,18 +5,19 @@ import React, { useState } from 'react';
 import { TopNavigation } from '@cloudscape-design/components';
 
 // Amplify
-import { Auth } from 'aws-amplify';
+import { signOut } from 'aws-amplify/auth';
 // Company logo. Upload your own logo and point to it to change this in the TopNavigation.
 import logo from '../../../public/images/AWS_logo_RGB_REV.png';
 
 // Styles
 import '../../styles/top-navigation.scss';
 
-const TopNavigationHeader = ({ user }) => {
+const TopNavigationHeader = ({userInfo, user }) => {
   // Function to sign user out
-  async function signOut() {
+  // Function signOut renamed to appSignOut to prevent conflict with aws-amplify/auth - signOut
+  async function appSignOut() {
     try {
-      await Auth.signOut();
+      await signOut();
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -67,8 +68,8 @@ const TopNavigationHeader = ({ user }) => {
           },
           {
             type: 'menu-dropdown',
-            text: `${user.attributes.given_name} ${user.attributes.family_name}`,
-            description: `${user.attributes.email}`,
+            text: `${userInfo.given_name} ${userInfo.family_name}`,
+            description: `${userInfo.email}`,
             iconName: 'user-profile',
             items: [
               { id: 'profile', text: 'Profile' },
@@ -100,7 +101,7 @@ const TopNavigationHeader = ({ user }) => {
                 ],
               },
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-              { id: 'signout', text: <span onClick={signOut}>Sign out </span> },
+              { id: 'signout', text: <span onClick={appSignOut}>Sign out </span> },
             ],
           },
         ]}

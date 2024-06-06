@@ -16,34 +16,24 @@ integration guidelines:
 
 https://cloudscape.design/patterns/patterns/overview/
 *********************************************************************** */
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
 import {
   Box,
-  BreadcrumbGroup,
   Button,
   ButtonDropdown,
   ColumnLayout,
-  Container,
   Header,
   ProgressBar,
-  StatusIndicator,
   SpaceBetween,
-  Table,
+  StatusIndicator
 } from '@cloudscape-design/components';
-import { API, graphqlOperation, Amplify, Auth, PubSub, Hub } from 'aws-amplify';
-import {
-  AWSIoTProvider,
-  CONNECTION_STATE_CHANGE,
-  // PubSub,
-  ConnectionState,
-} from '@aws-amplify/pubsub';
-import {
-  TableEmptyState,
-  InfoLink,
-} from '../../common/common-components-config';
+import { Hub } from 'aws-amplify/utils';
+import { pubsub } from '../../config/amplify-config';
+import React from 'react';
 
-import { getOneBittle } from '../../graphql/queries';
+import {
+  CONNECTION_STATE_CHANGE
+} from '@aws-amplify/pubsub';
+
 
 Hub.listen('pubsub', (data) => {
   const { payload } = data;
@@ -174,7 +164,7 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkF' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kwkF' } })
               }
             >
               Forward
@@ -183,15 +173,14 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkL' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kwkL' } })    
               }
             >
               Forward L
             </Button>
             <Button
               onClick={() => {
-                PubSub.publish(`Bittle1/sub`, { message: 'kwkR' });
-                console.log('you clicked me');
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kwkR' } })
               }}
             >
               Forward R
@@ -200,14 +189,14 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbkL' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbkL' } })
               }
             >
               Back L
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbkR' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbkR' } })
               }
             >
               Back R
@@ -216,16 +205,14 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kbk' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbk' } })
               }
             >
               Back
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, {
-                  message: 'kbalance',
-                })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbalance' } })
               }
               variant="primary"
             >
@@ -234,8 +221,7 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
             <Button
               onClick={
                 () =>
-                  PubSub.publish(`${singleBittleName}/sub`, { message: 'd' })
-                // PubSub.publish(`Bittle2/sub`, { message: 'd' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'd' } })
               }
               variant="primary"
             >
@@ -254,7 +240,7 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'g' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'g' } })
               }
             >
               Gyro On/Off
@@ -263,7 +249,7 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'c' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'c' } })
               }
             >
               Calibration
@@ -272,9 +258,7 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, {
-                  message: 'kbalance',
-                })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbalance' } })
               }
             >
               Balanced
@@ -292,21 +276,21 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kwkF' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kwkF' } })                
               }
             >
               Walk
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'ksit' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'ksit' } })   
               }
             >
               Sit
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'khi' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'khi' } })  
               }
             >
               Hello
@@ -315,21 +299,21 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kpee' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kpee' } })  
               }
             >
               Pee
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'ktrF' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'ktrF' } })  
               }
             >
               Trot
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kck' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kck' } })  
               }
             >
               Check
@@ -338,14 +322,14 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kvtF' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kvtF' } }) 
               }
             >
               Stepping
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kpu' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kpu' } }) 
               }
             >
               Push Ups
@@ -354,30 +338,29 @@ export const BittleCommandsTableConfig = ({ singleBittle }) => {
           <div>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kstr' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kstr' } }) 
               }
             >
               Stretch
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, {
-                  message: 'kbuttUp',
-                })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kbuttUp' } }) 
               }
             >
               Butt Up
             </Button>
             <Button
-              onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'krnF' })
+              onClick={() =>{console.log("inside onClick: Run")
+              pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'krnF' } }) 
+               }
               }
             >
               Run
             </Button>
             <Button
               onClick={() =>
-                PubSub.publish(`${singleBittleName}/sub`, { message: 'kcrF' })
+                pubsub.publish({ topics: `${singleBittleName}/sub`, message: { msg: 'kcrF' } }) 
               }
             >
               Crawl
